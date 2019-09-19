@@ -7,7 +7,7 @@
         <script src = "https://code.jquery.com/jquery-3.4.1.js"></script>
     </head>
     <body>
-        <?php include ('navbar.html'); ?>
-        <div class = "main-content">Hello</div>
+        <?php include ('navbar.php'); ?>
+        <main>Hello</main>
     </body>
 </html>
