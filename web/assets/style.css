@@ -1,6 +1,7 @@
 body {
     font-family: "Comic Sans MS", cursive, sans-serif;
 }
+
 main {
     background-color: white;
     color: black;
@@ -8,6 +9,7 @@ main {
     margin-top: 80px;
     height: 125vh;
 }
+
 header {
     background-color: black;
     position: fixed;
@@ -18,17 +20,20 @@ header {
     box-shadow: 0 0 8px 0 black;
 }
 
-header .navlinks
-{
+header .navlinks {
     display: flex;
     flex-direction: row;
     align-items: center;
+    text-align: center;
+    width: 30%;
+    margin: 0 auto;
+    list-style: none;
 }
 
-header .navlinks *
-{
+header .navlinks * {
     margin: 20px;
 }
+
 header .navlinks div a {
     color: white;
     text-decoration: none;
