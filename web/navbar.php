@@ -9,7 +9,7 @@
             <div><a href="profile">Profile</a></div>
             <?php
             } else { ?>
-                <div><a href="/login/">Log-in</a></div>
+                <div><a href="/login/">Login</a></div>
             <?php
             }
             ?>

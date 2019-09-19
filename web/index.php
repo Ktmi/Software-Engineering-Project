@@ -8,6 +8,22 @@
     </head>
     <body>
         <?php include ('navbar.php'); ?>
-        <main>Hello</main>
+        <main>
+        <center>
+        <h3>Welcome to BlueJay!</h3>
+        </center>
+        <div class="container" style="background-color:#ffffff; width: 30%; border:1px solid black;">
+            <form action="action_page.php" method="post">
+                This is a Post<br>
+                &nbsp <br>
+                &nbsp <br>
+                &nbsp <br>
+                &nbsp <br>
+                &nbsp <br>
+                &nbsp <br>
+                &nbsp <br>
+        </div>
+        </main>
+        
     </body>
 </html>
