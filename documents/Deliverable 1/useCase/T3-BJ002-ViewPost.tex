@@ -1,0 +1,66 @@
+\subsection{T3-BJ002-View Post}
+\textbf{Use Case ID:} T3-BJ002-View Post\\
+\textbf{Use Case Level:} High-level\\
+\textbf{Details:}
+\begin{itemize}
+    \item %PUT DESCRIPTION HERE
+    \item \textbf{Actor:} User
+    \item \textbf{Pre-conditions:}
+    \begin{itemize}
+        \item User has internet access
+        \item User has logged on.
+    \end{itemize}
+    \item \textbf{Description:}
+    \begin{enumerate}
+        \item User selects a post on the page while searching through the posts, or within any of the extensions of that functionality.
+        \item The browser requests the page with the selected post.
+        \item The post, and all posts replying to that post are queried from the database.
+        \item The server constructs the page to display the posts.
+        \item The server sends the page to the browser.
+        \item The browser displays the page to the user.
+    \end{enumerate}
+    \item \textbf{Post-conditions:}
+    \begin{itemize}
+        \item Number of views on the post increases by one.
+    \end{itemize}
+\end{itemize}
+\textbf{Alternative Courses of Action:}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+\textbf{Extensions:}
+\begin{itemize}
+    \item N/A
+\end{itemize}
+\textbf{Exceptions:}
+\begin{itemize}
+    \item Post could not be retrieved.
+\end{itemize}
+\textbf{Concurrent Uses:}
+\begin{itemize}
+    \item None
+\end{itemize}
+\textbf{Related Use Cases:}
+\begin{itemize}
+    \item T3-BJ001-Browse Post
+\end{itemize}
+\textbf{Decision Support}
+\begin{itemize}
+    \item Frequency: 100 times per minute
+    \item Criticality: High
+    \item Risk: Medium
+\end{itemize}
+\textbf{Constraints:}
+\begin{itemize}
+    \item Usability: Average of 2 minutes for user to learn how to navigate pages and make posts
+    \item Reliability:
+    \item Performance:
+    \item Supportability: Supported by browsers across multiple desktop and mobile devices.
+    \item Implementation:
+\end{itemize}
+\textbf{Modification History}
+\begin{itemize}
+    \item Owner: David Ramirez
+    \item Initiation date: 8/27/2019
+    \item Date last modified: 9/30/2019
+\end{itemize}

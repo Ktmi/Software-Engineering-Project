@@ -1,4 +1,4 @@
-Deliverable1.aux
-Deliverable1.log
-Deliverable1.pdf
-Deliverable1.toc
+**/*.aux
+**/*.log
+**/*.pdf
+**/*.toc
