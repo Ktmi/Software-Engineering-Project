@@ -87,7 +87,7 @@
                     <br><label for="psw">
                         <h2>Re-Enter Password</h2>
                     </label><br>
-                    <input type="password" placeholder="Re-Enter Password" name="psw" id="userPass" required><br>
+                    <input type="password" placeholder="Re-Enter Password" name="psw" id="userPassRe" required><br>
 
                     <a href="/"><button type="submit" onclick="createAccount();">
                             <h3>Submit</h3>
