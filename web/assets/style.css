@@ -1,12 +1,12 @@
 body {
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 main {
-    background-color: lightblue;
+    background-color: lightgray;
     color: black;
     padding: 30px;
-    margin-top: 80px;
+    margin-top: 90px;
     height: 130vh;
 }
 
@@ -16,7 +16,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    height: 95px;
+    height: 105px;
     box-shadow: 0 0 8px 0 black;
 }
 

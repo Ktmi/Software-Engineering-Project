@@ -14,7 +14,7 @@
         <center>
             <h2>Welcome to BlueJay!</h2><br>
         </center>
-        <div class="row" style="background-color: lightcoral; width: 100%; border:2px solid black;">
+        <div class="row" style="background-color: white; width: 100%; border:2px solid black;">
             <form action="action_page.php" method="post">
                     <div class="column" style="border:1px solid black;">
                     <center>Most Viewed Posts</center><br>
