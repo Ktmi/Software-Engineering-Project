@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+    <?php
+        if(!isset($_COOKIE["login"])){ ?>     
+            <meta http-equiv="Refresh" content="0; url=/login"/>
+        <?php }
+    ?> 
     <meta charset="utf-8">
     <title>Blue Jay</title>
     <link rel="stylesheet" href="/assets/style.css">

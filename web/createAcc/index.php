@@ -39,9 +39,6 @@
                     <a href="/createAccount"><button type="submit" onclick="createAccount();">
                             <h3>Submit</h3>
                         </button>
-                        <a href="/"><button type="button" class="cancelbtn">
-                                <h3>Return to Homepage</h3>
-                            </button></a>
                         <h1>&nbsp</h1>
             </div>
             </form>
