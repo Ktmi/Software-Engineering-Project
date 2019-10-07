@@ -1,13 +1,13 @@
 body {
-    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 main {
-    background-color: white;
+    background-color: lightgray;
     color: black;
     padding: 30px;
-    margin-top: 80px;
-    height: 125vh;
+    margin-top: 90px;
+    height: 130vh;
 }
 
 header {
@@ -16,7 +16,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    height: 80px;
+    height: 105px;
     box-shadow: 0 0 8px 0 black;
 }
 
@@ -25,16 +25,30 @@ header .navlinks {
     flex-direction: row;
     align-items: center;
     text-align: center;
-    width: 30%;
+    width: 34%;
     margin: 0 auto;
     list-style: none;
 }
 
 header .navlinks * {
-    margin: 20px;
+    margin: 0px;
 }
 
 header .navlinks div a {
-    color: white;
+    color: lightgreen;
     text-decoration: none;
+}
+
+.column {
+    float: left;
+    width: 33.165%;
+}
+
+
+/* Clear floats after the columns */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }

@@ -1,22 +1,26 @@
 <header>
     <nav>
-        <div class = "navlinks">
-            <div><img></img></div>
-            <div><a href="/">Home</a></div>
-            <?php 
-            if (isset($_COOKIE["user"])) { ?>
-            <div><a href="/profile">Profile</a></div>
-            <div><a href="/logout">Logout</a></div>
-            <?php
-            } else { ?>
-                <div><a href="/login/">Login</a></div>
-            <?php
-            }
-            ?>
-            <div></div>    
-        </div>
+        <center>
+            <div class="navlinks">
+                <div><img src="https://dejpknyizje2n.cloudfront.net/svgcustom/clipart/preview/serious-blue-jay-head-sticker-31770-300x300.png" 
+                width="65%" height="65%" alt="#"></img></div>
+                <div><a href="/">
+                        <h3> &nbspHome&nbsp| </h3>
+                    </a></div>
+                <div><a href="/">
+                        <h3> &nbspBrowse&nbsp| </h3>
+                    </a></div>
+                <div><a href="/profile">
+                        <h3> &nbspProfile&nbsp| </h3>
+                    </a></div>
+                <div><a href="/logout">
+                        <h3> &nbspLogout&nbsp </h3>
+                    </a></div>
+                <div></div>
+            </div>
+        </center>
     </nav>
     <script>
-        
+
     </script>
 </header>
