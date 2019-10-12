@@ -25,9 +25,13 @@ public class SQLDatabaseConnection {
     public String getPost(int id)
     throws SQLException
     {
-        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM ");
+        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM POSTS WHERE POSTS.id = ?");
         st.setInt(1,id);
         ResultSet rs = st.executeQuery();
+        if(rs.next())
+        {
+            return rs.getString("");
+        }
         return null;
     }
 }

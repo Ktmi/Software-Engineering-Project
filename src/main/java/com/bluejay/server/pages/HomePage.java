@@ -1,4 +1,4 @@
-package com.bluejay.server;
+package com.bluejay.server.pages;
 
 import java.io.IOException;
 import java.io.PrintWriter;
