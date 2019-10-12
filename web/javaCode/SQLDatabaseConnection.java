@@ -1,23 +1,26 @@
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
 
 public class SQLDatabaseConnection {
-    public static void main(String[] args) {
 
-        // Create a variable for the connection string.
-        String connectionUrl = "jdbc:sqlserver://127.0.0.1:3306;databaseName=mydb;user=root;password=null";
+    private Connection dbconnect;
 
-        try (Connection con = DriverManager.getConnection(connectionUrl); Statement stmt = con.createStatement();) {
-            String SQL = "SELECT * mydb.users";
-            stmt.executeQuery(SQL);
-        }
-
-        // Handle any errors that may have occurred.
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public SQLDatabaseConnection()
+    {
+        Context initCtx = new InitialContext();
+        Context envCtx = (Context) initCtx.lookup("java:comp/env");
+        DataSource ds = (DataSource) envCtx.lookup("jbdc/dbconnection");
+        dbconnect = ds.getConnection();
+    }
+    public String getPost(int id)
+    {
+        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM ");
+        st.setInt(1,id);
+        ResultSet rs = st.executeQuery();
+        return null;
     }
 }
