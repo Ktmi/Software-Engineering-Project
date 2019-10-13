@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 
 @WebServlet("/test")
 public class HomePage
-extends HttpServlet
+extends Page
 {
     /**
      * Here just so I can ignore the stupid warning.
