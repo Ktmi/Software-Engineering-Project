@@ -8,7 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 @WebServlet("/test")
-public class HomePage extends HttpServlet
+public class HomePage
+extends HttpServlet
 {
     /**
      * Here just so I can ignore the stupid warning.
