@@ -55,7 +55,7 @@ public class SQLDatabaseConnection
      * @param hash Hashed password.
      * @return Null if login invalid, otherwise, returns a session token for the user.
      */
-    public String verifyLogin(String user, String hash) // TODO finish verifyLogin
+    public String verifyLogin(String user, byte[] hash) // TODO finish verifyLogin
     {
         return null;
     }

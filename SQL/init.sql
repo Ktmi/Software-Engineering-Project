@@ -1,7 +1,7 @@
 CREATE TABLE users (
     username varchar(40) unique,
     email varchar(255),
-    password varchar(255),
+    password byte(32),
     PRIMARY KEY (username)
 );
 

@@ -26,7 +26,9 @@ extends HttpServlet
             dbConnection = new SQLDatabaseConnection();
         } catch (Exception e)
         {
-            throw new ServletException("Unable to initialize database connection.");
+            ServletException e2 = new ServletException("Unable to initialize database connection.");
+            e2.addSuppressed(e);
+            throw e2;
         }
     }
     @Override
