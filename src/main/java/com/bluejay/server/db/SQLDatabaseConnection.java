@@ -60,4 +60,15 @@ public class SQLDatabaseConnection
         return null;
     }
 
+    void createAccount(String userName, String email, String password) // TODO finish createAccount
+    throws SQLException
+    {
+        PreparedStatement st = dbconnect.prepareStatement("INSERT INTO USERS VALUES (?, ?, ?)");
+        st.setString(1,userName);
+        st.setString(2,email);
+        st.setString(3,password);
+        
+        st.executeUpdate();
+        return;
+    }
 }
