@@ -12,7 +12,7 @@
 <body>
     <%@ include file="navbar.jsp" %>
     <main class = "w3-container">
-            <h2>Welcome to BlueJay!</h2>
+            <h2 class="w3-center">Welcome to BlueJay!</h2>
             <br>
             <div class="w3-row-padding">
                 <div class="w3-col w3-third w3-hover-shadow w3-blue">

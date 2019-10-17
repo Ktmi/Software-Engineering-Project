@@ -24,7 +24,7 @@ extends Page
 
 
     // TODO finish doPost for Login
-    //   - Needs a proper response message for ajax, probably in XML or JSON
+    //   - Needs to finish db component
     //
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
@@ -47,7 +47,7 @@ extends Page
         PrintWriter out = resp.getWriter();
         if (session == null)
         {
-            out.println("FAILURE");
+            out.println("{\"SUCCESS\": false}");
             return;
         }
         Cookie userCookie = new Cookie("username", req.getParameter("username"));
@@ -56,7 +56,7 @@ extends Page
         sessionCookie.setMaxAge(60 * 60 * 30);
         resp.addCookie(userCookie);
         resp.addCookie(sessionCookie);
-        out.println("SUCCESS");
+        out.println("{\"SUCCESS\": true}");
     }
 
 
