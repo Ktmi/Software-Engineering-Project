@@ -13,7 +13,7 @@
     <body style="background-color:rgb(40, 43, 43);">
         <center>
             <div class="container" style="background-color:#ffffff; width: 30%">
-                <link rel="stylesheet" href="/assets/ACstyle.css">
+                <link rel="stylesheet" href="<c:url value = "/css/ACstyle.css"/>">
                 <h1>&nbsp <br> Create an Account</h1>
                 <form action="action_page.php" method="post">
                     <br><br><br><label for="uname">
@@ -36,7 +36,7 @@
                     </label><br>
                     <input type="password" placeholder="Re-Enter Password" name="psw" id="userPassRe" required><br>
 
-                    <a href="/createAccount"><button type="submit" onclick="createAccount();">
+                    <link rel="stylesheet" href="<c:url value = "/createAcc"/>"><button type="submit" onclick="createAccount();">
                             <h3>Submit</h3>
                         </button>
                         <h1>&nbsp</h1>

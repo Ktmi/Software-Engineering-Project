@@ -11,7 +11,7 @@
 <body style="background-color:rgb(40, 43, 43);">
     <center>
         <div class="container" style="background-color:#ffffff; width: 30%">
-            <link rel="stylesheet" href="/assets/ACstyle.css">
+            <link rel="stylesheet" href="<c:url value = "/css/ACstyle.css"/>">
             <h1>&nbsp <br> Forgot Password?</h1>
             <form action="action_page.php" method="post">
                 <br><br><br><label for="uname"><h2>Email Recovery</h2></label><br>
