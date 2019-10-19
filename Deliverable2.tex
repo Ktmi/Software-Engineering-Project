@@ -2,19 +2,9 @@
 
 \begin{document}
 
-\title{October 5, 2019\\
-Software Engineering\\
-CEN 4010 – U01\\
-Deliverable 2\\
-Blue Jay}
+\title{October 5, 2019\\Software Engineering\\CEN 4010 – U01\\Deliverable 2\\Blue Jay}
 
-\author{Team 3\\
-\\•	Mareo Yapp
-\\•	Brandon Lee
-\\•	Josselyn Ruiz
-\\•	Alex Collantes
-\\•	David Ramirez
-\\Professor Peter Clarke}
+\author{Team 3\\Mareo Yapp\\Brandon Lee\\Josselyn Ruiz\\Alex Collantes\\David Ramirez\\Professor Peter Clarke}
 \maketitle
 
 \begin{abstract}
@@ -41,28 +31,28 @@ Blue Jay}
 	9.	The system will make users go through a process to get their password by answering 3 security questions (see use case BJS006 – Security Questions in Appendix A).\\
 	10.	The system will send users an email asking them to verify their account (see use case BJS007 – Email Verification in Appendix A).\\
 	\subsection{Non-functional requirements}
-	Usability: \\
-	Reliability: \\
-	Performance: \\
-	Supportability: \\
-	Implementation: \\
+	Usability: All use cases require no actual training to use.\\
+	Reliability: The system allows for a mean time to failure of 5% every 48 hours.\\
+	Performance: The maximum response time should be one second.\\
+	Supportability: Supported by browsers across multiple desktop and mobile devices.\\
 \section{Design methodology used} 
 	The Unified Software Development Process model was used. The package, use case, deployment, ER, class, sequence and state machine diagram were used to represent the design.
 \section{Definitions, acronyms, and abbreviations}
-BlueJay\\StarUML\\SM User\\MVC\\Client/Server\\Three Tier
+BlueJay\\StarUML\\SM User\\MVC\\Three Tier
 \section{Overview of document}
+		Chapter 2 will cover the software architecture such as the architectural patterns used. Chapter 3 will cover the diagrams used to represents the subsystems. Chapters 4 to 7 will be about the glossary, team signatures, references and appendices respectively.
 \chapter{Proposed Software Architecture}
-	This chapter will introduce 
+	This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram. Persistent data and the security protocols that were implemented will also be outlined.
 \section{Overview}
 	MVC was used because the client needs to modify its view; so, it requests the controller which generates a new model or a portion of a model it can send back over to view.\\
-	Client/Server was used
+	Three Tier was used because
 \section{Subsystem Decomposition}
 \section{Hardware and Software Mapping}
 \section{Persistent Data Management}
 \section{Security Management}
 	BlueJay prides itself on its security, to ensure this various security protocols were implemented to protect unauthorized access to SM user’s accounts. These protocols include email verification, security questions and password recovery. 
 \chapter{Detailed Design}
-	This chapter will introduce 
+	This chapter will introduce minimal class diagram for the subsystems and explain the purpose of each class.
 \section{Overview}
 \section{State Machine}
 \section{Object Interaction}
@@ -72,7 +62,6 @@ BlueJay: BlueJay (BJ) is a social media platform that allows users to post texts
 StarUML: StarUML is a software tool used to create UML diagrams.\\
 SM User: Social media user; the user who is logged into the system.\\
 MVC: Model View Controller is a software architectural pattern commonly used for developing user interfaces which divides the related program logic into three interconnected elements.\\
-Client/Server: Client–server model is a distributed application structure that partitions tasks or workloads between the providers of a resource or service, called servers, and service requesters, called clients.\\
 Three Tier: Three-tier architecture is a client-server software architecture pattern in which the user interface (presentation), functional process logic ("business rules"), computer data storage and data access are developed and maintained as independent modules, most often on separate platforms.\\
 \chapter{Approval page with signatures of the team Appendix} 
 \chapter{References}
@@ -82,7 +71,74 @@ Three Tier: Three-tier architecture is a client-server software architecture pat
 \section{Appendix C}
 \section{Appendix D}
 \section{Appendix E}
-
+ENTRY 1\\	
+Location		ECS Lab\\
+Starting Time		2:00pm\\
+Duration		2 hours\\
+Attendees		David, Brandon, Alex, Josselyn, Mareo\\
+Late Attendees	Josselyn, Mareo\\
+Absent		None\\
+\\
+Minutes Captured\\
+-	Review class and sequence diagrams; to include java servlet\\
+-	David went over class diagram\\
+-	Use case implementation\\
+o	Create Reply\\
+o	Browse Post\\
+o	Create Post\\
+o	Log In\\
+o	Log Out\\
+o	View Post\\
+o	Account Creation\\
+o	Email Verification\\
+o	Forgot Password\\
+o	Security Questions (replaced Hide Password)\\
+-	David and Alex to begin reviewing PHP and converting it to Java\\
+-	Rewrite of cookies necessary\\
+-	Roles Decided\\
+o	David – Team Leader and Development\\
+o	Josselyn – Minute Take and Developer\\
+o	Brandon – Time Keeper and Quality Assurance\\
+o	Alex – Developer and Requirements Engineer\\
+o	Mareo – Requirements Engineer and Quality Assurance\\
+\\
+ENTRY 2\\	
+Location		GL 166\\
+Starting Time		5:50pm\\
+Duration		25 minutes\\
+Attendees		David, Alex, Josselyn, Mareo, Brandon\\
+Late Attendees	None\\
+Absent		None\\
+\\
+Minutes Captured\\
+-	Mareo created a doc in Google docs; David suggests using Git Hub to create and edit document to minimize issues with formatting.\\
+-	Alex suggests splitting up work in a more efficient way.\\
+-	Databases already created during phase one. (Users and Posts)\\
+-	Need to build ER diagram\\
+-	Tasks to do\\
+o	Pick two architectures to apply for project – prepare to present (three-tier, client/server, MVC)\\
+o	PHP to Java conversion needed; Java DB revisit (Alex and David)\\
+o	Document upload to Git Hub (Brandon, Mareo)\\
+o	UI revisit (Josselyn)\\
+o	Send initial diary entries (Josselyn)\\
+\\
+ENTRY 3\\	
+Location		GL 166\\
+Starting Time		6:00pm\\
+Duration		20 minutes\\
+Attendees		David, Alex, Josselyn, Mareo\\
+Late Attendees	None\\
+Absent		Brandon (out sick)\\
+\\
+Minutes Captured\\
+-	David assisting Alex with Linux set up\\
+-	Rough draft of deployment diagram made\\
+-	Mareo aligning with GitHub documentation\\
+-	Josselyn to find ER diagram programs that verifies if models are made correctly\\
+-	Entities being included in ER Diagram\\
+o	Profile\\
+o	User\\
+o	Post\\
 \end{document}
 
 \documentclass
