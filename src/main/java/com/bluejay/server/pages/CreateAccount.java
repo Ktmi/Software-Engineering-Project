@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.bluejay.server.pages.Page;
 
 @WebServlet("/test3")
-public class CreateAcc
+public class CreateAccount
 extends Page
 {
     
