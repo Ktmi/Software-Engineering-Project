@@ -1,0 +1,67 @@
+\subsection{T3-BJ001-Browse Posts}
+\textbf{Use Case ID:} T3-BJ001-Browse Posts\\
+\textbf{Use Case Level:} High-level\\
+\textbf{Details:}
+\begin{itemize}
+    \item The homepage is to display all recently popular posts
+    \item \textbf{Actor:} User
+    \item \textbf{Pre-conditions:}
+    \begin{itemize}
+        \item User has internet access
+        \item User has logged on.
+    \end{itemize}
+    \item \textbf{Description:}
+    \begin{enumerate}
+        \item User requests homepage
+        \item System queries database for most popular posts within the last 24 hours
+        \item Server constructs home page, showing most popular posts.
+        \item Page is delivered to user browser.
+        \item Browser displays homepage
+    \end{enumerate}
+    \item \textbf{Post-conditions:}
+    \begin{itemize}
+        \item Opening this page has no effect on the internal state of the server. The page is delivered to the client user/administrator.
+    \end{itemize}
+\end{itemize}
+\textbf{Alternative Courses of Action:}
+\begin{itemize}
+    \item User searches for specific posts
+    \item User checks his/her notifications
+\end{itemize}
+\textbf{Extensions:}
+\begin{itemize}
+    \item None
+\end{itemize}
+\textbf{Exceptions:}
+\begin{itemize}
+    \item Posts could not be retrieved.
+\end{itemize}
+\textbf{Concurrent Uses:}
+\begin{itemize}
+    \item None
+\end{itemize}
+\textbf{Related Use Cases:}
+\begin{itemize}
+    \item T3-BJ002-View Post
+    \item T3-BJ003-View Profile
+\end{itemize}
+\textbf{Decision Support}
+\begin{itemize}
+    \item Frequency: 100 times per minute
+    \item Criticality: High
+    \item Risk: Medium
+\end{itemize}
+\textbf{Constraints:}
+\begin{itemize}
+    \item Usability: Average of about a minute for users to recognize and understand interface.
+    \item Reliability: 
+    \item Performance:
+    \item Supportability: Supported by browsers across multiple desktop and mobile devices.
+    \item Implementation:
+\end{itemize}
+\textbf{Modification History}
+\begin{itemize}
+    \item Owner: David Ramirez
+    \item Initiation date: 8/27/2019
+    \item Date last modified: 9/30/2019
+\end{itemize}
