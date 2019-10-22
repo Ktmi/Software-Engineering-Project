@@ -43,6 +43,9 @@ public class SQLDatabaseConnection
      * @param user
      * @param token
      * @return returns true if user session is valid, false otherwise.
+     * pre: user <> null && user <> ""
+     * pre: token <> null && token <> ""
+     * post: if token valid for username, return true, else return false
      */
     public boolean verifyToken(String user, String token) // TODO finish verifyToken
     {
