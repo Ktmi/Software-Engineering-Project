@@ -20,21 +20,20 @@
 	BlueJay (BJ) allows users to post text and images in a safe and secure manner to reduce the leaking of sensitive information, which can lead to fraud and identity theft. This will be done using many existing security techniques, such as password encryption, SSL encryption, and other safety measures that encourage users to prioritize securing their data.
 \section{Requirements}
 	\subsection{Functional requirements}
-	1.	The system will allow users to create an account (see use case BJ015 – Account Creation in Appendix A).\\
-	2.	The system will allow users to create and upload posts (see use case BJ004 – Create Post in Appendix A).\\
-	3.	The will allow users to reply to a post (see use case BJ006 – Reply to Post in Appendix A).\\
-	4.	The system will allow users to view posts on the site (see use case BJ002 – View Post in Appendix A).\\
-	5.	The system will allow users to browse most recent popular post (see use case BJ001 – Browse Post in Appendix A)\\
-	6.	The system will make users go through a process to access their account (see use case BJ021 – Login in Appendix A).\\
-	7.	The system will allow users to exit their accounts (see use case BJ022 – Logout in Appendix A).\\
-	8.	The system will allow users to go through a process to access their account if they forget their password (see use case BJS005 – Forgot Password in Appendix A).\\
-	9.	The system will make users go through a process to get their password by answering 3 security questions (see use case BJS006 – Security Questions in Appendix A).\\
-	10.	The system will send users an email asking them to verify their account (see use case BJS007 – Email Verification in Appendix A).\\
+	1.	The system will allow users to create an account (see use case BJ015 – Account Creation in Appendix B).\\
+	2.	The system will allow users to create and upload posts (see use case BJ004 – Create Post in Appendix B).\\
+	3.	The will allow users to reply to a post (see use case BJ006 – Reply to Post in Appendix B).\\
+	4.	The system will allow users to view posts on the site (see use case BJ002 – View Post in Appendix B).\\
+	5.	The system will allow users to browse most recent popular post (see use case BJ001 – Browse Post in Appendix B)\\
+	6.	The system will make users go through a process to access their account (see use case BJ021 – Login in Appendix B).\\
+	7.	The system will allow users to exit their accounts (see use case BJ022 – Logout in Appendix B).\\
+	8.	The system will allow users to go through a process to access their account if they forget their password (see use case BJS005 – Forgot Password in Appendix B).\\
+	9.	The system will make users go through a process to get their password by answering 3 security questions (see use case BJS006 – Security Questions in Appendix B).\\
+	10.	The system will send users an email asking them to verify their account (see use case BJS007 – Email Verification in Appendix B).\\
 	\subsection{Non-functional requirements}
-	Usability: All use cases require no actual training to use.\\
-	Reliability: The system allows for a mean time to failure of 5% every 48 hours.\\
-	Performance: The maximum response time should be one second.\\
-	Supportability: Supported by browsers across multiple desktop and mobile devices.\\
+		Usability: All use cases require no actual training to use. While some use cases may be confusing for first time social media users (BJ)’s user interactions follow well known practices seen on other social media sites (see use cases like BJ006 – Reply to Post and BJ004 – Create Post in Appendix B).\\
+	Reliability: All use cases have a consistent mean time to failure of 5 percent every 48 hours (see use cases like BJ015 – Account Creation and BJ021 – Login in Appendix B).\\	
+	Performance: All use cases should have a maximum response time less than or equal to one second (see use case like BJ004 – Create Post and BJS007 – Email Verification in Appendix B).\\
 \section{Design methodology used} 
 	The Unified Software Development Process model was used. The package, use case, deployment, ER, class, sequence and state machine diagram were used to represent the design.
 \section{Definitions, acronyms, and abbreviations}
@@ -68,6 +67,22 @@ Three Tier: Three-tier architecture is a client-server software architecture pat
 \chapter{Appendices}
 \section{Appendix A}
 \section{Appendix B}
+Usability: \\
+1.	BJ006 – Reply to Post\\
+2.	BJ004 – Create Post\\
+3.	BJS005 – Forgot Password\\
+4.	BJS006 – Security Questions\\
+5.	BJ002 – View Post.\\
+Reliability: \\
+1.	BJ001 – Browse Post\\
+2.	BJ015 – Account Creation\\
+3.	BJ021 – Login\\
+4.	BJ022 – Log out.\\
+5.	BJS007 – Email Verification.\\
+Performance: \\
+1.	BJ001 – Browse Post\\
+2.	BJ004 – Create Post\\
+3.	BJS007 – Email Verification.\\
 \section{Appendix C}
 \section{Appendix D}
 \section{Appendix E}
