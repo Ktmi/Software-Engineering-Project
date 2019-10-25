@@ -1,16 +1,27 @@
-CREATE TABLE users (
-    username varchar(40) unique,
+CREATE TABLE users
+(
+    userid int AUTO_INCREMENT,
+    username varchar(255) unique,
     email varchar(255),
     password byte(32),
-    PRIMARY KEY (username)
+    PRIMARY KEY (userid)
 );
 
-CREATE TABLE posts (
-    postID int unique,
-    username varchar(40) unique,
-    text varchar(255),
-    password varchar(255),
-    replyTo int unique,
-    FOREIGN KEY (username) REFERENCES users(username),
-    PRIMARY KEY (postID)
+CREATE TABLE posts
+(
+    postid int AUTO_INCREMENT,
+    userid int,
+    title varchar(255),
+    content TEXT,
+    PRIMARY KEY (postid),
+    FOREIGN KEY (userid) REFERENCES users(userid)
+);
+
+CREATE TABLE replies
+(
+    replyid int,
+    postid int,
+    PRIMARY KEY (replyid),
+    FOREIGN KEY (replyid) REFERENCES posts(postid),
+    FOREIGN KEY (postid) REFERENCES posts(postid)
 );

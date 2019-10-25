@@ -1,4 +1,4 @@
-package com.bluejay.server.pages;
+package com.bluejay.server.logic.pages;
 
 import java.util.TreeMap;
 
