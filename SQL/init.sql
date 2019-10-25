@@ -11,11 +11,18 @@ CREATE TABLE posts
 (
     postid int AUTO_INCREMENT,
     userid int,
-    title varchar(255),
     content TEXT,
     PRIMARY KEY (postid),
     FOREIGN KEY (userid) REFERENCES users(userid)
 );
+
+CREATE TABLE thread
+(
+    postid int,
+    title varchar(255),
+    PRIMARY KEY (postid),
+    FOREIGN KEY (postid) REFERENCES posts(postid)
+)
 
 CREATE TABLE replies
 (
@@ -23,5 +30,5 @@ CREATE TABLE replies
     postid int,
     PRIMARY KEY (replyid),
     FOREIGN KEY (replyid) REFERENCES posts(postid),
-    FOREIGN KEY (postid) REFERENCES posts(postid)
+    FOREIGN KEY (postid) REFERENCES thread(postid)
 );

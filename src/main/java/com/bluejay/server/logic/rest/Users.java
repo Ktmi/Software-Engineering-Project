@@ -5,9 +5,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-@Path("/rest/user")
+@Path("/user")
+@Produces("application/json")
 public class Users
 {
     /**
@@ -18,7 +20,8 @@ public class Users
      */
     @POST
     public Response createUser(@FormParam("username") String userName,
-                               @FormParam("password") String secret)
+                               @FormParam("password") String secret,
+                               @FormParam("email") String email)
     {
         // "INSERT INTO users(username, password, email) VALUES (?,?)"
         /*
