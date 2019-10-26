@@ -48,6 +48,11 @@ This document will detail all the functional and non-functional requirements, su
 		a.	All use cases should have a maximum response time less than or equal to one second.\\
 	Supportability: \\
 		a.	All use case should be supported by browsers across multiple desktop and mobile devices.\\
+	Frequency:\\
+		a.	The average SM User will create and browse post around 30 times a day (see use cases BJ001 - Browse Post and BJ004 - Create Post in Appendix B).\\
+		b.	The average SM User will view and reply to posts around 50 times a day (see use cases BJ002 - View Post and BJ006 - Reply to Post).\\
+		c.	The average SM User will login and log out at most 15 times per day (see use cases BJ021 - Login and BJ022 - Log out in Appendix B).\\
+		d.	Some use cases will only be used once (see use cases BJ015 - Account Creation, BJS005 - Forgot Password, BJS006 - Security Questions and BJS007 - Email Verification in Appendix B).\\
 \section{Design methodology used} 
 	The Unified Software Development Process model was used. The package, use case, deployment, ER, class, sequence and state machine diagram were used to represent the design.
 \section{Definitions, acronyms, and abbreviations}
@@ -361,7 +366,7 @@ Exceptions:\\
 1.	The user has inputted the incorrect log in information.\\
 \\
 Decision Support\\
-     Frequency: 15 times per day.\\
+     Frequency: At most 15 times per day.\\
      Criticality: High. REASON\\
      Risk: High. REASON\\
      \\
@@ -412,7 +417,7 @@ Related Use Cases: \\
 3.	BJ001 – Browse Post\\
 \\
 Decision Support\\
-     Frequency: 15 times per day.\\
+     Frequency: At most 15 times per day.\\
      Criticality: High. REASON\\
      Risk: High. REASON\\
 \\
@@ -554,7 +559,7 @@ Extensions: \\
 1.	BJ015 – Account Creation\\
 \\
 Decision Support\\
-     Frequency: 3 times per day\\
+     Frequency: An average user would only use this once.\\
      Criticality: High. REASON\\
      Risk: High. REASON\\
 \\
