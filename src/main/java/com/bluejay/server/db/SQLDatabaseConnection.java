@@ -39,7 +39,7 @@ implements AutoCloseable
     {
         PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM user WHERE username = ? AND secret = ?");
         st.setString(1, login.getUsername());
-        st.setBytes(2, hashSecret(login.getPassword());
+        st.setBytes(2, hashSecret(login.getPassword()));
         ResultSet rs = st.executeQuery();
         return rs.next();
     }
