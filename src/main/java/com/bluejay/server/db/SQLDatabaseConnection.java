@@ -45,18 +45,22 @@ implements AutoCloseable
     }
 
 
+    public boolean addAccount(Account )
 
-    protected void setEncryptionType(String encryptionType)
+
+
+
+    protected final void setEncryptionType(String encryptionType)
     {
         this.encryptionType = encryptionType;
     }
 
-    protected String getEncryptionType()
+    protected final String getEncryptionType()
     {
         return encryptionType;
     }
 
-    protected byte[] hashSecret(String secret)
+    protected final byte[] hashSecret(String secret)
     throws SQLException
     {
         MessageDigest md;

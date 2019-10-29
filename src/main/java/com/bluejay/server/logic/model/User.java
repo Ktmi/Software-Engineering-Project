@@ -2,17 +2,17 @@ package com.bluejay.server.logic.model;
 
 public class User
 {
-    private int userid;
+    private Integer userid;
     private String username;
+    private String password;
     private String email;
-    private Byte[] secret;
 
-    public int getUserid()
+    public Integer getUserid()
     {
         return userid;
     }
 
-    public void setUserid(int userid)
+    public void setUserid(Integer userid)
     {
         this.userid = userid;
     }
@@ -27,6 +27,16 @@ public class User
         this.username = username;
     }
 
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
     public String getEmail()
     {
         return email;
@@ -35,15 +45,5 @@ public class User
     public void setEmail(String email)
     {
         this.email = email;
-    }
-
-    public Byte[] getSecret()
-    {
-        return secret;
-    }
-
-    public void setSecret(Byte[] secret)
-    {
-        this.secret = secret;
     }
 }
