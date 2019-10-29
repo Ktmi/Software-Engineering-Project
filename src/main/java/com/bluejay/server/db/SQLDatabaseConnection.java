@@ -1,6 +1,11 @@
 package com.bluejay.server.db;
 
 import javax.sql.DataSource;
+
+import com.bluejay.server.logic.model.Login;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +16,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 public class SQLDatabaseConnection
+implements AutoCloseable
 {
 
     private Connection dbconnect;
@@ -24,54 +30,34 @@ public class SQLDatabaseConnection
         dbconnect = ds.getConnection();
     }
 
-
-    public String getPost(int id) // TODO finish getPost
+    public boolean validateLogin(Login login)
     throws SQLException
     {
-        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM POSTS WHERE POSTS.id = ?");
-        st.setInt(1,id);
-        ResultSet rs = st.executeQuery();
-        if(rs.next())
+        MessageDigest md;
+        try
         {
-            return rs.getString("");
+            md = MessageDigest.getInstance("SHA-256");
         }
-        return null;
+        catch(NoSuchAlgorithmException e)
+        {
+            SQLException e2 = new SQLException("Unable to process login.");
+            e2.addSuppressed(e);
+            throw e2;
+        }
+
+        md.update(login.getPassword().getBytes());
+        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM user WHERE username = ? AND secret = ?");
+        st.setString(1, login.getUsername());
+        st.setBytes(2, md.digest());
+
+        ResultSet rs = st.executeQuery();
+        return rs.next();
     }
 
-    /**
-     * Verify that user session is valid.
-     * @param user
-     * @param token
-     * @return returns true if user session is valid, false otherwise.
-     * pre: user <> null && user <> ""
-     * pre: token <> null && token <> ""
-     * post: if token valid for username, return true, else return false
-     */
-    public boolean verifyToken(String user, String token) // TODO finish verifyToken
-    {
-        return false;
-    }
-    
-    /**
-     * 
-     * @param user Username / Email
-     * @param hash Hashed password.
-     * @return Null if login invalid, otherwise, returns a session token for the user.
-     */
-    public String verifyLogin(String user, byte[] hash) // TODO finish verifyLogin
-    {
-        return null;
+    @Override
+    public void close() throws Exception {
+        dbconnect.close();
+
     }
 
-    void createAccount(String userName, String email, String password) // TODO finish createAccount
-    throws SQLException
-    {
-        PreparedStatement st = dbconnect.prepareStatement("INSERT INTO USERS VALUES (?, ?, ?)");
-        st.setString(1,userName);
-        st.setString(2,email);
-        st.setString(3,password);
-        
-        st.executeUpdate();
-        return;
-    }
 }

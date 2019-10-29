@@ -1,9 +1,9 @@
 package com.bluejay.server.logic.rest;
 
-import java.security.Key;
+//import java.security.Key;
 
-import javax.crypto.KeyGenerator;
-import javax.inject.Inject;
+//import javax.crypto.KeyGenerator;
+//import javax.inject.Inject;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,8 +16,8 @@ import javax.ws.rs.core.Response;
 public class Auth
 {
 
-    @Inject
-    private KeyGenerator keyGenerator;
+    //@Inject
+    //private KeyGenerator keyGenerator;
 
     @POST
     public Response verifyLogin (@FormParam("username") String username,
@@ -32,7 +32,7 @@ public class Auth
 
     private String issueToken(String username)
     {
-        Key key = keyGenerator.generateKey();
+        //Key key = keyGenerator.generateKey();
         return null;
     }
 
