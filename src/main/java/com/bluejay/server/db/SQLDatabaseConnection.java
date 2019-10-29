@@ -20,7 +20,7 @@ implements AutoCloseable
 {
 
     private Connection dbconnect;
-
+    private String encryptionType;
 
 
 
@@ -31,6 +31,7 @@ implements AutoCloseable
         Context envCtx = (Context) initCtx.lookup("java:comp/env");
         DataSource ds = (DataSource) envCtx.lookup("jbdc/dbconnection");
         dbconnect = ds.getConnection();
+        setEncryptionType("SHA-256");
     }
 
     public boolean validateLogin(Login login)
@@ -45,12 +46,14 @@ implements AutoCloseable
 
 
 
-
-
-
-    protected String getSecretEncryption()
+    protected void setEncryptionType(String encryptionType)
     {
-        return "SHA-256";
+        this.encryptionType = encryptionType;
+    }
+
+    protected String getEncryptionType()
+    {
+        return encryptionType;
     }
 
     protected byte[] hashSecret(String secret)
@@ -59,7 +62,7 @@ implements AutoCloseable
         MessageDigest md;
         try
         {
-            md = MessageDigest.getInstance(getSecretEncryption());
+            md = MessageDigest.getInstance(getEncryptionType());
         }
         catch(NoSuchAlgorithmException e)
         {
