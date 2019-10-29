@@ -21,6 +21,9 @@ implements AutoCloseable
 
     private Connection dbconnect;
 
+
+
+
     public SQLDatabaseConnection()
     throws SQLException, NamingException
     {
@@ -33,25 +36,39 @@ implements AutoCloseable
     public boolean validateLogin(Login login)
     throws SQLException
     {
+        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM user WHERE username = ? AND secret = ?");
+        st.setString(1, login.getUsername());
+        st.setBytes(2, hashSecret(login.getPassword());
+        ResultSet rs = st.executeQuery();
+        return rs.next();
+    }
+
+
+
+
+
+
+    protected String getSecretEncryption()
+    {
+        return "SHA-256";
+    }
+
+    protected byte[] hashSecret(String secret)
+    throws SQLException
+    {
         MessageDigest md;
         try
         {
-            md = MessageDigest.getInstance("SHA-256");
+            md = MessageDigest.getInstance(getSecretEncryption());
         }
         catch(NoSuchAlgorithmException e)
         {
-            SQLException e2 = new SQLException("Unable to process login.");
+            SQLException e2 = new SQLException("Unable to get encryption scheme.");
             e2.addSuppressed(e);
             throw e2;
         }
-
-        md.update(login.getPassword().getBytes());
-        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM user WHERE username = ? AND secret = ?");
-        st.setString(1, login.getUsername());
-        st.setBytes(2, md.digest());
-
-        ResultSet rs = st.executeQuery();
-        return rs.next();
+        md.update(secret.getBytes());
+        return md.digest();
     }
 
     @Override
