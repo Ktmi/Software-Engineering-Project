@@ -4,18 +4,21 @@
 
 \title{October 5, 2019\\Software Engineering\\CEN 4010 – U01\\Deliverable 2\\Blue Jay}
 
-\author{Team 3\\Mareo Yapp\\Brandon Lee\\Josselyn Ruiz\\Alex Collantes\\David Ramirez\\Professor Peter Clarke}
+\author{Team 3\and Mareo Yapp\and Brandon Lee\and Josselyn Ruiz\and Alex Collantes\and David Ramirez\and Professor Peter Clarke}
 \maketitle
 
 \begin{abstract}
 There are many ways for people to communicate with others, and social media is no exception. However, many of the existing platforms provide limited security, causing thousands of sensitive information to be leaked. Even with existing forms of security in place, the current methods vary from platform to platform, with the most well-known social media sites generally having the weakest levels of encryption, or none. BlueJay is a social platform for users to safely and securely post and share content over the internet using post sanitization, SSL encryption, password encryption, and other forms of user security. It takes the free-form posting of reddit and the social comforts of twitter to bring the same feeling of sharing content in a more secure setting.\\
 This document will detail all the functional and non-functional requirements, subsystems, and architectural and design patterns used to implement BlueJay. The UML models displayed in the document were generated using StarUML.\\
-•	MVC and three-tier are the architectural patterns used.\\
-•	Security used\\
-•	Major subsystems used\\
-•	Persistent data used\\
-•	OCL constraints\\
-•	Design patterns\\
+
+\begin{itemize}
+\item MVC and three-tier are the architectural patterns used.
+\item Security used
+\item Major subsystems used
+\item Persistent data used
+\item OCL constraints
+\item Design patterns
+\end{itemize}
 \end{abstract}
  
 \tableofcontents
@@ -27,16 +30,19 @@ This document will detail all the functional and non-functional requirements, su
 	BlueJay (BJ) allows users to post text and images in a safe and secure manner to reduce the leaking of sensitive information, which can lead to fraud and identity theft. This will be done using many existing security techniques, such as password encryption, SSL encryption, and other safety measures that encourage users to prioritize securing their data.
 \section{Requirements}
 	\subsection{Functional requirements}
-	1.	The system will allow users to create an account (see use case BJ015 – Account Creation in Appendix B).\\
-	2.	The system will allow users to create and upload posts (see use case BJ004 – Create Post in Appendix B).\\
-	3.	The will allow users to reply to a post (see use case BJ006 – Reply to Post in Appendix B).\\
-	4.	The system will allow users to view posts on the site (see use case BJ002 – View Post in Appendix B).\\
-	5.	The system will allow users to browse most recent popular post (see use case BJ001 – Browse Post in Appendix B)\\
-	6.	The system will make users go through a process to access their account (see use case BJ021 – Login in Appendix B).\\
-	7.	The system will allow users to exit their accounts (see use case BJ022 – Logout in Appendix B).\\
-	8.	The system will allow users to go through a process to access their account if they forget their password (see use case BJS005 – Forgot Password in Appendix B).\\
-	9.	The system will make users go through a process to get their password by answering 3 security questions (see use case BJS006 – Security Questions in Appendix B).\\
-	10.	The system will send users an email asking them to verify their account (see use case BJS007 – Email Verification in Appendix B).\\
+
+	\begin{enumerate}
+		\item The system will allow users to create an account (see use case BJ015 – Account Creation in Appendix B).\\
+		\item The system will allow users to create and upload posts (see use case BJ004 – Create Post in Appendix B).\\
+		\item The will allow users to reply to a post (see use case BJ006 – Reply to Post in Appendix B).\\
+		\item The system will allow users to view posts on the site (see use case BJ002 – View Post in Appendix B).\\
+		\item The system will allow users to browse most recent popular post (see use case BJ001 – Browse Post in Appendix B)\\
+		\item The system will make users go through a process to access their account (see use case BJ021 – Login in Appendix B).\\
+		\item The system will allow users to exit their accounts (see use case BJ022 – Logout in Appendix B).\\
+		\item The system will allow users to go through a process to access their account if they forget their password (see use case BJS005 – Forgot Password in Appendix B).\\
+		\item The system will make users go through a process to get their password by answering 3 security questions (see use case BJS006 – Security Questions in Appendix B).\\
+		\item The system will send users an email asking them to verify their account (see use case BJS007 – Email Verification in Appendix B).\\
+	\end{enumerate}
 	\subsection{Non-functional requirements}
 	Usability: \\
 		a.	All use cases require no actual training to use. While some use cases will be confusing for first time social media users, (BJ)’s user interactions follow well known practices seen on other social media sites.\\
