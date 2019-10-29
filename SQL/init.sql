@@ -1,9 +1,9 @@
 CREATE TABLE users
 (
-    userid int AUTO_INCREMENT,
-    username varchar(255) unique,
-    email varchar(255),
-    password byte(32),
+    userid INT AUTO_INCREMENT NOT NULL,
+    username varchar(255) UNIQUE NOT NULL,
+    email varchar(255) NOT NULL,
+    password byte(32) NOT NULL,
     PRIMARY KEY (userid)
 );
 

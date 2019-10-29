@@ -1,4 +1,3 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +9,7 @@
 </head>
 
 <body>
-    <%@ include file="navbar.jsp" %>
+    <#include "navbar.ftl">
     <main class = "w3-container">
             <h2 class="w3-center">Welcome to BlueJay!</h2>
             <br>
@@ -18,28 +17,37 @@
                 <div class="w3-col w3-third w3-hover-shadow w3-blue">
                     <header class="w3-container w3-blue"><h1>Most Viewed Posts</h1></header>
                     <div class="w3-container w3-white">
-                        <p>POST 1</p>
-                        <p>POST 2</p>
-                        <p>POST 3</p>
+                        <#list mostViewed as post>
+                            <a href="view/${post.id}">${post.name}</a>
+                        <#else>
+                            <p>NO POSTS</p>
+                        </#list>
                     </div>
                 </div>
+
                 <div class="w3-col w3-third">
                     <div class="w3-container w3-hover-shadow">
                         <header class="w3-panel w3-blue"><h1>Most Liked Posts</h1></header>
                         <div class="w3-panel w3-white">
-                            <p>POST 1</p>
-                            <p>POST 2</p>
-                            <p>POST 3</p>
+                            <#list mostLiked as post>
+                                <a href="view/${post.id}">${post.name}</a>
+                            <#else>
+                                <p>NO POSTS</p>
+                            </#list>
                         </div>
                     </div>
                 </div>
+
                 <div class="w3-col w3-third w3-hover-shadow w3-blue">
                     <header class="w3-container"><h1>Recent Posts</h1></header>
-                    <div class="w3-container w3-white"><p>POST 1</p></div>
-                    <div class="w3-container w3-white"><p>POST 2</p></div>
-                    <div class="w3-container w3-white"><p>POST 3</p></div>
+                    <#list recents as post>
+                        <a href="view/${post.id}">${post.name}</a>
+                    <#else>
+                        <p>NO POSTS</p>
+                    </#list>
                 </div>
             </div>
+
     </main>
 </body>
 
