@@ -1,0 +1,6 @@
+.project
+*.docx
+*.doc
+.vs
+.settings
+.vscode
