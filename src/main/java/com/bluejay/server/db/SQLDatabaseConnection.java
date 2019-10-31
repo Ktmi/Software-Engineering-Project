@@ -3,6 +3,7 @@ package com.bluejay.server.db;
 import javax.sql.DataSource;
 
 import com.bluejay.server.logic.model.Login;
+import com.bluejay.server.logic.model.User;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -39,18 +40,38 @@ implements AutoCloseable
     public boolean validateLogin(Login login)
     throws SQLException
     {
-        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM user WHERE username = ? AND secret = ?");
-        st.setString(1, login.getUsername());
-        st.setBytes(2, hashSecret(login.getPassword()));
-        ResultSet rs = st.executeQuery();
-        return rs.next();
+        boolean result = false;
+        try
+        {
+            PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM user WHERE username = ? AND secret = ?");
+            st.setString(1, login.getUsername());
+            st.setBytes(2, hashSecret(login.getPassword()));
+            ResultSet rs = st.executeQuery();
+            result = rs.next();
+        }
+        catch(NoSuchAlgorithmException e)
+        {
+            SQLException e2 = new SQLException("Unable to load hashing algorithm.");
+            e2.addSuppressed(e);
+            throw e2;
+        }
+        return result;
     }
 
 
-    public boolean addAccount(Account )
+
+    // TODO finish addUser
+    public boolean addUser(User user)
+    throws SQLException
+    {
+        PreparedStatement st = dbconnect.prepareStatement("sql");
+
+
+        return true;
+    }
 
     protected final byte[] hashSecret(String secret)
-    throws SQLException
+    throws NoSuchAlgorithmException
     {
         md.update(secret.getBytes());
         return md.digest();
