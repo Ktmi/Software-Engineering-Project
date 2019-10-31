@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -19,10 +21,11 @@ public class SQLDatabaseConnection
 implements AutoCloseable
 {
 
+    @Resource
     private Connection dbconnect;
-    private String encryptionType;
 
-
+    @Inject
+    private MessageDigest md;
 
     public SQLDatabaseConnection()
     throws SQLException, NamingException
@@ -31,7 +34,6 @@ implements AutoCloseable
         Context envCtx = (Context) initCtx.lookup("java:comp/env");
         DataSource ds = (DataSource) envCtx.lookup("jbdc/dbconnection");
         dbconnect = ds.getConnection();
-        setEncryptionType("SHA-256");
     }
 
     public boolean validateLogin(Login login)
@@ -47,33 +49,9 @@ implements AutoCloseable
 
     public boolean addAccount(Account )
 
-
-
-
-    protected final void setEncryptionType(String encryptionType)
-    {
-        this.encryptionType = encryptionType;
-    }
-
-    protected final String getEncryptionType()
-    {
-        return encryptionType;
-    }
-
     protected final byte[] hashSecret(String secret)
     throws SQLException
     {
-        MessageDigest md;
-        try
-        {
-            md = MessageDigest.getInstance(getEncryptionType());
-        }
-        catch(NoSuchAlgorithmException e)
-        {
-            SQLException e2 = new SQLException("Unable to get encryption scheme.");
-            e2.addSuppressed(e);
-            throw e2;
-        }
         md.update(secret.getBytes());
         return md.digest();
     }

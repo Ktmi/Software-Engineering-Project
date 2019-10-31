@@ -6,8 +6,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.mvc.freemarker.FreemarkerMvcFeature;
 
 @ApplicationPath("/")
-public class ControlFacade extends ResourceConfig {
-    public ControlFacade() {
+public class ControlConfig extends ResourceConfig {
+    public ControlConfig() {
         packages("com.bluejay.server.logic.control");
         property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "templates/freemarker");
         register(FreemarkerMvcFeature.class);
