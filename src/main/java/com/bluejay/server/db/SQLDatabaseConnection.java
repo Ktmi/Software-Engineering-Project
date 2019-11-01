@@ -40,22 +40,11 @@ implements AutoCloseable
     public boolean validateLogin(Login login)
     throws SQLException
     {
-        boolean result = false;
-        try
-        {
-            PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM user WHERE username = ? AND secret = ?");
-            st.setString(1, login.getUsername());
-            st.setBytes(2, hashSecret(login.getPassword()));
-            ResultSet rs = st.executeQuery();
-            result = rs.next();
-        }
-        catch(NoSuchAlgorithmException e)
-        {
-            SQLException e2 = new SQLException("Unable to load hashing algorithm.");
-            e2.addSuppressed(e);
-            throw e2;
-        }
-        return result;
+        PreparedStatement st = dbconnect.prepareStatement("SELECT * FROM user WHERE username = ? AND secret = ?");
+        st.setString(1, login.getUsername());
+        st.setBytes(2, hashSecret(login.getPassword()));
+        ResultSet rs = st.executeQuery();
+        return rs.next();
     }
 
 
@@ -71,7 +60,6 @@ implements AutoCloseable
     }
 
     protected final byte[] hashSecret(String secret)
-    throws NoSuchAlgorithmException
     {
         md.update(secret.getBytes());
         return md.digest();
