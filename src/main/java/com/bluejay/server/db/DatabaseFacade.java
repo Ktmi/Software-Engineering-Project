@@ -5,28 +5,37 @@ import javax.sql.DataSource;
 import com.bluejay.server.logic.model.User;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
 
-public class SQLDatabaseConnection
+public class DatabaseFacade
 {
-
-    @Inject
-    private MessageDigest md;
-
     @Resource(name = "jbdc/bluejay-db")
     private DataSource ds;
+    private MessageDigest encryption;
 
+    public void setEncryption(MessageDigest encryption)
+    {
+        this.encryption = encryption;
+    }
+    public void setEncryption(String algorithm)
+    throws NoSuchAlgorithmException
+    {
+        encryption = MessageDigest.getInstance(algorithm);
+    }
+    public MessageDigest getEncryption()
+    {
+        return encryption;
+    }
 
     public void validateLogin(User user)
     throws SQLException
     {
-        boolean result = false;
         try(Connection con = ds.getConnection();
             PreparedStatement st = con.prepareStatement("SELECT userid FROM user WHERE username = ? AND secret = ?");)
         {
@@ -40,8 +49,7 @@ public class SQLDatabaseConnection
             }
         }
     }
-
-    // TODO finish addUser
+    
     public void addUser(User user)
     throws SQLException
     {
@@ -63,8 +71,8 @@ public class SQLDatabaseConnection
 
     protected final byte[] hashSecret(String secret)
     {
-        md.update(secret.getBytes());
-        return md.digest();
+        encryption.update(secret.getBytes());
+        return encryption.digest();
     }
 
 }
