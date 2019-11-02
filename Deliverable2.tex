@@ -10,7 +10,7 @@
 
 \begin{abstract}
 There are many ways for people to communicate with others, and social media is no exception. However, many of the existing platforms provide limited security, causing thousands of sensitive information to be leaked. Even with existing forms of security in place, the current methods vary from platform to platform, with the most well-known social media sites generally having the weakest levels of encryption, or none. BlueJay is a social platform for users to safely and securely post and share content over the internet using post sanitization, SSL encryption, password encryption, and other forms of user security. It takes the free-form posting of reddit and the social comforts of twitter to bring the same feeling of sharing content in a more secure setting.\\
-This document will detail all the functional and non-functional requirements, subsystems, and architectural and design patterns used to implement BlueJay. The UML models displayed in the document were generated using StarUML. The security protocols used to protect BlueJay include email verification, forget password and login and out. The architectural patterns in the package diagram were the Model View Controller and the Three Tier.  The design patterns used were the Template, Façade and Mediator. The major subsystem in the package diagram are Client, Logic and Database.\\
+This document will detail all the functional and non-functional requirements, subsystems, and architectural and design patterns used to implement BlueJay. The UML models displayed in the document were generated using StarUML. The security protocols used to protect BlueJay include email verification, forget password and login and out. The architectural patterns in the package diagram were the three tier. The major subsystem in the package diagram are Client, Logic and Database. The design patterns used were the Template, Façade and Mediator.\\
 \end{abstract}
  
 \tableofcontents
@@ -59,16 +59,13 @@ BlueJay\\StarUML\\SM User\\MVC\\Three Tier\\CSS
 \chapter{Proposed Software Architecture}
 	This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram. Persistent data and the security protocols that were implemented will also be outlined.
 \section{Overview}
-	MVC was used because the client needs to modify its view; so, it requests the controller which generates a new model or a portion of a model it can send back over to view.\\
-	Three Tier was used because
+	MVC was used because\\
+	Three Tier was used because\\
 \section{Subsystem Decomposition}
-	Client\\	Logic\\	Database\\
 \section{Hardware and Software Mapping}
 \section{Persistent Data Management}
-	Database\\
 \section{Security Management}
 BlueJay prides itself on its security, to ensure this various security protocols were implemented to protect unauthorized access to SM user’s accounts. These protocols include email verification, security questions and password recovery. With email verification when a SM user creates an account, they must provide an validate email address that is not being used by another account to activate their account. To access their account a user must log into by providing their username and password. In the off chance that user forgets their password they will be able to recover and change their old password by answering two questions they had previously set up and will have end when an email is sent to them.\\
-Sha256 
 \chapter{Detailed Design}
 This chapter will introduce minimal class diagram for the subsystems and explain the purpose of each class. Along with the minimal class diagram this chapter will display the state machine and refined sequence diagrams. The design patterns used and the class sections that contain the OCL statements will be identified.\\
 \section{Overview}
