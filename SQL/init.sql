@@ -3,7 +3,7 @@ CREATE TABLE user
     userid INT AUTO_INCREMENT NOT NULL,
     username varchar(255) UNIQUE NOT NULL,
     email varchar(255) NOT NULL,
-    password byte(32) NOT NULL,
+    secret byte(32) NOT NULL,
     PRIMARY KEY (userid)
 );
 
