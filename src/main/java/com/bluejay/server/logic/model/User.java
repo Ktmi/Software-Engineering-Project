@@ -29,7 +29,9 @@ public class User
 
     public String getPassword()
     {
-        return password;
+        String temp = this.password;
+        this.password = null;
+        return temp;
     }
 
     public void setPassword(String password)

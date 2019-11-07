@@ -44,7 +44,6 @@ public class DatabaseFacade
             ResultSet rs = st.executeQuery();
             if(rs.next())
             {
-                user.setPassword(null);
                 user.setUserid(rs.getInt(1));
             }
         }
@@ -64,7 +63,6 @@ public class DatabaseFacade
                 ResultSet rs = st.getGeneratedKeys();
                 rs.next();
                 user.setUserid(rs.getInt(1));
-                user.setPassword(null);
             }
         }
     }
