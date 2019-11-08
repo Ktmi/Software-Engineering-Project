@@ -3,41 +3,76 @@
 
 \begin{document}
 
-\title{October 5, 2019\\Software Engineering\\CEN 4010 – U01\\Deliverable 2\\Blue Jay}
-
+\title{Software Engineering\\CEN 4010 – U01\\Deliverable 2\\Blue Jay}
+\date{\today}
 \author{Team 3\and Mareo Yapp\and Brandon Lee\and Josselyn Ruiz\and Alex Collantes\and David Ramirez\and Professor Peter Clarke}
 \maketitle
 
 \begin{abstract}
-There are many ways for people to communicate with others, and social media is no exception. However, many of the existing platforms provide limited security, causing thousands of sensitive information to be leaked. Even with existing forms of security in place, the current methods vary from platform to platform, with the most well-known social media sites generally having the weakest levels of encryption, or none. BlueJay is a social platform for users to safely and securely post and share content over the internet using post sanitization, SSL encryption, password encryption, and other forms of user security. It takes the free-form posting of reddit and the social comforts of twitter to bring the same feeling of sharing content in a more secure setting.\\
-This document will detail all the functional and non-functional requirements, subsystems, and architectural and design patterns used to implement BlueJay. The UML models displayed in the document were generated using StarUML. The security protocols used to protect BlueJay include email verification, forget password and login and out. The architectural patterns in the package diagram were the three tier. The major subsystem in the package diagram are Client, Logic and Database. The design patterns used were the Template, Façade and Mediator.\\
+There are many ways for people to communicate with others,
+and social media is no exception. However,
+many of the existing platforms provide limited security,
+causing thousands of sensitive information to be leaked.
+Even with existing forms of security in place,
+the current methods vary from platform to platform,
+with the most well-known social media sites generally having the weakest levels of encryption, or none.
+BlueJay is a social platform for users to safely and securely post and share content over the internet using post sanitization,
+SSL encryption, password encryption, and other forms of user security.
+It takes the free-form posting of reddit and the social comforts of twitter to bring the same feeling of sharing content in a more secure setting.
+
+This document will detail all the functional and non-functional requirements,
+subsystems, and architectural and design patterns used to implement BlueJay.
+The UML models displayed in the document were generated using StarUML.
+The security protocols used to protect BlueJay include email verification,
+forget password and login and out.
+The architectural patterns in the package diagram were the three tier.
+The major subsystem in the package diagram are Client, Logic and Database.
+The design patterns used were the Template, Façade and Mediator.
 \end{abstract}
  
 \tableofcontents
 
 \chapter{Introduction}
-	This chapter will introduce the purpose of BlueJay (BJ), the functional and non-functional requirements of the use cases implemented. The software process model used will be identified along with the UML models that will be shown in the document.
+	This chapter will introduce the purpose of BlueJay (BJ),
+	the functional and non-functional requirements of the use cases implemented.
+	The software process model used will be identified along with the UML models that will be shown in the document.
 \section{Purpose of system}
-	Social media is a constant part of everyday life. People use it to stay in touch with their friends and family and to display their interests to the world, but far too often social media companies have been lapsing in protecting their users’ information.\\
-	BlueJay (BJ) allows users to post text and images in a safe and secure manner to reduce the leaking of sensitive information, which can lead to fraud and identity theft. This will be done using many existing security techniques, such as password encryption, SSL encryption, and other safety measures that encourage users to prioritize securing their data.
+	Social media is a constant part of everyday life.
+	People use it to stay in touch with their friends and family and to display their interests to the world,
+	but far too often social media companies have been lapsing in protecting their users’ information.
+
+	BlueJay (BJ) allows users to post text and images in a safe and secure manner to reduce the leaking of sensitive information,
+	which can lead to fraud and identity theft.
+	This will be done using many existing security techniques, such as password encryption, SSL encryption,
+	and other safety measures that encourage users to prioritize securing their data.
 \section{Requirements}
 	\subsection{Functional requirements}
+	These are the use cases we are implementing for the system.
+	For more information, please see Appendix \ref{app:use_cases}
 	\begin{enumerate}
-		\item The system will allow users to create an account (see use case BJ015 – Account Creation in Appendix B).\\
-		\item The system will allow users to create and upload posts (see use case BJ004 – Create Post in Appendix B).\\
-		\item The will allow users to reply to a post (see use case BJ006 – Reply to Post in Appendix B).\\
-		\item The system will allow users to view posts on the site (see use case BJ002 – View Post in Appendix B).\\
-		\item The system will allow users to browse most recent popular post (see use case BJ001 – Browse Post in Appendix B)\\
-		\item The system will make users go through a process to access their account (see use case BJ021 – Login in Appendix B).\\
-		\item The system will allow users to exit their accounts (see use case BJ022 – Logout in Appendix B).\\
-		\item The system will allow users to go through a process to access their account if they forget their password (see use case BJS005 – Forgot Password in Appendix B).\\
-		\item The system will make users go through a process to get their password by answering 3 security questions (see use case BJS006 – Security Questions in Appendix B).\\
-		\item The system will send users an email asking them to verify their account (see use case BJS007 – Email Verification in Appendix B).\\
+		\item The system shall allow users to create an account
+		\item The system shall allow users to create and upload posts
+		\item The system shall allow users to reply to a post
+		\item The system shall allow users to view posts on the site
+		\item The system shall allow users to browse most recent popular post
+		\item The system shall make users go through a process to access their account
+		\item The system shall allow users to exit their accounts
+		\item The system shall allow users to go through a process to access their account if they forget their password
+		\item The system shall make users go through a process to get their password by answering 3 security questions
+		\item The system shall send users an email asking them to verify their account
 	\end{enumerate}
 	\subsection{Non-functional requirements}
-	Usability: \\
-		a.	All use cases require no actual training to use. While some use cases will be confusing for first time social media users, (BJ)’s user interactions follow well known practices seen on other social media sites.\\
-		b.	Some though take an average of 2 minutes to familiarize with (see use cases BJ001 - Browse Post, BJ002 - View Post, BJ004 - Create Post, BJS005 - Forgot Password and BJS006 - Security Questions in Appendix B). \\
+	Our system has many different non-functional requirements.
+	\begin{description}
+		\item [Usability] Users should be able to look at the page presented to them,
+		and immediately recognize the functionality being exposed to them.
+		\item [Reliability] The system will be highly available, up to 90\% of the time.
+		And should be able to automatically recover from exceptional conditions.
+		\item [Performance] The system will be highly responsive,
+		except in the case of loading large posts.
+	\end{description}
+
+
 	Reliability: \\
 		a.	All use cases have a consistent mean time to failure of 5 percent every 48 hours.\\
 		b.	Some use cases should only allow for failure during a system maintenance (see use cases BJ021 - Login, BJ022 - Log out, BJS006 - Security Questions and BJS007 - Email Verification in Appendix B).\\
@@ -51,16 +86,45 @@ This document will detail all the functional and non-functional requirements, su
 		c.	The average SM User will login and log out at most 15 times per day (see use cases BJ021 - Login and BJ022 - Log out in Appendix B).\\
 		d.	Some use cases will only be used once (see use cases BJ015 - Account Creation, BJS005 - Forgot Password, BJS006 - Security Questions and BJS007 - Email Verification in Appendix B).\\
 \section{Design methodology used} 
-	The Unified Software Development Process model was used. The package, use case, deployment, ER, class, sequence and state machine diagram were used to represent the design.
+	The Unified Software Development Process model was used.
+	The package, use case, deployment, ER, class, sequence and state machine diagram were used to represent the design.
+
+
 \section{Definitions, acronyms, and abbreviations}
-BlueJay\\StarUML\\SM User\\MVC\\Three Tier\\CSS
+	Throughout the document, we use the following terms.
+	\begin{description}
+		\item [BlueJay] The name of our system, commonly abbreviated to BJ.
+		\item [StarUML] Program we use to create models for our system.
+		\item [SM User] A social media user, or for our system just a user.
+		\item [HTML] Hyper-text markup language, the format we deliver content to our users in.
+		\item [CSS] Cascading style sheets, file that determines how the HTML is rendered for clients.
+		\item [SHA-256] Hashing algorithm we use to improve password security.
+	\end{description}
 \section{Overview of document}
-	Chapter 2 will cover the software architecture such as the architectural patterns used. Chapter 3 will cover the diagrams used to represents the subsystems. Chapters 4 to 7 will be about the glossary, team signatures, references and appendices respectively.
+	Chapter 2 will cover the software architecture such as the architectural patterns used.
+	Chapter 3 will cover the diagrams used to represents the subsystems.
+	Chapters 4 to 7 will be about the glossary, team signatures, references and appendices respectively.
+
+
+
+
+
 \chapter{Proposed Software Architecture}
-	This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram. Persistent data and the security protocols that were implemented will also be outlined.
+	This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram.
+	Persistent data and the security protocols that were implemented will also be outlined.
 \section{Overview}
-	MVC was used because\\
-	Three Tier was used because\\
+	The primary architectural patter of our system is three-tier.
+	As part of three-tier we have divided up the system into three main packages,
+	client, logic, and database.
+	The reason we chose three-tier over possibly four-tier or client-server,
+	is because we don't need a special adapter layer between the client And
+	the underlying business logic like four tier, but we do need a datastore
+	unlike client-server.
+
+	The secondary architectural pattern used in our system is repository.
+	This secondary pattern exists, within the database package.
+	The reason we chose repository
+
 \section{Subsystem Decomposition}
 \section{Hardware and Software Mapping}
 \section{Persistent Data Management}
@@ -83,10 +147,11 @@ CSS: Cascading Style Sheets is a style sheet language used for describing the pr
 \chapter{Approval page with signatures of the team Appendix} 
 \includegraphics{Signatures}
 \chapter{References}
-\chapter{Appendices}
-\section{Appendix A}
-\includegraphics{Use case diagram}
-\section{Appendix B}
+\appendix
+\section{Use Case Diagram}
+\includegraphics{UseCaseDiagram}
+\section{Use Cases}
+\label{app:use_cases}
 Use Case ID: BJ001 – Browse Posts\\
 Use Case Level: High-level\\
 Details: The user requests that the homepage is to display all recently popular posts.\\
@@ -542,7 +607,7 @@ Pre-conditions: \\
 \\
 Description: \\
 1.	Server is adding new account to database.\\
-2.	The system will send a verification email to the email address of the new account.\\
+2.	The system shall send a verification email to the email address of the new account.\\
 3.	The user will click the link in their email to verify their account.\\
 a.	Server marks the account as verified.\\
 4.	Browser is redirected to homepage.\\
@@ -578,9 +643,9 @@ Modification History\\
      Owner: Brandon Lee\\
      Initiation date: 8/27/2019\\
      Date last modified: 9/14/2019\\
-\section{Appendix C}
-\section{Appendix D}
-\section{Appendix E}
+\section{Class Diagram}
+\section{Class Interfaces}
+\section{Meetings Diary}
 ENTRY 1\\	
 Location		ECS Lab\\
 Starting Time		2:00pm\\

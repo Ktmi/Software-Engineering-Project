@@ -4,3 +4,10 @@
 .vs
 .settings
 .vscode
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.pdf
+*.synctex.gz
+*.toc
