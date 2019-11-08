@@ -1,5 +1,6 @@
 \documentclass{report}
 \usepackage{graphicx}
+\usepackage[toc,page]{appendix}
 
 \begin{document}
 
@@ -72,12 +73,6 @@ The design patterns used were the Template, Façade and Mediator.
 		except in the case of loading large posts.
 	\end{description}
 
-
-	Reliability: \\
-		a.	All use cases have a consistent mean time to failure of 5 percent every 48 hours.\\
-		b.	Some use cases should only allow for failure during a system maintenance (see use cases BJ021 - Login, BJ022 - Log out, BJS006 - Security Questions and BJS007 - Email Verification in Appendix B).\\
-	Performance:\\ 
-		a.	All use cases should have a maximum response time less than or equal to one second.\\
 	Supportability: \\
 		a.	All use case should be supported by browsers across multiple desktop and mobile devices.\\
 	Frequency:\\
@@ -105,10 +100,6 @@ The design patterns used were the Template, Façade and Mediator.
 	Chapter 3 will cover the diagrams used to represents the subsystems.
 	Chapters 4 to 7 will be about the glossary, team signatures, references and appendices respectively.
 
-
-
-
-
 \chapter{Proposed Software Architecture}
 	This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram.
 	Persistent data and the security protocols that were implemented will also be outlined.
@@ -128,8 +119,33 @@ The design patterns used were the Template, Façade and Mediator.
 \section{Subsystem Decomposition}
 \section{Hardware and Software Mapping}
 \section{Persistent Data Management}
+	Persistent data is stored in the database.
+	
+
 \section{Security Management}
-BlueJay prides itself on its security, to ensure this various security protocols were implemented to protect unauthorized access to SM user’s accounts. These protocols include email verification, security questions and password recovery. With email verification when a SM user creates an account, they must provide an validate email address that is not being used by another account to activate their account. To access their account a user must log into by providing their username and password. In the off chance that user forgets their password they will be able to recover and change their old password by answering two questions they had previously set up and will have end when an email is sent to them.\\
+	Authentication is currently performed through a username and password login form.
+	The password is hashed with SHA-256 then checked against the password hash in the database.
+	If they match, the user is given a token, which is used in authorization.
+
+	Authorization is performed by a security context.
+	Whenever a user attempts to access a resource which requirements a certain permission level,
+	the system will check with the security context, if they have the appropriate permissions.
+	The required permission level is set per action, and is checked every time
+	a user attempts an action with a security level.
+
+
+
+BlueJay prides itself on its security,
+to ensure this various security protocols were implemented to protect unauthorized access to SM user’s accounts.
+These protocols include email verification, security questions and password recovery.
+With email verification when a SM user creates an account, they must provide an validate email address that is not being used by another account to activate their account.
+To access their account a user must log into by providing their username and password.
+In the off chance that user forgets their password they will be able to recover and change their old password by answering two questions they had previously set up and will have end when an email is sent to them.\\
+
+
+
+
+
 \chapter{Detailed Design}
 This chapter will introduce minimal class diagram for the subsystems and explain the purpose of each class. Along with the minimal class diagram this chapter will display the state machine and refined sequence diagrams. The design patterns used and the class sections that contain the OCL statements will be identified.\\
 \section{Overview}
@@ -147,7 +163,7 @@ CSS: Cascading Style Sheets is a style sheet language used for describing the pr
 \chapter{Approval page with signatures of the team Appendix} 
 \includegraphics{Signatures}
 \chapter{References}
-\appendix
+\begin{appendices}
 \section{Use Case Diagram}
 \includegraphics{UseCaseDiagram}
 \section{Use Cases}
@@ -714,6 +730,5 @@ Minutes Captured\\
 o	Profile\\
 o	User\\
 o	Post\\
+\end{appendices}
 \end{document}
-
-\documentclass
