@@ -1,6 +1,5 @@
 \documentclass{report}
 \usepackage{graphicx}
-\usepackage[toc,page]{appendix}
 
 \begin{document}
 
@@ -49,7 +48,7 @@ The design patterns used were the Template, Façade and Mediator.
 \section{Requirements}
 	\subsection{Functional requirements}
 	These are the use cases we are implementing for the system.
-	For more information, please see Appendix \ref{app:use_cases}
+	For more information, please see Appendix~\ref{app:use_cases}.
 	\begin{enumerate}
 		\item The system shall allow users to create an account
 		\item The system shall allow users to create and upload posts
@@ -89,7 +88,7 @@ The design patterns used were the Template, Façade and Mediator.
 	Throughout the document, we use the following terms.
 	\begin{description}
 		\item [BlueJay] The name of our system, commonly abbreviated to BJ.
-		\item [StarUML] Program we use to create models for our system.
+		\item [StarUML] Software used to create UML diagrams of our system.
 		\item [SM User] A social media user, or for our system just a user.
 		\item [HTML] Hyper-text markup language, the format we deliver content to our users in.
 		\item [CSS] Cascading style sheets, file that determines how the HTML is rendered for clients.
@@ -114,7 +113,8 @@ The design patterns used were the Template, Façade and Mediator.
 
 	The secondary architectural pattern used in our system is repository.
 	This secondary pattern exists, within the database package.
-	The reason we chose repository
+	The reason we chose repository is because we need a location for
+	persistent data storage, which we can implement with a repository.
 
 \section{Subsystem Decomposition}
 \section{Hardware and Software Mapping}
@@ -152,7 +152,9 @@ This chapter will introduce minimal class diagram for the subsystems and explain
 \section{State Machine}
 \section{Object Interaction}
 \section{Detailed Class Design}
-The design patterns used were the Template, Façade and Mediator.\\
+The design patterns used were the Injection, Façade, and Command.
+
+
 \chapter{Glossary}
 BlueJay: BlueJay (BJ) is a social media platform that allows users to post texts and images in a safe and secure environment.\\
 StarUML: StarUML is a software tool used to create UML diagrams.\\
@@ -160,13 +162,19 @@ SM User: Social media user; the user who is logged into the system.\\
 MVC: Model View Controller is a software architectural pattern commonly used for developing user interfaces which divides the related program logic into three interconnected elements.\\
 Three Tier: Three-tier architecture is a client-server software architecture pattern in which the user interface (presentation), functional process logic ("business rules"), computer data storage and data access are developed and maintained as independent modules, most often on separate platforms.\\
 CSS: Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language like HTML.\\
+
 \chapter{Approval page with signatures of the team Appendix} 
 \includegraphics{Signatures}
+\newpage
+
 \chapter{References}
-\begin{appendices}
-\section{Use Case Diagram}
+Test
+\newpage
+
+\appendix
+\chapter{Use Case Diagram}
 \includegraphics{UseCaseDiagram}
-\section{Use Cases}
+\chapter{Use Cases}
 \label{app:use_cases}
 Use Case ID: BJ001 – Browse Posts\\
 Use Case Level: High-level\\
@@ -659,9 +667,9 @@ Modification History\\
      Owner: Brandon Lee\\
      Initiation date: 8/27/2019\\
      Date last modified: 9/14/2019\\
-\section{Class Diagram}
-\section{Class Interfaces}
-\section{Meetings Diary}
+\chapter{Class Diagram}
+\chapter{Class Interfaces}
+\chapter{Meetings Diary}
 ENTRY 1\\	
 Location		ECS Lab\\
 Starting Time		2:00pm\\
@@ -730,5 +738,4 @@ Minutes Captured\\
 o	Profile\\
 o	User\\
 o	Post\\
-\end{appendices}
 \end{document}
