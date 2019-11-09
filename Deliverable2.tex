@@ -70,6 +70,8 @@ The design patterns used were the Template, Façade and Mediator.
 		And should be able to automatically recover from exceptional conditions.
 		\item [Performance] The system will be highly responsive,
 		except in the case of loading large posts.
+		\item [Supportability]
+		\item [Frequency]
 	\end{description}
 
 	Supportability: \\
@@ -105,16 +107,22 @@ The design patterns used were the Template, Façade and Mediator.
 \section{Overview}
 	The primary architectural patter of our system is three-tier.
 	As part of three-tier we have divided up the system into three main packages,
-	client, logic, and database.
+	client, logic/presentation, and datastore.
 	The reason we chose three-tier over possibly four-tier or client-server,
 	is because we don't need a special adapter layer between the client And
 	the underlying business logic like four tier, but we do need a datastore
 	unlike client-server.
+	As is in our use case diagram in Appendix~\ref{app:use_case_diagram}, all our use cases
+	focus on a client making requests to the server, and the server fulfilling those requests in some way.
+	This makes the client-server part of three-tier implicitly required.
+	However, this lacks the requirement for persistent data storage,
+	which is where the third part of three-tier architecture, the datastore
+	comes into play.
 
 	The secondary architectural pattern used in our system is repository.
-	This secondary pattern exists, within the database package.
-	The reason we chose repository is because we need a location for
-	persistent data storage, which we can implement with a repository.
+	This secondary pattern exists, within the datastore package.
+	As mentioned earlier, the datastore package exists for persistent datastorage,
+	and we implement this with a central repository.
 
 \section{Subsystem Decomposition}
 \section{Hardware and Software Mapping}
@@ -133,6 +141,7 @@ The design patterns used were the Template, Façade and Mediator.
 	The required permission level is set per action, and is checked every time
 	a user attempts an action with a security level.
 
+	
 
 
 BlueJay prides itself on its security,
@@ -171,6 +180,7 @@ CSS: Cascading Style Sheets is a style sheet language used for describing the pr
 Test
 \appendix
 \chapter{Use Case Diagram}
+\label{app:use_case_diagram}
 \includegraphics{UseCaseDiagram}
 \chapter{Use Cases}
 \label{app:use_cases}
