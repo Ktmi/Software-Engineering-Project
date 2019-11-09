@@ -101,28 +101,11 @@ The design patterns used were the Command, Singleton and Facade.
 	Chapters 4 to 7 will be about the glossary, team signatures, references and appendices respectively.
 
 \chapter{Proposed Software Architecture}
-	This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram.
-	Persistent data and the security protocols that were implemented will also be outlined.
+This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram. How subsystems were mapped to hardware and software will be outlined. The data to be stored will be identified using an ER diagram and the security protocols that were implemented will also be outlined.
 \section{Overview}
-	The primary architectural patter of our system is three-tier.
-	As part of three-tier we have divided up the system into three main packages,
-	client, logic/presentation, and datastore.
-	The reason we chose three-tier over possibly four-tier or client-server,
-	is because we don't need a special adapter layer between the client And
-	the underlying business logic like four tier, but we do need a datastore
-	unlike client-server.
-	As is in our use case diagram in Appendix~\ref{app:use_case_diagram}, all our use cases
-	focus on a client making requests to the server, and the server fulfilling those requests in some way.
-	This makes the client-server part of three-tier implicitly required.
-	However, this lacks the requirement for persistent data storage,
-	which is where the third part of three-tier architecture, the datastore
-	comes into play.
+The primary architectural pattern of the system is three-tier. As part of three-tier it will divide up the system into three main packages: the client, logic/presentation, and datastore. The reason three-tier was chosen over the possibility of four-tier or client-server is because the system does not need a special adapter layer between the client and the underlying business logic like four-tier, but it needs a datastore unlike client-server. As in the use case diagram (see Appendix A), all the use cases focus on a client making requests to the server, and the server fulfilling those requests in some way. This makes the client-server part of three-tier implicitly required. However, this lacks the requirement for persistent data storage, which is where the third part of three-tier architecture, the datastore comes into play.
 
-	The secondary architectural pattern used in our system is repository.
-	This secondary pattern exists, within the datastore package.
-	As mentioned earlier, the datastore package exists for persistent datastorage,
-	and we implement this with a central repository.
-
+The secondary architectural pattern used in the system is repository. This secondary pattern exists, within the datastore package. As mentioned earlier, the datastore package exists for persistent data storage, and we implement this with a central repository.
 \section{Subsystem Decomposition}
 \section{Hardware and Software Mapping}
 \section{Persistent Data Management}
