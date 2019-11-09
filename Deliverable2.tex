@@ -25,9 +25,9 @@ subsystems, and architectural and design patterns used to implement BlueJay.
 The UML models displayed in the document were generated using StarUML.
 The security protocols used to protect BlueJay include email verification,
 forget password and login and out.
-The architectural patterns in the package diagram were the three tier.
+The architectural patterns in the package diagram were the three-tier and repository.
 The major subsystem in the package diagram are Client, Logic and Database.
-The design patterns used were the Template, Façade and Mediator.
+The design patterns used were the Command, Singleton and Facade.
 \end{abstract}
  
 \tableofcontents
@@ -48,18 +48,17 @@ The design patterns used were the Template, Façade and Mediator.
 \section{Requirements}
 	\subsection{Functional requirements}
 	These are the use cases we are implementing for the system.
-	For more information, please see Appendix~\ref{app:use_cases}.
 	\begin{enumerate}
-		\item The system shall allow users to create an account
-		\item The system shall allow users to create and upload posts
-		\item The system shall allow users to reply to a post
-		\item The system shall allow users to view posts on the site
-		\item The system shall allow users to browse most recent popular post
-		\item The system shall make users go through a process to access their account
-		\item The system shall allow users to exit their accounts
-		\item The system shall allow users to go through a process to access their account if they forget their password
-		\item The system shall make users go through a process to get their password by answering 3 security questions
-		\item The system shall send users an email asking them to verify their account
+		\item The system will allow users to create an account (see use case BJ015 – Account Creation in Appendix B).
+		\item The system will allow users to create and upload posts (see use case BJ004 – Create Post in Appendix B).
+		\item The system will allow users to reply to a post (see use case BJ006 – Reply to Post in Appendix B).
+		\item The system will allow users to view posts on the site (see use case BJ002 – View Post in Appendix B).
+		\item The system will allow users to browse most recent popular post (see use case BJ001 – Browse Post in Appendix B).
+		\item The system will make users go through a process to access their account (see use case BJ021 – Login in Appendix B).
+		\item The system will allow users to exit their accounts (see use case BJ022 – Logout in Appendix B).
+		\item The system will allow users to go through a process to access their account if they forget their password (see use case BJS005 – Forgot Password in Appendix B).
+		\item The system will make users go through a process to get their password by answering 3 security questions (see use case BJS006 – Security Questions in Appendix B).
+		\item The system will send users an email asking them to verify their account (see use case BJS007 – Email Verification in Appendix B).
 	\end{enumerate}
 	\subsection{Non-functional requirements}
 	Our system has many different non-functional requirements.
