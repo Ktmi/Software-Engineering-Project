@@ -25,9 +25,9 @@ subsystems, and architectural and design patterns used to implement BlueJay.
 The UML models displayed in the document were generated using StarUML.
 The security protocols used to protect BlueJay include email verification,
 forget password and login and out.
-The architectural patterns in the package diagram were the three tier.
+The architectural patterns in the package diagram were the three-tier and repository.
 The major subsystem in the package diagram are Client, Logic and Database.
-The design patterns used were the Template, Façade and Mediator.
+The design patterns used were the Command, Singleton and Facade.
 \end{abstract}
  
 \tableofcontents
@@ -49,18 +49,17 @@ The design patterns used were the Template, Façade and Mediator.
 
 	\subsection{Functional requirements}
 	These are the use cases we are implementing for the system.
-	For more information, please see Appendix~\ref{app:use_cases}.
 	\begin{enumerate}
-		\item The system shall allow users to create an account
-		\item The system shall allow users to create and upload posts
-		\item The system shall allow users to reply to a post
-		\item The system shall allow users to view posts on the site
-		\item The system shall allow users to browse most recent popular post
-		\item The system shall make users go through a process to access their account
-		\item The system shall allow users to exit their accounts
-		\item The system shall allow users to go through a process to access their account if they forget their password
-		\item The system shall make users go through a process to get their password by answering 3 security questions
-		\item The system shall send users an email asking them to verify their account
+		\item The system will allow users to create an account (see use case BJ015 – Account Creation in Appendix B).
+		\item The system will allow users to create and upload posts (see use case BJ004 – Create Post in Appendix B).
+		\item The system will allow users to reply to a post (see use case BJ006 – Reply to Post in Appendix B).
+		\item The system will allow users to view posts on the site (see use case BJ002 – View Post in Appendix B).
+		\item The system will allow users to browse most recent popular post (see use case BJ001 – Browse Post in Appendix B).
+		\item The system will make users go through a process to access their account (see use case BJ021 – Login in Appendix B).
+		\item The system will allow users to exit their accounts (see use case BJ022 – Logout in Appendix B).
+		\item The system will allow users to go through a process to access their account if they forget their password (see use case BJS005 – Forgot Password in Appendix B).
+		\item The system will make users go through a process to get their password by answering 3 security questions (see use case BJS006 – Security Questions in Appendix B).
+		\item The system will send users an email asking them to verify their account (see use case BJS007 – Email Verification in Appendix B).
 	\end{enumerate}
 	\subsection{Non-functional requirements}
 	Our system has many different non-functional requirements.
@@ -101,28 +100,11 @@ The design patterns used were the Template, Façade and Mediator.
 	Chapters 4 to 7 will be about the glossary, team signatures, references and appendices respectively.
 
 \chapter{Proposed Software Architecture}
-	This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram.
-	Persistent data and the security protocols that were implemented will also be outlined.
+This chapter will introduce the architectural patterns and detail the major subsystems used in the package diagram. How subsystems were mapped to hardware and software will be outlined. The data to be stored will be identified using an ER diagram and the security protocols that were implemented will also be outlined.
 \section{Overview}
-	The primary architectural patter of our system is three-tier.
-	As part of three-tier we have divided up the system into three main packages,
-	client, logic/presentation, and datastore.
-	The reason we chose three-tier over possibly four-tier or client-server,
-	is because we don't need a special adapter layer between the client And
-	the underlying business logic like four tier, but we do need a datastore
-	unlike client-server.
-	As is in our use case diagram in Appendix~\ref{app:use_case_diagram}, all our use cases
-	focus on a client making requests to the server, and the server fulfilling those requests in some way.
-	This makes the client-server part of three-tier implicitly required.
-	However, this lacks the requirement for persistent data storage,
-	which is where the third part of three-tier architecture, the datastore
-	comes into play.
+The primary architectural pattern of the system is three-tier. As part of three-tier it will divide up the system into three main packages: the client, logic/presentation, and datastore. The reason three-tier was chosen over the possibility of four-tier or client-server is because the system does not need a special adapter layer between the client and the underlying business logic like four-tier, but it needs a datastore unlike client-server. As in the use case diagram (see Appendix A), all the use cases focus on a client making requests to the server, and the server fulfilling those requests in some way. This makes the client-server part of three-tier implicitly required. However, this lacks the requirement for persistent data storage, which is where the third part of three-tier architecture, the datastore comes into play.
 
-	The secondary architectural pattern used in our system is repository.
-	This secondary pattern exists, within the datastore package.
-	As mentioned earlier, the datastore package exists for persistent datastorage,
-	and we implement this with a central repository.
-
+The secondary architectural pattern used in the system is repository. This secondary pattern exists, within the datastore package. As mentioned earlier, the datastore package exists for persistent data storage, and we implement this with a central repository.
 \section{Subsystem Decomposition}
 \section{Hardware and Software Mapping}
 \section{Persistent Data Management}
