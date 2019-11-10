@@ -1,5 +1,7 @@
 package com.bluejay.server.logic.rest;
 
+import javax.ws.rs.DELETE;
+
 //import java.security.Key;
 
 //import javax.crypto.KeyGenerator;
@@ -27,7 +29,13 @@ public class Auth
 
         String token = issueToken(username);
         
-        return Response.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + token).build();
+        return Response.ok().header(HttpHeaders.AUTHORIZATION, token).build();
+    }
+
+    @DELETE
+    public Response logout()
+    {
+        return Response.ok().header(HttpHeaders.AUTHORIZATION, null).build();
     }
 
     private String issueToken(String username)
