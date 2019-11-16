@@ -15,18 +15,17 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
-  <resource-ref>
+  <!--resource-ref>
       <description>DB Connection</description>
       <res-ref-name>jdbc/bluejay-db</res-ref-name>
       <res-type>javax.sql.DataSource</res-type>
       <res-auth>Container</res-auth>
-  </resource-ref>
+  </resource-ref-->
 
   <resource-env-ref>
     <description>DB connection facade</description>
     <resource-env-ref-name>bean/bluejay-db-facade</resource-env-ref-name>
     <resource-env-ref-type>com.bluejay.server.db.DatabaseFacade</resource-env-ref-type>
-    <res-auth>Container</res-auth>
 </resource-env-ref>
 
 
