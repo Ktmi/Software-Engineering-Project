@@ -1,27 +1,27 @@
-package com.bluejay.server.logic.model;
+package com.bluejay.server.common;
 
 public class Reply
 {
-    private int postid;
-    private int replyid;
+    private int threadid;
+    private Post post;
 
-    public int getPostid()
+    public int getThreadid()
     {
-        return postid;
+        return threadid;
     }
 
-    public void setPostid(int postid)
+    public void setThreadid(int threadid)
     {
-        this.postid = postid;
+        this.threadid = threadid;
     }
 
-    public int getReplyid()
+    public Post getPost()
     {
-        return replyid;
+        return post;
     }
 
-    public void setReplyid(int replyid)
+    public void setPost(Post post)
     {
-        this.replyid = replyid;
+        this.post = post;
     }
 }

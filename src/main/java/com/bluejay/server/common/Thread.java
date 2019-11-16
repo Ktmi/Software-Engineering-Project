@@ -1,18 +1,18 @@
-package com.bluejay.server.logic.model;
+package com.bluejay.server.common;
 
 public class Thread
 {
-    private int postid;
+    private Post post;
     private String title;
 
-    public int getPostid()
+    public Post getPost()
     {
-        return postid;
+        return post;
     }
 
-    public void setPostid(int postid)
+    public void setPost(Post post)
     {
-        this.postid = postid;
+        this.post = post;
     }
 
     public String getTitle()

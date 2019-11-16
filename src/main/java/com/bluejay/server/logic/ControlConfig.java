@@ -1,4 +1,4 @@
-package com.bluejay.server.logic.control;
+package com.bluejay.server.logic;
 
 import javax.ws.rs.ApplicationPath;
 

@@ -1,4 +1,4 @@
-package com.bluejay.server.logic.control;
+package com.bluejay.server.logic;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -14,10 +14,10 @@ import org.glassfish.jersey.server.mvc.Template;
 import org.glassfish.jersey.server.mvc.ErrorTemplate;
 
 @Path("/")
+@Produces({"text/html"})
 public class HomePage {
 
     @GET
-    @Produces({"text/html"})
     @Template(name = "/index.ftl")
     @ErrorTemplate(name = "/error.ftl")
     public Map<String,Object> presentHomepage()

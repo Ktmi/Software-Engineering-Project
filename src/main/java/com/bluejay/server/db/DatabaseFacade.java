@@ -2,7 +2,9 @@ package com.bluejay.server.db;
 
 import javax.sql.DataSource;
 
-import com.bluejay.server.logic.model.User;
+import com.bluejay.server.common.User;
+import com.bluejay.server.common.Post;
+import com.bluejay.server.common.Thread;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -66,6 +68,28 @@ public class DatabaseFacade
             }
         }
     }
+
+    public void createPost(Thread thread)
+    throws SQLException
+    {
+        try(Connection con = ds.getConnection();
+        PreparedStatement st = con.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)");
+        PreparedStatement st2 = con.prepareStatement("INSERT INTO thread(postid,title) VALUES (?,?)");)
+        {
+            Post post = thread.getPost();
+            st.setInt(1, post.getUserid());
+            st.setString(2, post.getContent());
+            if(st.executeUpdate() > 0)
+            {
+                ResultSet rs = st.getGeneratedKeys();
+                rs.next();
+                post.setUserid(rs.getInt(1));
+            }
+        }
+    }
+
+
+
 
     protected final byte[] hashSecret(String secret)
     {

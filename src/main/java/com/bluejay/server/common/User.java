@@ -1,4 +1,4 @@
-package com.bluejay.server.logic.model;
+package com.bluejay.server.common;
 
 public class User
 {
