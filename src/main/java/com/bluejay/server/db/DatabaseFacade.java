@@ -61,28 +61,44 @@ public class DatabaseFacade {
 		}
 	}
 
+	/**
+	 * 
+	 * @param thread Java representation of thread object to be added to database.
+	 *               After operation is complete, this object is modified to include
+	 *               the postid.
+	 * 
+	 * @throws SQLException
+	 */
 	public void createThread(Thread thread) throws SQLException {
-		createPost(thread.getPost());
+		createPost(thread);
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement("INSERT INTO thread(postid,title) VALUES (?,?)");) {
-			Post post = thread.getPost();
-			st.setInt(1, post.getPostid());
+			st.setInt(1, thread.getPostid());
 			st.setString(2, thread.getTitle());
 			st.executeUpdate();
 		}
 	}
 
 	public void createReply(Reply reply) throws SQLException {
-		createPost(reply.getPost());
+		createPost(reply);
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement("INSERT INTO reply(postid,threadid) VALUES (?,?)");) {
-			Post post = reply.getPost();
-			st.setInt(1, post.getPostid());
+			st.setInt(1, reply.getPostid());
 			st.setInt(2, reply.getThreadid());
 			st.executeUpdate();
 		}
 	}
 
+	/**
+	 * Adds a post, with the give userid and content to the database. After adding
+	 * the post to the database, the java object representing the post is updated to
+	 * include the id of the post.
+	 * 
+	 * @param post Java representation of post object to be added to database. After
+	 *             operation is complete, this object is modified to include the
+	 *             postid.
+	 * @throws SQLException
+	 */
 	protected void createPost(Post post) throws SQLException {
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)");) {
@@ -99,7 +115,7 @@ public class DatabaseFacade {
 
 	public List<Object> search(String query, List<String> orderBy, int from, int to) throws SQLException {
 		try (Connection con = ds.getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT * FROM posts WHERE");) {
+				PreparedStatement st = con.prepareStatement("SELECT * FROM posts WHERE content LIKE ?");) {
 
 		}
 		return null;

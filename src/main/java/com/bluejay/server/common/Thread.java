@@ -1,27 +1,13 @@
 package com.bluejay.server.common;
 
-public class Thread
-{
-    private Post post;
-    private String title;
+public class Thread extends Post {
+	private String title;
 
-    public Post getPost()
-    {
-        return post;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setPost(Post post)
-    {
-        this.post = post;
-    }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public void setTitle(String title)
-    {
-        this.title = title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 }
