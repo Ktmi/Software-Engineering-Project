@@ -22,7 +22,7 @@ CREATE TABLE thread
     title varchar(255),
     PRIMARY KEY (postid),
     FOREIGN KEY (postid) REFERENCES post(postid)
-)
+);
 
 CREATE TABLE reply
 (
