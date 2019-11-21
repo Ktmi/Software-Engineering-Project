@@ -16,6 +16,11 @@ import com.bluejay.server.common.Reply;
 import com.bluejay.server.common.Thread;
 import com.bluejay.server.common.User;
 
+/**
+ * Provides an interface to the bluejay database.
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ */
 public class DatabaseFacade {
 	@Resource(name = "jbdc/bluejay-db")
 	private DataSource ds;
@@ -46,6 +51,11 @@ public class DatabaseFacade {
 		}
 	}
 
+	/**
+	 * 
+	 * @param user
+	 * @throws SQLException
+	 */
 	public void addUser(User user) throws SQLException {
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con
@@ -110,10 +120,19 @@ public class DatabaseFacade {
 				post.setPostid(rs.getInt(1));
 			}
 		}
-
 	}
 
-	public List<Object> search(String query, List<String> orderBy, int from, int to) throws SQLException {
+	/**
+	 * TODO finish search back end
+	 * 
+	 * @param query
+	 * @param orderBy
+	 * @param from
+	 * @param to
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Post> search(String query, List<String> orderBy, int from, int to) throws SQLException {
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement("SELECT * FROM posts WHERE content LIKE ?");) {
 
