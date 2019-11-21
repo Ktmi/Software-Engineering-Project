@@ -26,9 +26,9 @@ CREATE TABLE thread
 
 CREATE TABLE reply
 (
-    replyid int,
     postid int,
-    PRIMARY KEY (replyid),
-    FOREIGN KEY (replyid) REFERENCES post(postid),
-    FOREIGN KEY (postid) REFERENCES thread(postid)
+    threadid int,
+    PRIMARY KEY (postid),
+    FOREIGN KEY (postid) REFERENCES post(postid),
+    FOREIGN KEY (threadid) REFERENCES thread(postid)
 );
