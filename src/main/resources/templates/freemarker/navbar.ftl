@@ -4,7 +4,7 @@
             <a href="/" class="w3-bar-item w3-button w3-hover-white">Home</a>
             <a href="/" class="w3-bar-item w3-button w3-hover-white">Browse</a>
             <a href="/profile" class="w3-bar-item w3-button w3-hover-white">Profile</a>
-            <a href="/logout" class="w3-bar-item w3-button w3-hover-white">Logout</a>
+            <a href="/login" class="w3-bar-item w3-button w3-hover-white">Login</a>
     </nav>
     <script>
     </script>
