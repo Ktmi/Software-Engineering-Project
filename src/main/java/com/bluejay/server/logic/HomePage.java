@@ -16,7 +16,7 @@ import org.glassfish.jersey.server.mvc.Template;
 
 import com.bluejay.server.db.DatabaseFacade;
 
-@Path("/rest")
+@Path("/")
 @Produces({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
 public class HomePage {
 

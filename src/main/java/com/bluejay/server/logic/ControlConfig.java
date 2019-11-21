@@ -7,16 +7,15 @@ import org.glassfish.jersey.server.mvc.freemarker.FreemarkerMvcFeature;
 
 /**
  * Configuration for the {@link org.glassfish.jersey.servlet.ServletContainer}.
- * Injected into the servlet container during
- * initialization of the WebApp. 
+ * Injected into the servlet container during initialization of the WebApp.
  */
-@ApplicationPath("/")
+@ApplicationPath("/rest")
 public class ControlConfig extends ResourceConfig {
-    public ControlConfig() {
-        //Set package to expose components of
-        packages("com.bluejay.server.logic");
-        //Adds in Templating for pages
-        property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "templates/freemarker");
-        register(FreemarkerMvcFeature.class);
-    }
+	public ControlConfig() {
+		// Set package to expose components of
+		packages("com.bluejay.server.logic");
+		// Adds in Templating for pages
+		property(FreemarkerMvcFeature.TEMPLATE_BASE_PATH, "templates/freemarker");
+		register(FreemarkerMvcFeature.class);
+	}
 }
