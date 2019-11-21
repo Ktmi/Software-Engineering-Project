@@ -1,77 +1,71 @@
-   h1 {
-       color: #2565ae;
-       font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-       font-size: 32px;
-       font-weight: 400;
-       line-height: 42px;
-       margin: 0 0 0px;
-   }
-   
-   .wrapper-div {
-       display: table-cell;
-       vertical-align: middle
-   }
-   
-   h2 {
-       color: #000000;
-       text-align: center;
-       line-height: 0px;
-       font-size: 16px;
-       pointer-events: none;
-       margin: 0 0 0px;
-   }
-   
-   h3 {
-       color: #ffffff;
-       text-align: center;
-       line-height: 10px;
-       font-size: 12px;
-       pointer-events: none;
-       margin: 0 0 0px;
-       vertical-align: middle
-   }
-   /* Full-width inputs */
-   
-   input[type=text],
-   input[type=password] {
-       width: 70%;
-       padding: 12px 12px;
-       margin: 8px 0;
-       display: inline-block;
-       border: 1px solid #ccc;
-       box-sizing: border-box;
-   }
-   /* Set a style for all buttons */
-   
-   button {
-       background-color: #4CAF50;
-       color: white;
-       padding: 14px 20px;
-       margin: 8px 0;
-       border: none;
-       cursor: pointer;
-       width: 70%;
-   }
-   /* Add a hover effect for buttons */
-   
-   button:hover {
-       opacity: 0.7;
-   }
-   /* Extra style for the cancel button (red) */
-   
-   .cancelbtn {
-       width: 70%;
-       padding: 14px 20px;
-       background-color: #f44336;
-   }
-   /* Change styles for span and cancel button on extra small screens */
-   
-   @media screen and (max-width: 300px) {
-       span.psw {
-           display: block;
-           float: none;
-       }
-       .cancelbtn {
-           width: 100%;
-       }
-   }
+h1 {
+	color: #2565ae;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 42px;
+	margin: 0 0 0px;
+}
+
+.wrapper-div {
+	display: table-cell;
+	vertical-align: middle
+}
+
+h2 {
+	color: #000000;
+	text-align: center;
+	line-height: 0px;
+	font-size: 16px;
+	pointer-events: none;
+	margin: 0 0 0px;
+}
+
+h3 {
+	color: #ffffff;
+	text-align: center;
+	line-height: 10px;
+	font-size: 12px;
+	pointer-events: none;
+	margin: 0 0 0px;
+	vertical-align: middle
+}
+/* Full-width inputs */
+input[type=text], input[type=password] {
+	width: 70%;
+	padding: 12px 12px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+/* Set a style for all buttons */
+button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 70%;
+}
+/* Add a hover effect for buttons */
+button:hover {
+	opacity: 0.7;
+}
+/* Extra style for the cancel button (red) */
+.cancelbtn {
+	width: 70%;
+	padding: 14px 20px;
+	background-color: #f44336;
+}
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+	span.psw {
+		display: block;
+		float: none;
+	}
+	.cancelbtn {
+		width: 100%;
+	}
+}

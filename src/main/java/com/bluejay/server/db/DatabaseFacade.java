@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -89,7 +90,10 @@ public class DatabaseFacade
     }
 
 
-
+    public List<Object> search(String query, List<String> orderBy, int from, int to)
+    {
+    	return null;
+    }
 
     protected final byte[] hashSecret(String secret)
     {

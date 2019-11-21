@@ -9,7 +9,8 @@ import javax.ws.rs.Path;
 import javax.annotation.Resource;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
-
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.server.mvc.Template;
 
@@ -18,7 +19,7 @@ import com.bluejay.server.db.DatabaseFacade;
 import org.glassfish.jersey.server.mvc.ErrorTemplate;
 
 @Path("/")
-@Produces({"text/html"})
+@Produces({MediaType.TEXT_HTML,MediaType.APPLICATION_JSON})
 public class HomePage {
 
 	@Resource(name = "jbdc/bluejay-db")
@@ -28,7 +29,7 @@ public class HomePage {
     @GET
     @Template(name = "/index.ftl")
     @ErrorTemplate(name = "/error.ftl")
-    @Produces("text/html")
+    @Produces(MediaType.TEXT_HTML)
     public Map<String,Object> presentHomepage()
     {
         Map<String,Object> a = new HashMap<String,Object>();
@@ -38,4 +39,17 @@ public class HomePage {
         a.put("recents",items);
         return a;
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Object> search(@QueryParam("query") String query, @QueryParam("orderBy") List<String> orderBy, 
+    		@QueryParam("from") int from, @QueryParam("to") int to)
+    {
+    	return databaseFacade.search(query, orderBy, from, to);
+    }
+    
+    
+    
+    
+    
 }
