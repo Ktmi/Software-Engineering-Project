@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.sql.DataSource;
 
@@ -23,11 +22,19 @@ import com.bluejay.server.common.User;
  * @author David Ramirez <drami102@fiu.edu>
  */
 public class DatabaseFacade {
-	@Resource(name = "jdbc/bluejay-db")
+	@Inject
 	private DataSource ds;
 
 	@Inject
 	private MessageDigest encryption;
+
+	public void setDataSource(DataSource dataSource) {
+		this.ds = dataSource;
+	}
+
+	public DataSource getDataSource() {
+		return this.ds;
+	}
 
 	public void setEncryption(MessageDigest encryption) {
 		this.encryption = encryption;

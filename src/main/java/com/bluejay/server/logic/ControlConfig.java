@@ -3,6 +3,7 @@ package com.bluejay.server.logic;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.sql.DataSource;
 import javax.ws.rs.ApplicationPath;
 
 import org.glassfish.jersey.internal.inject.AbstractBinder;
@@ -28,6 +29,7 @@ public class ControlConfig extends ResourceConfig {
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
 			final DatabaseFacade db = (DatabaseFacade) envCtx.lookup("bean/bluejay-db-facade");
+			db.setDataSource((DataSource) envCtx.lookup("jdbc/bluejay-db"));
 			register(new AbstractBinder() {
 				@Override
 				protected void configure() {
