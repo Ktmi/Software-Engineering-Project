@@ -23,10 +23,8 @@ import com.bluejay.server.common.User;
  * @author David Ramirez <drami102@fiu.edu>
  */
 public class DatabaseFacade {
-	@Inject
 	private DataSource ds;
 
-	@Inject
 	private MessageDigest encryption;
 
 	public void setDataSource(DataSource dataSource) {
