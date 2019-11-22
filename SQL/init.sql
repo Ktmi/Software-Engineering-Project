@@ -1,4 +1,4 @@
-CREATE TABLE user
+CREATE TABLE users
 (
     userid INT AUTO_INCREMENT NOT NULL,
     username varchar(255) UNIQUE NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE user
     PRIMARY KEY (userid)
 );
 
-CREATE TABLE post
+CREATE TABLE posts
 (
     postid int AUTO_INCREMENT,
     userid int,
@@ -16,7 +16,7 @@ CREATE TABLE post
     FOREIGN KEY (userid) REFERENCES users(userid)
 );
 
-CREATE TABLE thread
+CREATE TABLE threads
 (
     postid int,
     title varchar(255),
@@ -24,7 +24,7 @@ CREATE TABLE thread
     FOREIGN KEY (postid) REFERENCES post(postid)
 );
 
-CREATE TABLE reply
+CREATE TABLE replies
 (
     postid int,
     threadid int,

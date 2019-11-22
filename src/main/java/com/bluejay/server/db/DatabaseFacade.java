@@ -50,7 +50,7 @@ public class DatabaseFacade {
 	public void validateLogin(User user) throws SQLException {
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con
-						.prepareStatement("SELECT userid FROM user WHERE username = ? AND secret = ?");) {
+						.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?");) {
 			st.setString(1, user.getUsername());
 			st.setBytes(2, hashSecret(user.getPassword()));
 			ResultSet rs = st.executeQuery();
@@ -68,7 +68,7 @@ public class DatabaseFacade {
 	public void addUser(User user) throws SQLException {
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con
-						.prepareStatement("INSERT INTO user(username,email,password) VALUES (?,?,?)");) {
+						.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)");) {
 			st.setString(1, user.getUsername());
 			st.setString(2, user.getEmail());
 			st.setBytes(3, hashSecret(user.getPassword()));
@@ -91,7 +91,7 @@ public class DatabaseFacade {
 	public void createThread(Thread thread) throws SQLException {
 		createPost(thread);
 		try (Connection con = ds.getConnection();
-				PreparedStatement st = con.prepareStatement("INSERT INTO thread(postid,title) VALUES (?,?)");) {
+				PreparedStatement st = con.prepareStatement("INSERT INTO threads(postid,title) VALUES (?,?)");) {
 			st.setInt(1, thread.getPostid());
 			st.setString(2, thread.getTitle());
 			st.executeUpdate();
@@ -101,7 +101,7 @@ public class DatabaseFacade {
 	public void createReply(Reply reply) throws SQLException {
 		createPost(reply);
 		try (Connection con = ds.getConnection();
-				PreparedStatement st = con.prepareStatement("INSERT INTO reply(postid,threadid) VALUES (?,?)");) {
+				PreparedStatement st = con.prepareStatement("INSERT INTO replies(postid,threadid) VALUES (?,?)");) {
 			st.setInt(1, reply.getPostid());
 			st.setInt(2, reply.getThreadid());
 			st.executeUpdate();
@@ -161,12 +161,44 @@ public class DatabaseFacade {
 			st.setInt(1, page * amt);
 			st.setInt(2, amt);
 			try (ResultSet rs = st.executeQuery();) {
-
+				while(rs.next())
+				{
+					Thread temp = new Thread();
+					temp.setUserid(rs.getInt(1));
+					temp.setPostid(rs.getInt(2));
+					temp.setTitle(rs.getString(3));
+					list.add(temp);
+				}
 			}
 		}
 		return list;
 	}
 
+	public List<Reply> getReplies(Thread thread, int page, int amt) throws SQLException {
+		List<Reply> list = new ArrayList<Reply>();
+		try (Connection con = ds.getConnection();
+				PreparedStatement st = con.prepareStatement(
+						"SELECT userid, postid FROM replies INNER JOIN posts USING postid WHERE threadid = ? LIMIT ?,?");) {
+			st.setInt(1, thread.getPostid());
+			st.setInt(2, page * amt);
+			st.setInt(3, amt);
+			try (ResultSet rs = st.executeQuery();) {
+				while(rs.next())
+				{
+					Reply temp = new Reply();
+					temp.setUserid(rs.getInt(1));
+					temp.setPostid(rs.getInt(2));
+					list.add(temp);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * TODO finish search back end
 	 * 
