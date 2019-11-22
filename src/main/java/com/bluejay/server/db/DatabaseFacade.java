@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -130,6 +131,42 @@ public class DatabaseFacade {
 				post.setPostid(rs.getInt(1));
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param post Input and output parameter. Expected to have a valid postid
+	 *             assigned. After function completion the content and userid is
+	 *             written to this object.
+	 * @throws SQLException
+	 */
+	public void getPost(Post post) throws SQLException {
+		try (Connection con = ds.getConnection();
+				PreparedStatement st = con.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?");) {
+			st.setInt(1, post.getPostid());
+			try (ResultSet rs = st.executeQuery();) {
+				if (rs.next()) {
+					post.setUserid(rs.getInt(1));
+					post.setContent(rs.getString(2));
+				} else
+					throw new SQLException();
+			}
+		}
+	}
+
+	public List<Thread> getThreads(int page, int amt) throws SQLException {
+		List<Thread> list = new ArrayList<Thread>();
+		try (Connection con = ds.getConnection();
+				PreparedStatement st = con.prepareStatement(
+						"SELECT userid, postid, title FROM threads INNER JOIN posts USING postid LIMIT ?,?");) {
+			st.setInt(1, page * amt);
+			st.setInt(2, amt);
+			try (ResultSet rs = st.executeQuery();) {
+
+			}
+		}
+		return list;
 	}
 
 	/**
