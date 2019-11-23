@@ -1,9 +1,11 @@
+CREATE SCHEMA `bluejay` ;
+USE bluejay;
 CREATE TABLE users
 (
-    userid INT AUTO_INCREMENT NOT NULL,
+    userid int AUTO_INCREMENT NOT NULL,
     username varchar(255) UNIQUE NOT NULL,
     email varchar(255) NOT NULL,
-    secret byte(32) NOT NULL,
+    secret binary(32) NOT NULL,
     PRIMARY KEY (userid)
 );
 
@@ -21,7 +23,7 @@ CREATE TABLE threads
     postid int,
     title varchar(255),
     PRIMARY KEY (postid),
-    FOREIGN KEY (postid) REFERENCES post(postid)
+    FOREIGN KEY (postid) REFERENCES posts(postid)
 );
 
 CREATE TABLE replies
@@ -29,6 +31,6 @@ CREATE TABLE replies
     postid int,
     threadid int,
     PRIMARY KEY (postid),
-    FOREIGN KEY (postid) REFERENCES post(postid),
-    FOREIGN KEY (threadid) REFERENCES thread(postid)
+    FOREIGN KEY (postid) REFERENCES posts(postid),
+    FOREIGN KEY (threadid) REFERENCES threads(postid)
 );

@@ -20,8 +20,7 @@
 
 			<link rel="stylesheet" href="<c:url value = "/css/ACstyle.css"/>">
 			<form action="action_page.php" method="post">
-				<br>
-				<label for="uname"><h2>Username</h2></label><br> <input
+				<br> <label for="uname"><h2>Username</h2></label><br> <input
 					type="text" placeholder="Enter Username" name="uname" required><br>
 				<br> <label for="psw"><h2>Password</h2></label><br> <input
 					type="password" placeholder="Enter Password" name="psw" required><br>
@@ -34,8 +33,7 @@
 					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 				</label> <span class="psw"> <a href="<c:url value = "/forgotPass"/>">Forgot
-						password?</a></span><br>
-				<br> <span class="psw"> New User? <a
+						password?</a></span><br> <br> <span class="psw"> New User? <a
 					href="<c:url value = "/createAcc"/>">Create New Account</a></span><br>
 				<br>
 				<h1>&nbsp</h1>

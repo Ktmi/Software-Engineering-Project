@@ -17,13 +17,9 @@
 				&nbsp <br> Forgot Password?
 			</h1>
 			<form action="action_page.php" method="post">
-				<br>
-				<br>
-				<br>
-				<label for="uname"><h2>Email Recovery</h2></label><br> <input
-					type="text" placeholder="Enter Email" name="uname" required><br>
-				<br>
-				<br>
+				<br> <br> <br> <label for="uname"><h2>Email
+						Recovery</h2></label><br> <input type="text" placeholder="Enter Email"
+					name="uname" required><br> <br> <br>
 
 				<button type="submit">
 					<h3>Submit</h3>

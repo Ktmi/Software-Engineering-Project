@@ -18,22 +18,19 @@
 				&nbsp <br> Create an Account
 			</h1>
 			<form action="action_page.php" method="post" id="createAccountForm">
-				<br>
-				<br>
-				<br>
-				<label for="uname">
+				<br> <br> <br> <label for="uname">
 					<h2>Email</h2>
 				</label><br> <input type="text" placeholder="Enter Email" name="uname"
-					id="userEmail" required><br> <br>
-				<label for="uname">
+					id="userEmail" required><br> <br> <label
+					for="uname">
 					<h2>Username</h2>
 				</label><br> <input type="text" placeholder="Enter Username"
-					name="uname" id="userName" required><br> <br>
-				<label for="psw">
+					name="uname" id="userName" required><br> <br> <label
+					for="psw">
 					<h2>Password</h2>
 				</label><br> <input type="password" placeholder="Enter Password"
-					name="psw" id="userPass" required><br> <br>
-				<label for="psw">
+					name="psw" id="userPass" required><br> <br> <label
+					for="psw">
 					<h2>Re-Enter Password</h2>
 				</label><br> <input type="password" placeholder="Re-Enter Password"
 					name="psw" id="userPassRe" required><br>

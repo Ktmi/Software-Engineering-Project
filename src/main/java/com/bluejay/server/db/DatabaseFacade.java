@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import com.bluejay.server.common.Post;
@@ -157,12 +156,11 @@ public class DatabaseFacade {
 		List<Thread> list = new ArrayList<Thread>();
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement(
-						"SELECT userid, postid, title FROM threads INNER JOIN posts USING postid LIMIT ?,?");) {
+						"SELECT userid, posts.postid, title FROM threads INNER JOIN posts LIMIT ?,?");) {
 			st.setInt(1, page * amt);
 			st.setInt(2, amt);
 			try (ResultSet rs = st.executeQuery();) {
-				while(rs.next())
-				{
+				while (rs.next()) {
 					Thread temp = new Thread();
 					temp.setUserid(rs.getInt(1));
 					temp.setPostid(rs.getInt(2));
@@ -178,13 +176,12 @@ public class DatabaseFacade {
 		List<Reply> list = new ArrayList<Reply>();
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement(
-						"SELECT userid, postid FROM replies INNER JOIN posts USING postid WHERE threadid = ? LIMIT ?,?");) {
+						"SELECT userid, postid FROM replies INNER JOIN posts WHERE threadid = ? LIMIT ?,?");) {
 			st.setInt(1, thread.getPostid());
 			st.setInt(2, page * amt);
 			st.setInt(3, amt);
 			try (ResultSet rs = st.executeQuery();) {
-				while(rs.next())
-				{
+				while (rs.next()) {
 					Reply temp = new Reply();
 					temp.setUserid(rs.getInt(1));
 					temp.setPostid(rs.getInt(2));
@@ -194,11 +191,7 @@ public class DatabaseFacade {
 		}
 		return list;
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * TODO finish search back end
 	 * 
