@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -23,10 +24,17 @@ public class HomePage {
 	private DatabaseFacade databaseFacade;
 
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Post getPost(@QueryParam("") Post post) throws SQLException {
+		databaseFacade.getPost(post);
+		return post;
+	}
+
+	@Path("/testEcho")
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Post getPost(Post post) throws SQLException {
-		databaseFacade.getPost(post);
+	public Post testEcho(Post post) throws SQLException {
 		return post;
 	}
 
