@@ -64,6 +64,16 @@ button:hover {
 	width: 70%;
 }
 
+.button2 {
+	background-color: #000000;
+	color: white;
+	padding: 2px 20px;
+	margin: 6px 0;
+	border: none;
+	cursor: pointer;
+	width: 20%;
+}
+
 /* Extra style for the cancel button (red) */
 .cancelbtn {
 	width: 70%;
