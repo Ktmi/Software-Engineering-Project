@@ -11,31 +11,49 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 
 import com.bluejay.server.common.Post;
+import com.bluejay.server.common.Reply;
 import com.bluejay.server.common.Thread;
+import com.bluejay.server.common.User;
 import com.bluejay.server.db.DatabaseFacade;
 
-@Path("/")
-public class HomePage {
+@Path("/post")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public class PostAccess {
 
 	@Inject
 	private DatabaseFacade databaseFacade;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Post getPost(@QueryParam("") Post post) throws SQLException {
-		databaseFacade.getPost(post);
-		return post;
-	}
-
-	@Path("/testEcho")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Post testEcho(Post post) throws SQLException {
+	public Post getPost(Post post) {
+		try {
+			databaseFacade.getPost(post);
+		} catch (SQLException e) {
+			post.setContent("Content unavailable.");
+		}
 		return post;
+	}
+
+	@Path("/thread")
+	@POST
+	public Thread createThread(Thread thread) {
+
+		return null;
+	}
+
+	@Path("/reply")
+	@POST
+	public Reply createReply(Reply reply, @Context SecurityContext securityContext) {
+		User user = (User) securityContext.getUserPrincipal();
+		reply.setUserid(user.getUserid());
+		return null;
 	}
 
 	@Path("/browse")
