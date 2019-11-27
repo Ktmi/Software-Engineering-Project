@@ -7,7 +7,8 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Create Account</title>
 </head>
-<link rel="stylesheet" type="text/css" href="/bluejay-server/css/ACstyle.css" />
+<link rel="stylesheet" type="text/css"
+	href="/bluejay-server/css/ACstyle.css" />
 <body style="background-color: rgb(40, 43, 43);">
 
 	<div style="text-align: center;">
@@ -24,29 +25,32 @@
 				<input type="text" placeholder="Enter Email" name="uname"
 					id="userEmail" required><br> <br>
 				<h3>
-					<label for="uname"> Username </label><br>
-					<br> <input type="text" placeholder="Enter Username"
-						name="uname" id="userName" required>
+					<label for="uname"> Username </label><br> <br> <input
+						type="text" placeholder="Enter Username" name="uname"
+						id="userName" required>
 				</h3>
 				<h3>
-					<br>
-					<label for="psw"> Password </label>
+					<br> <label for="psw"> Password </label>
 				</h3>
 				<input type="password" placeholder="Enter Password" name="psw"
 					id="userPass" required><br>
 				<h3>
-					<br>
-					<label for="psw"> Re-Enter Password </label>
+					<br> <label for="psw"> Re-Enter Password </label>
 				</h3>
 				<input type="password" placeholder="Re-Enter Password" name="psw"
 					id="userPassRe" required><br> <br> <br>
-				<button type="submit" onclick="createAccount();">
+				<button type="submit" onclick="window.location.href = '/bluejay-server/securityQuestions/';">
 					<h3>Submit</h3>
 				</button>
-				<button onclick="window.location.href = '/bluejay-server/';" class="button1">
+				<button onclick="window.location.href = '/bluejay-server/';"
+					class="button1">
 					<h3>Return to Homepage</h3>
 				</button>
-				<br><br><br><br><br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
 			</form>
 		</div>
 
