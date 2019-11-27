@@ -1,6 +1,8 @@
 package com.bluejay.server.common;
 
-public class User {
+import java.security.Principal;
+
+public class User implements Principal {
 	private int userid;
 	private String username;
 	private String password;
@@ -39,4 +41,10 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	@Override
+	public String getName() {
+		return userid + '|' + username;
+	}
+
 }

@@ -55,6 +55,8 @@ public class DatabaseFacade {
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 				user.setUserid(rs.getInt(1));
+			} else {
+				throw new SQLException();
 			}
 		}
 	}
