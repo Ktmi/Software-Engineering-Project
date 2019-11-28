@@ -6,7 +6,7 @@ bj.getUpdatePost = function (target)
 	post.postid = target.attr("postid");
 	post.userid = target.attr("userid");
 	$.ajax({
-		url:'/bluejay-server/rest',
+		url:'/bluejay-server/rest/post',
 		type:'POST',
 		dataType:'json',
 		contentType: 'application/json',

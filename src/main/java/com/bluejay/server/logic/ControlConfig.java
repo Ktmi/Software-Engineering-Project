@@ -28,7 +28,7 @@ public class ControlConfig extends ResourceConfig {
 
 	public ControlConfig() {
 		// Set package to expose components of
-		packages(false, "com.bluejay.server.logic.rest");
+		packages("com.bluejay.server.logic.rest");
 
 		// Filter for Authorization
 		register(AuthorizationFilter.class);
