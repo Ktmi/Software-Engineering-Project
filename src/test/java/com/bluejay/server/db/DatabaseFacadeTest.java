@@ -30,6 +30,12 @@ import org.mockito.MockitoAnnotations;
 
 import com.bluejay.server.common.User;
 
+/**
+ * Unit tests for DatabaseFacade
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ *
+ */
 public class DatabaseFacadeTest {
 
 	private DatabaseFacade databaseFacade;

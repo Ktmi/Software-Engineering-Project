@@ -2,6 +2,11 @@ package com.bluejay.server.common;
 
 import java.security.Principal;
 
+/**
+ * Java representation of User
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ */
 public class User implements Principal {
 	private int userid;
 	private String username;

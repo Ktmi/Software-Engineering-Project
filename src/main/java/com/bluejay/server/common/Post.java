@@ -1,5 +1,10 @@
 package com.bluejay.server.common;
 
+/**
+ * Java representation of Post
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ */
 public class Post {
 	private int postid;
 	private int userid;

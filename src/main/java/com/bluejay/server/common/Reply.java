@@ -1,5 +1,10 @@
 package com.bluejay.server.common;
 
+/**
+ * Java representation of Reply
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ */
 public class Reply extends Post {
 	private int threadid;
 
