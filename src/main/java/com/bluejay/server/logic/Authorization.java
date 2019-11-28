@@ -1,4 +1,4 @@
-package com.bluejay.server.logic.rest;
+package com.bluejay.server.logic;
 
 import java.security.Key;
 
