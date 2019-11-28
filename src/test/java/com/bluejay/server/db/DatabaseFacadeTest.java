@@ -10,6 +10,8 @@ import static org.mockito.Mockito.mock;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -35,21 +37,20 @@ public class DatabaseFacadeTest {
 
 	@Test
 	public void testGetSetDataSource() {
-		// getDataSource returns null for just initialized databaseFacade
-		assertNull("Default constructor initialized the DatasSurce.", databaseFacade.getDataSource());
+		// getEncryption returns null for just initialized databaseFacade
+		assertNull("Default constructor initialized the MessageDigest.", databaseFacade.getDataSource());
 
-		final DataSource mockedDataSource1 = mock(DataSource.class);
-		assertNotNull("Mock returned null", mockedDataSource1); // Check that return mock is not null
+		DataSource lastDataSource = null;
 
-		databaseFacade.setDataSource(mockedDataSource1);
-		assertSame("Did not change DataSource", mockedDataSource1, databaseFacade.getDataSource());
+		for (int i = 0; i < 5; i++) {
+			final DataSource mockedDataSource = mock(DataSource.class);
+			assertNotNull("Mock returned null", mockedDataSource); // Check that return mock is not null
+			assertNotSame("Duplicate mock return value", lastDataSource, mockedDataSource);
 
-		final DataSource mockedDataSource2 = mock(DataSource.class);
-		assertNotNull("Mock returned null", mockedDataSource2);// Check that return mock is not null
-		assertNotSame("Duplicate mocks return value", mockedDataSource1, mockedDataSource2);
-
-		databaseFacade.setDataSource(mockedDataSource2);
-		assertSame("Did not change DataSource.", mockedDataSource2, databaseFacade.getDataSource());
+			databaseFacade.setDataSource(mockedDataSource);
+			assertSame("Did not change DataSource", mockedDataSource, databaseFacade.getDataSource());
+			lastDataSource = mockedDataSource;
+		}
 	}
 
 	@Test
@@ -57,44 +58,40 @@ public class DatabaseFacadeTest {
 		// getEncryption returns null for just initialized databaseFacade
 		assertNull("Default constructor initialized the MessageDigest.", databaseFacade.getEncryption());
 
-		final MessageDigest mockedMessageDigest1 = mock(MessageDigest.class);
-		assertNotNull("Mock returned null", mockedMessageDigest1); // Check that return mock is not null
+		MessageDigest lastMessageDigest = null;
 
-		databaseFacade.setEncryption(mockedMessageDigest1);
-		assertSame("Did not change MessageDigest", mockedMessageDigest1, databaseFacade.getEncryption());
+		for (int i = 0; i < 5; i++) {
+			final MessageDigest mockedMessageDigest = mock(MessageDigest.class);
+			assertNotNull("Mock returned null", mockedMessageDigest); // Check that return mock is not null
+			assertNotSame("Duplicate mock return value", lastMessageDigest, mockedMessageDigest);
 
-		final MessageDigest mockedMessageDigest2 = mock(MessageDigest.class);
-		assertNotNull("Mock returned null", mockedMessageDigest2);// Check that return mock is not null
-		assertNotSame("Duplicate mocks return value", mockedMessageDigest1, mockedMessageDigest2);
-
-		databaseFacade.setEncryption(mockedMessageDigest2);
-		assertSame("Did not change MessageDigest", mockedMessageDigest2, databaseFacade.getEncryption());
+			databaseFacade.setEncryption(mockedMessageDigest);
+			assertSame("Did not change MessageDigest", mockedMessageDigest, databaseFacade.getEncryption());
+			lastMessageDigest = mockedMessageDigest;
+		}
 	}
 
 	@Test
-	public void testSetEncryptionString() throws NoSuchAlgorithmException {
+	public void testGetSetEncryptionString() throws NoSuchAlgorithmException {
 		// getEncryption returns null for just initialized databaseFacade
 		assertNull("Default constructor initialized the MessageDigest.", databaseFacade.getEncryption());
 
-		String algorithm;
 		MessageDigest result;
 		MessageDigest lastResult = null;
 
-		algorithm = "SHA-256";
-		databaseFacade.setEncryption(algorithm);
-		result = databaseFacade.getEncryption();
+		List<String> algorithms = new ArrayList();
+		algorithms.add("SHA-256");
+		algorithms.add("MD5");
+		algorithms.add("SHA-1");
 
-		assertNotSame("MessageDigest should have changed", lastResult, result);
-		assertEquals("Message algorithm did not match expected", algorithm, result.getAlgorithm());
-		lastResult = result;
+		for (String algorithm : algorithms) {
+			databaseFacade.setEncryption(algorithm);
+			result = databaseFacade.getEncryption();
 
-		algorithm = "MD5";
-		databaseFacade.setEncryption(algorithm);
-		result = databaseFacade.getEncryption();
-
-		assertNotSame("MessageDigest should have changed", lastResult, result);
-		assertEquals("Message algorithm did not match expected", algorithm, result.getAlgorithm());
-
+			assertNotSame("MessageDigest should have changed", lastResult, result);
+			assertEquals("Message algorithm did not match expected", algorithm, result.getAlgorithm());
+			lastResult = result;
+		}
 	}
 
 	@Test(expected = NoSuchAlgorithmException.class)
