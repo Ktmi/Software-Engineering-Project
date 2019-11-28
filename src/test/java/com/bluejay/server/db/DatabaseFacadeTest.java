@@ -7,9 +7,16 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +25,28 @@ import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import com.bluejay.server.common.User;
 
 public class DatabaseFacadeTest {
 
 	private DatabaseFacade databaseFacade;
 
+	@Mock
+	private DataSource mockDataSource;
+	@Mock
+	private Connection mockConnection;
+	@Mock
+	private PreparedStatement mockStatement;
+	@Mock
+	private ResultSet mockResultSet;
+
 	// Initialize the DatabaseFacade
 	@Before
 	public void init() {
+		MockitoAnnotations.initMocks(this);
 		databaseFacade = new DatabaseFacade();
 	}
 
@@ -33,6 +54,10 @@ public class DatabaseFacadeTest {
 	@After
 	public void clean() {
 		databaseFacade = null;
+		mockDataSource = null;
+		mockConnection = null;
+		mockStatement = null;
+		mockResultSet = null;
 	}
 
 	@Test
@@ -72,20 +97,24 @@ public class DatabaseFacadeTest {
 	}
 
 	@Test
-	public void testGetSetEncryptionString() throws NoSuchAlgorithmException {
+	public void testGetSetEncryptionString() {
 		// getEncryption returns null for just initialized databaseFacade
 		assertNull("Default constructor initialized the MessageDigest.", databaseFacade.getEncryption());
 
 		MessageDigest result;
 		MessageDigest lastResult = null;
 
-		List<String> algorithms = new ArrayList();
+		List<String> algorithms = new ArrayList<String>();
 		algorithms.add("SHA-256");
 		algorithms.add("MD5");
 		algorithms.add("SHA-1");
 
 		for (String algorithm : algorithms) {
-			databaseFacade.setEncryption(algorithm);
+			try {
+				databaseFacade.setEncryption(algorithm);
+			} catch (NoSuchAlgorithmException e) {
+				fail("Failed to set encryption to specified algorithm.");
+			}
 			result = databaseFacade.getEncryption();
 
 			assertNotSame("MessageDigest should have changed", lastResult, result);
@@ -100,8 +129,73 @@ public class DatabaseFacadeTest {
 	}
 
 	@Test
-	public void testValidateLogin() {
-		fail("Not yet implemented"); // TODO
+	public void testValidateLogin() throws Exception {
+		// Setup stubs
+		when(mockDataSource.getConnection()).thenReturn(mockConnection);
+		when(mockConnection.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?"))
+				.thenReturn(mockStatement);
+		when(mockResultSet.next()).thenReturn(true);
+		when(mockResultSet.getInt(1)).thenReturn(1);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		List<String> algorithms = new ArrayList<String>();
+		algorithms.add("SHA-256");
+		algorithms.add("MD5");
+		algorithms.add("SHA-1");
+
+		List<User> users = new ArrayList<User>();
+		User temp = new User();
+		temp.setUsername("David");
+		temp.setPassword("John Cena");
+		users.add(temp);
+
+		for (String algorithm : algorithms) {
+			MessageDigest expectedMessageDigest = MessageDigest.getInstance(algorithm);
+
+			databaseFacade.setEncryption(algorithm);
+
+			for (User user : users) {
+				// Setup stubs, reset verify
+				reset(mockStatement);
+				when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
+				String expectedName = user.getUsername();
+				String expectedPassword = user.getPassword();
+				user.setPassword(expectedPassword);
+
+				databaseFacade.validateLogin(user);
+
+				// Cleanup
+				user.setPassword(expectedPassword);
+
+				// Verify results
+				verify(mockStatement).setString(1, expectedName);
+				byte[] expectedHash = expectedMessageDigest.digest(expectedPassword.getBytes());
+				verify(mockStatement).setBytes(2, expectedHash);
+
+				assertEquals("Userid not set.", 1, user.getUserid());
+			}
+		}
+	}
+
+	@Test(expected = SQLException.class)
+	public void testValidateLoginException() throws Exception {
+		// Setup stubs
+		when(mockDataSource.getConnection()).thenReturn(mockConnection);
+		when(mockConnection.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?"))
+				.thenReturn(mockStatement);
+		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+		when(mockResultSet.next()).thenReturn(false);
+
+		databaseFacade.setDataSource(mockDataSource);
+		databaseFacade.setEncryption("SHA-256");
+
+		User temp = new User();
+		temp.setUsername("");
+		temp.setPassword("");
+
+		databaseFacade.validateLogin(temp);
 	}
 
 	@Test
