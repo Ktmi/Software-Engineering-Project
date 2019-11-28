@@ -77,6 +77,8 @@ public class DatabaseFacade {
 				ResultSet rs = st.getGeneratedKeys();
 				rs.next();
 				user.setUserid(rs.getInt(1));
+			} else {
+				throw new SQLException();
 			}
 		}
 	}

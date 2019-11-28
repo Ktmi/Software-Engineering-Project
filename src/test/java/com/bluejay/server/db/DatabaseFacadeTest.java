@@ -43,17 +43,40 @@ public class DatabaseFacadeTest {
 	@Mock
 	private ResultSet mockResultSet;
 
+	private List<String> algorithms;
+
+	private List<User> users;
+
 	// Initialize the DatabaseFacade
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 		databaseFacade = new DatabaseFacade();
+		algorithms = new ArrayList<String>();
+		users = new ArrayList<User>();
+
+		algorithms.add("SHA-256");
+		algorithms.add("MD5");
+		algorithms.add("SHA-1");
+
+		User temp = new User();
+		temp.setUsername("David");
+		temp.setPassword("John Cena");
+		temp.setEmail("m@test.com");
+		users.add(temp);
+		temp = new User();
+		temp.setUsername("User2");
+		temp.setPassword("Password2");
+		temp.setEmail("t@test.com");
 	}
 
 	// Throw out the old database facade
 	@After
 	public void clean() {
 		databaseFacade = null;
+		algorithms = null;
+		users = null;
+
 		mockDataSource = null;
 		mockConnection = null;
 		mockStatement = null;
@@ -104,11 +127,6 @@ public class DatabaseFacadeTest {
 		MessageDigest result;
 		MessageDigest lastResult = null;
 
-		List<String> algorithms = new ArrayList<String>();
-		algorithms.add("SHA-256");
-		algorithms.add("MD5");
-		algorithms.add("SHA-1");
-
 		for (String algorithm : algorithms) {
 			try {
 				databaseFacade.setEncryption(algorithm);
@@ -138,17 +156,6 @@ public class DatabaseFacadeTest {
 		when(mockResultSet.getInt(1)).thenReturn(1);
 
 		databaseFacade.setDataSource(mockDataSource);
-
-		List<String> algorithms = new ArrayList<String>();
-		algorithms.add("SHA-256");
-		algorithms.add("MD5");
-		algorithms.add("SHA-1");
-
-		List<User> users = new ArrayList<User>();
-		User temp = new User();
-		temp.setUsername("David");
-		temp.setPassword("John Cena");
-		users.add(temp);
 
 		for (String algorithm : algorithms) {
 			MessageDigest expectedMessageDigest = MessageDigest.getInstance(algorithm);
@@ -199,8 +206,65 @@ public class DatabaseFacadeTest {
 	}
 
 	@Test
-	public void testAddUser() {
-		fail("Not yet implemented"); // TODO
+	public void testAddUser() throws Exception {
+		// Setup stubs
+		when(mockDataSource.getConnection()).thenReturn(mockConnection);
+		when(mockConnection.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)"))
+				.thenReturn(mockStatement);
+		when(mockResultSet.next()).thenReturn(true);
+		when(mockResultSet.getInt(1)).thenReturn(1);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		for (String algorithm : algorithms) {
+			MessageDigest expectedMessageDigest = MessageDigest.getInstance(algorithm);
+
+			databaseFacade.setEncryption(algorithm);
+
+			for (User user : users) {
+				// Setup stubs, reset verify
+				reset(mockStatement);
+				when(mockStatement.executeUpdate()).thenReturn(1);
+				when(mockStatement.getGeneratedKeys()).thenReturn(mockResultSet);
+
+				String expectedName = user.getUsername();
+				String expectedPassword = user.getPassword();
+				String expectedEmail = user.getEmail();
+				user.setPassword(expectedPassword);
+
+				databaseFacade.addUser(user);
+
+				// Cleanup
+				user.setPassword(expectedPassword);
+
+				// Verify results
+				verify(mockStatement).setString(1, expectedName);
+				verify(mockStatement).setString(2, expectedEmail);
+				byte[] expectedHash = expectedMessageDigest.digest(expectedPassword.getBytes());
+				verify(mockStatement).setBytes(3, expectedHash);
+
+				assertEquals("Userid not set.", 1, user.getUserid());
+			}
+		}
+	}
+
+	@Test(expected = SQLException.class)
+	public void testAddUserException() throws Exception {
+		// Setup stubs
+		when(mockDataSource.getConnection()).thenReturn(mockConnection);
+		when(mockConnection.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)"))
+				.thenReturn(mockStatement);
+		when(mockStatement.executeUpdate()).thenReturn(0);
+
+		databaseFacade.setDataSource(mockDataSource);
+		databaseFacade.setEncryption("SHA-256");
+
+		User temp = new User();
+		temp.setUsername("");
+		temp.setPassword("");
+		temp.setEmail("");
+
+		databaseFacade.addUser(temp);
 	}
 
 	@Test
