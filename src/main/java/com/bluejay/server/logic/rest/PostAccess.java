@@ -28,8 +28,6 @@ import com.bluejay.server.db.DatabaseFacade;
  * @author David Ramirez <drami102@fiu.edu>
  */
 @Path("/post")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
 public class PostAccess {
 
 	@Inject
@@ -58,6 +56,8 @@ public class PostAccess {
 
 	@Path("/thread")
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Thread createThread(Thread thread, @Context SecurityContext securityContext) throws SQLException {
 		User user = (User) securityContext.getUserPrincipal();
 		thread.setUserid(user.getUserid());
@@ -67,6 +67,8 @@ public class PostAccess {
 
 	@Path("/reply")
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Reply createReply(Reply reply, @Context SecurityContext securityContext) throws SQLException {
 		User user = (User) securityContext.getUserPrincipal();
 		reply.setUserid(user.getUserid());

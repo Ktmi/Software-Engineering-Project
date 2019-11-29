@@ -83,6 +83,19 @@ public class DatabaseFacade {
 		}
 	}
 
+	public void getUser(User user) throws SQLException {
+		try (Connection con = ds.getConnection();
+				PreparedStatement st = con.prepareStatement("SELECT username FROM users WHERE userid = ?");) {
+			st.setInt(1, user.getUserid());
+			ResultSet rs = st.executeQuery();
+			if (rs.next()) {
+				user.setUserid(rs.getInt(1));
+			} else {
+				throw new SQLException();
+			}
+		}
+	}
+
 	/**
 	 * 
 	 * @param thread Java representation of thread object to be added to database.
