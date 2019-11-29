@@ -3,5 +3,28 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+	<display-name>Blue-Jay Web App</display-name>
+
+	<servlet>
+		<servlet-name>main-servlet</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>com.bluejay.server.logic.ControlConfig</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<resource-ref>
+		<description>DB Connection</description>
+		<res-ref-name>jdbc/bluejay-db</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<resource-ref>
+		<description>DB connection facade</description>
+		<res-ref-name>bean/bluejay-db-facade</res-ref-name>
+		<res-type>com.bluejay.server.db.DatabaseFacade</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
 </web-app>
