@@ -29,6 +29,10 @@ public class Authentication {
 		this.key = key;
 	}
 
+	public void setSignatureAlgorithm(SignatureAlgorithm signatureAlgorithm) {
+		this.signatureAlgorithm = signatureAlgorithm;
+	}
+
 	public String issueToken(User user) {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONDAY, 1);
