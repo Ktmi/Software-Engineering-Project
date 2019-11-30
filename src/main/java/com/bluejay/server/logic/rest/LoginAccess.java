@@ -35,7 +35,8 @@ public class LoginAccess {
 		try {
 			databaseFacade.validateLogin(user);
 			String token = authentication.issueToken(user);
-			return Response.ok().cookie(new NewCookie("UserToken", token)).build();
+			NewCookie cookie = new NewCookie("UserToken", token, "/", "", "authentication", 1000000, false);
+			return Response.ok().cookie(cookie).build();
 		} catch (SQLException e) {
 			return Response.status(Status.UNAUTHORIZED).build();
 		}
