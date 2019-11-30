@@ -24,13 +24,13 @@ import com.bluejay.server.logic.Authentication;
 public class LoginAccess {
 
 	@Inject
-	DatabaseFacade databaseFacade;
+	private DatabaseFacade databaseFacade;
 
 	@Inject
-	Authentication authentication;
+	private Authentication authentication;
 
 	@Context
-	UriInfo uriContext;
+	private UriInfo uriContext;
 
 	@POST
 	@PermitAll
