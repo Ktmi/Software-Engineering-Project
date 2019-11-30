@@ -2,6 +2,7 @@ package com.bluejay.server.logic;
 
 import java.lang.reflect.Method;
 import java.security.Principal;
+import java.util.Map;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
@@ -10,7 +11,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
@@ -45,9 +46,8 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 			requestContext.abortWith(Response.status(Status.FORBIDDEN).build());
 			return;
 		}
-
-		String authHeaderVal = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-		String token = authHeaderVal.substring("Bearer".length()).trim();
+		Map<String, Cookie> cookies = requestContext.getCookies();
+		String token = cookies.get("UserToken").getValue();
 		try {
 			final User user = authentication.verifyToken(token);
 

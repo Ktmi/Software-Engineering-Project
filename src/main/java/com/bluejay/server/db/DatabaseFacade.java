@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +69,8 @@ public class DatabaseFacade {
 	 */
 	public void addUser(User user) throws SQLException {
 		try (Connection con = ds.getConnection();
-				PreparedStatement st = con
-						.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)");) {
+				PreparedStatement st = con.prepareStatement("INSERT INTO users(username,email,secret) VALUES (?,?,?)",
+						Statement.RETURN_GENERATED_KEYS);) {
 			st.setString(1, user.getUsername());
 			st.setString(2, user.getEmail());
 			st.setBytes(3, hashSecret(user.getPassword()));
@@ -136,7 +137,8 @@ public class DatabaseFacade {
 	 */
 	protected void createPost(Post post) throws SQLException {
 		try (Connection con = ds.getConnection();
-				PreparedStatement st = con.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)");) {
+				PreparedStatement st = con.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)",
+						Statement.RETURN_GENERATED_KEYS);) {
 			st.setInt(1, post.getUserid());
 			st.setString(2, post.getContent());
 			if (st.executeUpdate() > 0) {

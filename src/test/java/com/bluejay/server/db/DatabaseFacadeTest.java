@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,8 +216,8 @@ public class DatabaseFacadeTest {
 	public void testAddUser() throws Exception {
 		// Setup stubs
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
-		when(mockConnection.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)"))
-				.thenReturn(mockStatement);
+		when(mockConnection.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)",
+				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
 		when(mockResultSet.next()).thenReturn(true);
 		when(mockResultSet.getInt(1)).thenReturn(1);
 
@@ -258,8 +259,8 @@ public class DatabaseFacadeTest {
 	public void testAddUserException() throws Exception {
 		// Setup stubs
 		when(mockDataSource.getConnection()).thenReturn(mockConnection);
-		when(mockConnection.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)"))
-				.thenReturn(mockStatement);
+		when(mockConnection.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)",
+				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
 		when(mockStatement.executeUpdate()).thenReturn(0);
 
 		databaseFacade.setDataSource(mockDataSource);
