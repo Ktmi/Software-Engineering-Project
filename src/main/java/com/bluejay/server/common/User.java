@@ -15,6 +15,7 @@ public class User implements Principal {
 	private String username;
 	@FormParam("password")
 	private String password;
+	@FormParam("email")
 	private String email;
 
 	public int getUserid() {
