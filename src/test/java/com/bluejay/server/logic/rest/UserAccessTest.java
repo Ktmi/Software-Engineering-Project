@@ -45,7 +45,7 @@ public class UserAccessTest {
 
 		Response response = userAccess.createUser(user);
 
-		assertEquals("creatUser did not return redirect", "/login",
+		assertEquals("creatUser did not return redirect", "/bluejay-server/login",
 				response.getHeaders().get("Location").get(0).toString());
 
 	}
