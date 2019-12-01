@@ -1,5 +1,6 @@
 package com.bluejay.server.logic.rest;
 
+import java.net.URI;
 import java.sql.SQLException;
 
 import javax.annotation.security.PermitAll;
@@ -9,10 +10,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import com.bluejay.server.common.User;
 import com.bluejay.server.db.DatabaseFacade;
@@ -28,8 +27,9 @@ public class UserAccess {
 	@Inject
 	private DatabaseFacade databaseFacade;
 
-	@Context
-	private UriInfo uriContext;
+	public void setDatabaseFacade(DatabaseFacade databaseFacade) {
+		this.databaseFacade = databaseFacade;
+	}
 
 	@POST
 	@PermitAll
@@ -44,10 +44,9 @@ public class UserAccess {
 	@POST
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(@BeanParam User user) throws SQLException {
 		databaseFacade.addUser(user);
-		return Response.temporaryRedirect(uriContext.getBaseUri().resolve("/login")).build();
+		return Response.temporaryRedirect(URI.create("/login")).build();
 	}
 
 }
