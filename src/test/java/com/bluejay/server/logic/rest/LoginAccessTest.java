@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -18,6 +19,11 @@ import com.bluejay.server.common.User;
 import com.bluejay.server.db.DatabaseFacade;
 import com.bluejay.server.logic.Authentication;
 
+/**
+ * Tests loginAccess
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ */
 public class LoginAccessTest {
 
 	@Mock
@@ -34,6 +40,13 @@ public class LoginAccessTest {
 		loginAccess = new LoginAccess();
 		loginAccess.setDatabaseFacade(mockDatabaseFacade);
 		loginAccess.setAuthentication(mockAuthentication);
+	}
+
+	@After
+	public void clean() {
+		mockDatabaseFacade = null;
+		mockAuthentication = null;
+		loginAccess = null;
 	}
 
 	@Test
