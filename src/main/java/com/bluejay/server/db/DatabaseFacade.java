@@ -90,7 +90,7 @@ public class DatabaseFacade {
 			st.setInt(1, user.getUserid());
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
-				user.setUserid(rs.getInt(1));
+				user.setUsername(rs.getString(1));
 			} else {
 				throw new SQLException();
 			}
@@ -201,6 +201,7 @@ public class DatabaseFacade {
 					Reply temp = new Reply();
 					temp.setUserid(rs.getInt(1));
 					temp.setPostid(rs.getInt(2));
+					temp.setThreadid(thread.getPostid());
 					list.add(temp);
 				}
 			}

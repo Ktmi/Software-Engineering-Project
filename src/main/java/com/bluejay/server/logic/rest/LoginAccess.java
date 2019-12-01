@@ -6,10 +6,8 @@ import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -30,8 +28,16 @@ public class LoginAccess {
 	@Inject
 	private DatabaseFacade databaseFacade;
 
+	public void setDatabaseFacade(DatabaseFacade databaseFacade) {
+		this.databaseFacade = databaseFacade;
+	}
+
 	@Inject
 	private Authentication authentication;
+
+	public void setAuthentication(Authentication authentication) {
+		this.authentication = authentication;
+	}
 
 	@POST
 	@PermitAll
@@ -45,12 +51,6 @@ public class LoginAccess {
 		} catch (SQLException e) {
 			return Response.status(Status.UNAUTHORIZED).build();
 		}
-	}
-
-	@DELETE
-	@PermitAll
-	public Response logout() {
-		return Response.ok().header(HttpHeaders.AUTHORIZATION, null).build();
 	}
 
 }

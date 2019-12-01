@@ -397,13 +397,100 @@ public class DatabaseFacadeTest {
 	}
 
 	@Test
-	public void testGetThreads() {
-		fail("Not yet implemented"); // TODO
+	public void testGetThreads() throws Exception {
+		when(mockConnection
+				.prepareStatement("SELECT userid, posts.postid, title FROM threads INNER JOIN posts LIMIT ?,?"))
+						.thenReturn(mockStatement);
+		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+		when(mockResultSet.next()).thenReturn(true).thenReturn(false);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		int expectedUserid = 1;
+		int expectedPostid = 2;
+		String expectedTitle = "Yo";
+
+		when(mockResultSet.getInt(1)).thenReturn(expectedUserid);
+		when(mockResultSet.getInt(2)).thenReturn(expectedPostid);
+		when(mockResultSet.getString(3)).thenReturn(expectedTitle);
+
+		List<Thread> result = databaseFacade.getThreads(1, 1);
+
+		Thread resultThread = result.get(0);
+
+		assertEquals("Did not return expected userid", expectedUserid, resultThread.getUserid());
+		assertEquals("Did not return expected postid", expectedPostid, resultThread.getPostid());
+		assertEquals("Did not return expected title", expectedTitle, resultThread.getTitle());
+
+		databaseFacade.setDataSource(mockDataSource);
+
 	}
 
 	@Test
-	public void testGetReplies() {
-		fail("Not yet implemented"); // TODO
+	public void testGetReplies() throws Exception {
+		when(mockConnection
+				.prepareStatement("SELECT userid, postid FROM replies INNER JOIN posts WHERE threadid = ? LIMIT ?,?"))
+						.thenReturn(mockStatement);
+		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+		when(mockResultSet.next()).thenReturn(true).thenReturn(false);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		int expectedUserid = 1;
+		int expectedPostid = 2;
+		int expectedThreadid = 3;
+
+		when(mockResultSet.getInt(1)).thenReturn(expectedUserid);
+		when(mockResultSet.getInt(2)).thenReturn(expectedPostid);
+
+		Thread thread = new Thread();
+
+		thread.setPostid(expectedThreadid);
+
+		List<Reply> result = databaseFacade.getReplies(thread, 1, 1);
+
+		Reply resultReply = result.get(0);
+
+		assertEquals("Did not return expected userid", expectedUserid, resultReply.getUserid());
+		assertEquals("Did not return expected postid", expectedPostid, resultReply.getPostid());
+		assertEquals("Did not return expected title", expectedThreadid, resultReply.getThreadid());
+
+		databaseFacade.setDataSource(mockDataSource);
+	}
+
+	@Test
+	public void testGetUser() throws Exception {
+		when(mockConnection.prepareStatement("SELECT username FROM users WHERE userid = ?")).thenReturn(mockStatement);
+		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+		when(mockResultSet.next()).thenReturn(true);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		String expectedUsername = "Yo";
+
+		when(mockResultSet.getString(1)).thenReturn(expectedUsername);
+
+		User user = new User();
+		user.setUserid(1);
+
+		databaseFacade.getUser(user);
+
+		assertEquals("Did not return expected username", expectedUsername, user.getUsername());
+
+	}
+
+	@Test(expected = SQLException.class)
+	public void testGetUserException() throws Exception {
+		when(mockConnection.prepareStatement("SELECT username FROM users WHERE userid = ?")).thenReturn(mockStatement);
+		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+		when(mockResultSet.next()).thenReturn(false);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		User user = new User();
+		user.setUserid(1);
+
+		databaseFacade.getUser(user);
 	}
 
 	/*

@@ -47,7 +47,7 @@ public class UserAccess {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response createUser(@BeanParam User user) throws SQLException {
 		databaseFacade.addUser(user);
-		return Response.temporaryRedirect(uriContext.getBaseUri().resolve("login")).build();
+		return Response.temporaryRedirect(uriContext.getBaseUri().resolve("/login")).build();
 	}
 
 }
