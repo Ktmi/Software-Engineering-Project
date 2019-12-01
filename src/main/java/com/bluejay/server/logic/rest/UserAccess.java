@@ -46,7 +46,7 @@ public class UserAccess {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response createUser(@BeanParam User user) throws SQLException {
 		databaseFacade.addUser(user);
-		return Response.temporaryRedirect(URI.create("/login")).build();
+		return Response.temporaryRedirect(URI.create("/bluejay-server/login")).build();
 	}
 
 }
