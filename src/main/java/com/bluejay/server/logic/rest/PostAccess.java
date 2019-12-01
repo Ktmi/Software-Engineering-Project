@@ -33,6 +33,10 @@ public class PostAccess {
 	@Inject
 	private DatabaseFacade databaseFacade;
 
+	public void setDatabaseFacade(DatabaseFacade databaseFacade) {
+		this.databaseFacade = databaseFacade;
+	}
+
 	@POST
 	@PermitAll
 	@Consumes(MediaType.APPLICATION_JSON)
