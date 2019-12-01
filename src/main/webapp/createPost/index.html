@@ -9,22 +9,20 @@
 </head>
 <link rel="stylesheet" type="text/css"
 	href="/bluejay-server/css/ACstyle.css" />
-<body style="background-color:#F1EFEF">
+<body style="background-color: #F1EFEF">
 	<header class="navbar w3-top"></header>
 	<div class="main" style="margin: 20px;">
 		<form action="/" method="post" id="createAccountForm">
 			<h1 style="padding-top: 45px">Make a Statement</h1>
-			<br><input type="text" name="title" placeholder="Label your Triumph" style="width:50%; height:15px; border-color:grey">
-			<textarea id="postText" style="width: 50%; height: 180px"></textarea>
-			<br><br><button onclick="window.location.href = '/bluejay-server/';"
+			<br> <input type="text" name="title" placeholder="Post Title"><br>
+			<textarea id="postText" placeholder="Post Body"
+				style="width: 70%; height: 180px; display: inline-block; box-sizing: border-box; margin: 8px 0; padding: 12px 12px; border: 1px solid #ccc;"></textarea>
+			<br> <br>
+			<button onclick="window.location.href = '/bluejay-server/';"
 				class="button2">
 				<h3 style="font-size: 18px;">Post</h3>
 			</button>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
+			<br> <br> <br> <br> <br>
 		</form>
 	</div>
 </body>
