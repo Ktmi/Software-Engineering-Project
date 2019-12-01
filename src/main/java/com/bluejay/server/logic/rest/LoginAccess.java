@@ -1,5 +1,6 @@
 package com.bluejay.server.logic.rest;
 
+import java.net.URI;
 import java.sql.SQLException;
 
 import javax.annotation.security.PermitAll;
@@ -11,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 import com.bluejay.server.common.User;
 import com.bluejay.server.db.DatabaseFacade;
@@ -47,9 +47,9 @@ public class LoginAccess {
 			databaseFacade.validateLogin(user);
 			String token = authentication.issueToken(user);
 			NewCookie cookie = new NewCookie("UserToken", token, "/", "", "authentication", 1000000, false);
-			return Response.ok().cookie(cookie).build();
+			return Response.temporaryRedirect(URI.create("/login/loginSucceeded.html")).cookie(cookie).build();
 		} catch (SQLException e) {
-			return Response.status(Status.UNAUTHORIZED).build();
+			return Response.temporaryRedirect(URI.create("/login/loginFailed.html")).build();
 		}
 	}
 

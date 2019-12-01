@@ -58,6 +58,9 @@ public class LoginAccessTest {
 		Response response = loginAccess.login(user);
 		String result = response.getCookies().get("UserToken").getValue();
 
+		assertEquals("Did not return appropriate status.", Status.TEMPORARY_REDIRECT.getStatusCode(),
+				response.getStatus());
+
 		assertEquals("Did not get expected cookie.", expectedCookieValue, result);
 
 	}
@@ -68,8 +71,10 @@ public class LoginAccessTest {
 		doThrow(new SQLException()).when(mockDatabaseFacade).validateLogin(user);
 
 		Response response = loginAccess.login(user);
+		System.out.println(response);
 
-		assertEquals("Did not return appropriate status.", Status.UNAUTHORIZED.getStatusCode(), response.getStatus());
+		assertEquals("Did not return appropriate status.", Status.TEMPORARY_REDIRECT.getStatusCode(),
+				response.getStatus());
 	}
 
 }
