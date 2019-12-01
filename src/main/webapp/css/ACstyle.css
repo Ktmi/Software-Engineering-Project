@@ -12,7 +12,7 @@ h1 {
 	vertical-align: middle
 }
 
-.h2 {
+h2 {
 	color: #000000;
 	text-align: center;
 	line-height: 0px;
@@ -21,15 +21,23 @@ h1 {
 	margin: 0 0 0px;
 }
 
-.h3 {
+h3 {
 	color: #ffffff;
 	text-align: center;
 	line-height: 10px;
-	font-size: 12px;
+	font-size: 15px;
 	pointer-events: none;
 	margin: 0 0 0px;
 	vertical-align: middle
 }
+
+h4 {
+	color: #000000;
+	line-height: 10px;
+	font-size: 20px;
+	pointer-events: none;
+}
+
 /* 70%-width inputs */
 input[type=text], input[type=password] {
 	width: 70%;
@@ -72,6 +80,7 @@ button:hover {
 	border: none;
 	cursor: pointer;
 	width: 80px;
+	height: 30px;
 }
 
 /* Extra style for the cancel button (red) */
@@ -80,6 +89,16 @@ button:hover {
 	padding: 14px 20px;
 	background-color: #f44336;
 }
+
+.table {
+  background-color: #ffffff;
+  padding: 20px;
+  padding-top: 10px;
+  border-radius:5px;
+  border: 1px light grey;
+  width: 60%
+}
+
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
 	span.psw {
