@@ -71,7 +71,6 @@ public class LoginAccessTest {
 		doThrow(new SQLException()).when(mockDatabaseFacade).validateLogin(user);
 
 		Response response = loginAccess.login(user);
-		System.out.println(response);
 
 		assertEquals("Did not return appropriate status.", Status.TEMPORARY_REDIRECT.getStatusCode(),
 				response.getStatus());
