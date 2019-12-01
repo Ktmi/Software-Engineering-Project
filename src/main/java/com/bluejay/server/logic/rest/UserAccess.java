@@ -17,6 +17,11 @@ import javax.ws.rs.core.UriInfo;
 import com.bluejay.server.common.User;
 import com.bluejay.server.db.DatabaseFacade;
 
+/**
+ * Provides access to info about users, and creating accounts.
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ */
 @Path("/user")
 public class UserAccess {
 

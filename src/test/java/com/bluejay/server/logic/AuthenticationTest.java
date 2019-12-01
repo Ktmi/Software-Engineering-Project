@@ -15,6 +15,11 @@ import com.bluejay.server.common.User;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 
+/**
+ * Tests the Authentication provider
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ */
 public class AuthenticationTest {
 
 	private Authentication authentication;
@@ -44,6 +49,8 @@ public class AuthenticationTest {
 	public void clean() {
 		key = null;
 		authentication = null;
+		signatureAlgorithm = null;
+		testUser = null;
 	}
 
 	// We don't necessarily care how the components work individually, we care how

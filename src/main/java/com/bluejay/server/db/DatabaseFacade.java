@@ -141,11 +141,10 @@ public class DatabaseFacade {
 						Statement.RETURN_GENERATED_KEYS);) {
 			st.setInt(1, post.getUserid());
 			st.setString(2, post.getContent());
-			if (st.executeUpdate() > 0) {
-				ResultSet rs = st.getGeneratedKeys();
-				rs.next();
-				post.setPostid(rs.getInt(1));
-			}
+			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			rs.next();
+			post.setPostid(rs.getInt(1));
 		}
 	}
 
@@ -161,13 +160,12 @@ public class DatabaseFacade {
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?");) {
 			st.setInt(1, post.getPostid());
-			try (ResultSet rs = st.executeQuery();) {
-				if (rs.next()) {
-					post.setUserid(rs.getInt(1));
-					post.setContent(rs.getString(2));
-				} else
-					throw new SQLException();
-			}
+			ResultSet rs = st.executeQuery();
+			if (rs.next()) {
+				post.setUserid(rs.getInt(1));
+				post.setContent(rs.getString(2));
+			} else
+				throw new SQLException();
 		}
 	}
 
@@ -178,14 +176,13 @@ public class DatabaseFacade {
 						"SELECT userid, posts.postid, title FROM threads INNER JOIN posts LIMIT ?,?");) {
 			st.setInt(1, page * amt);
 			st.setInt(2, amt);
-			try (ResultSet rs = st.executeQuery();) {
-				while (rs.next()) {
-					Thread temp = new Thread();
-					temp.setUserid(rs.getInt(1));
-					temp.setPostid(rs.getInt(2));
-					temp.setTitle(rs.getString(3));
-					list.add(temp);
-				}
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				Thread temp = new Thread();
+				temp.setUserid(rs.getInt(1));
+				temp.setPostid(rs.getInt(2));
+				temp.setTitle(rs.getString(3));
+				list.add(temp);
 			}
 		}
 		return list;
@@ -211,23 +208,28 @@ public class DatabaseFacade {
 		return list;
 	}
 
-	/**
+	/*
 	 * TODO finish search back end
 	 * 
 	 * @param query
+	 * 
 	 * @param orderBy
+	 * 
 	 * @param from
+	 * 
 	 * @param to
+	 * 
 	 * @return
+	 * 
 	 * @throws SQLException
+	 *
+	 * public List<Post> search(String query, List<String> orderBy, int from, int
+	 * to) throws SQLException { try (Connection con = ds.getConnection();
+	 * PreparedStatement st =
+	 * con.prepareStatement("SELECT * FROM posts WHERE content LIKE ?");) {
+	 * 
+	 * } return null; }
 	 */
-	public List<Post> search(String query, List<String> orderBy, int from, int to) throws SQLException {
-		try (Connection con = ds.getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT * FROM posts WHERE content LIKE ?");) {
-
-		}
-		return null;
-	}
 
 	protected final byte[] hashSecret(String secret) {
 		encryption.update(secret.getBytes());

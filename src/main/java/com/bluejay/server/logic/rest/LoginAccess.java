@@ -19,6 +19,11 @@ import com.bluejay.server.common.User;
 import com.bluejay.server.db.DatabaseFacade;
 import com.bluejay.server.logic.Authentication;
 
+/**
+ * Provides access to login and logout
+ * 
+ * @author David Ramirez <drami102@fiu.edu>
+ */
 @Path("/login")
 public class LoginAccess {
 

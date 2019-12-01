@@ -29,6 +29,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.bluejay.server.common.Post;
+import com.bluejay.server.common.Reply;
+import com.bluejay.server.common.Thread;
 import com.bluejay.server.common.User;
 
 /**
@@ -54,6 +57,10 @@ public class DatabaseFacadeTest {
 
 	private List<User> users;
 
+	private List<Thread> threads;
+
+	private List<Reply> replies;
+
 	// Initialize the DatabaseFacade
 	@Before
 	public void init() {
@@ -61,20 +68,41 @@ public class DatabaseFacadeTest {
 		databaseFacade = new DatabaseFacade();
 		algorithms = new ArrayList<String>();
 		users = new ArrayList<User>();
+		threads = new ArrayList<Thread>();
+		replies = new ArrayList<Reply>();
 
 		algorithms.add("SHA-256");
 		algorithms.add("MD5");
 		algorithms.add("SHA-1");
 
-		User temp = new User();
-		temp.setUsername("David");
-		temp.setPassword("John Cena");
-		temp.setEmail("m@test.com");
-		users.add(temp);
-		temp = new User();
-		temp.setUsername("User2");
-		temp.setPassword("Password2");
-		temp.setEmail("t@test.com");
+		User user = new User();
+		user.setUsername("David");
+		user.setPassword("John Cena");
+		user.setEmail("m@test.com");
+		users.add(user);
+		user = new User();
+		user.setUsername("User2");
+		user.setPassword("Password2");
+		user.setEmail("t@test.com");
+
+		Thread thread = new Thread();
+		thread.setUserid(1);
+		thread.setContent("Jo");
+		thread.setTitle("Yo");
+		threads.add(thread);
+
+		Reply reply = new Reply();
+		reply.setUserid(1);
+		reply.setContent("Jo");
+		reply.setThreadid(1);
+		replies.add(reply);
+
+		// Common stubs
+		try {
+			when(mockDataSource.getConnection()).thenReturn(mockConnection);
+		} catch (SQLException e) {
+
+		}
 	}
 
 	// Throw out the old database facade
@@ -83,6 +111,8 @@ public class DatabaseFacadeTest {
 		databaseFacade = null;
 		algorithms = null;
 		users = null;
+		threads = null;
+		replies = null;
 
 		mockDataSource = null;
 		mockConnection = null;
@@ -156,7 +186,6 @@ public class DatabaseFacadeTest {
 	@Test
 	public void testValidateLogin() throws Exception {
 		// Setup stubs
-		when(mockDataSource.getConnection()).thenReturn(mockConnection);
 		when(mockConnection.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?"))
 				.thenReturn(mockStatement);
 		when(mockResultSet.next()).thenReturn(true);
@@ -196,7 +225,6 @@ public class DatabaseFacadeTest {
 	@Test(expected = SQLException.class)
 	public void testValidateLoginException() throws Exception {
 		// Setup stubs
-		when(mockDataSource.getConnection()).thenReturn(mockConnection);
 		when(mockConnection.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?"))
 				.thenReturn(mockStatement);
 		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
@@ -215,8 +243,8 @@ public class DatabaseFacadeTest {
 	@Test
 	public void testAddUser() throws Exception {
 		// Setup stubs
-		when(mockDataSource.getConnection()).thenReturn(mockConnection);
-		when(mockConnection.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)",
+
+		when(mockConnection.prepareStatement("INSERT INTO users(username,email,secret) VALUES (?,?,?)",
 				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
 		when(mockResultSet.next()).thenReturn(true);
 		when(mockResultSet.getInt(1)).thenReturn(1);
@@ -258,8 +286,7 @@ public class DatabaseFacadeTest {
 	@Test(expected = SQLException.class)
 	public void testAddUserException() throws Exception {
 		// Setup stubs
-		when(mockDataSource.getConnection()).thenReturn(mockConnection);
-		when(mockConnection.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)",
+		when(mockConnection.prepareStatement("INSERT INTO users(username,email,secret) VALUES (?,?,?)",
 				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
 		when(mockStatement.executeUpdate()).thenReturn(0);
 
@@ -275,23 +302,98 @@ public class DatabaseFacadeTest {
 	}
 
 	@Test
-	public void testCreateThread() {
-		fail("Not yet implemented"); // TODO
+	public void testCreateThread() throws Exception {
+
+		PreparedStatement mockCreatePostStatement = mock(PreparedStatement.class);
+		ResultSet mockCreatePostResultSet = mock(ResultSet.class);
+
+		when(mockConnection.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)",
+				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockCreatePostStatement);
+		when(mockCreatePostStatement.executeUpdate()).thenReturn(1);
+		when(mockCreatePostStatement.getGeneratedKeys()).thenReturn(mockCreatePostResultSet);
+		when(mockCreatePostResultSet.next()).thenReturn(true);
+		when(mockCreatePostResultSet.getInt(1)).thenReturn(1);
+
+		when(mockConnection.prepareStatement("INSERT INTO threads(postid,title) VALUES (?,?)"))
+				.thenReturn(mockStatement);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		for (Thread thread : threads) {
+
+			databaseFacade.createThread(thread);
+			assertEquals("", 1, thread.getPostid());
+			verify(mockStatement).executeUpdate();
+		}
+
 	}
 
 	@Test
-	public void testCreateReply() {
-		fail("Not yet implemented"); // TODO
+	public void testCreateReply() throws Exception {
+
+		PreparedStatement mockCreatePostStatement = mock(PreparedStatement.class);
+		ResultSet mockCreatePostResultSet = mock(ResultSet.class);
+
+		when(mockConnection.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)",
+				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockCreatePostStatement);
+		when(mockCreatePostStatement.executeUpdate()).thenReturn(1);
+		when(mockCreatePostStatement.getGeneratedKeys()).thenReturn(mockCreatePostResultSet);
+		when(mockCreatePostResultSet.next()).thenReturn(true);
+		when(mockCreatePostResultSet.getInt(1)).thenReturn(1);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		when(mockConnection.prepareStatement("INSERT INTO replies(postid,threadid) VALUES (?,?)"))
+				.thenReturn(mockStatement);
+
+		for (Reply reply : replies) {
+
+			databaseFacade.createReply(reply);
+			assertEquals("", 1, reply.getPostid());
+			verify(mockStatement).executeUpdate();
+		}
 	}
 
-	@Test
-	public void testCreatePost() {
-		fail("Not yet implemented"); // TODO
-	}
+	/*
+	 * @Test public void testCreatePost() { fail("Not yet implemented"); // TODO }
+	 */
 
 	@Test
-	public void testGetPost() {
-		fail("Not yet implemented"); // TODO
+	public void testGetPost() throws Exception {
+		when(mockConnection.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?"))
+				.thenReturn(mockStatement);
+		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
+		when(mockResultSet.next()).thenReturn(true);
+
+		when(mockResultSet.getInt(1)).thenReturn(1);
+		String expectedContent = "Yo";
+		when(mockResultSet.getString(2)).thenReturn(expectedContent);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		Post post = new Post();
+		post.setPostid(1);
+
+		databaseFacade.getPost(post);
+
+		assertEquals("Returned content does not match", expectedContent, post.getContent());
+	}
+
+	@Test(expected = SQLException.class)
+	public void testGetPostException() throws Exception {
+		when(mockConnection.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?"))
+				.thenReturn(mockStatement);
+		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
+		when(mockResultSet.next()).thenReturn(false);
+
+		databaseFacade.setDataSource(mockDataSource);
+
+		Post post = new Post();
+		post.setPostid(1);
+
+		databaseFacade.getPost(post);
 	}
 
 	@Test
@@ -304,14 +406,7 @@ public class DatabaseFacadeTest {
 		fail("Not yet implemented"); // TODO
 	}
 
-	@Test
-	public void testSearch() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testHashSecret() {
-		fail("Not yet implemented"); // TODO
-	}
-
+	/*
+	 * @Test public void testSearch() { fail("Not yet implemented"); // TODO }
+	 */
 }
