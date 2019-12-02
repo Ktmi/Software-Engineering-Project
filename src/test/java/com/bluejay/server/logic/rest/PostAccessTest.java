@@ -2,6 +2,8 @@ package com.bluejay.server.logic.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -60,14 +62,22 @@ public class PostAccessTest {
 	}
 
 	@Test
-	public void testGetThreads() throws Exception {
+	public void testGetPosts() throws Exception {
 		List<Thread> threads = new ArrayList<Thread>();
+		List<Reply> replies = new ArrayList<Reply>();
 		when(mockDatabaseFacade.getThreads(0, 50)).thenReturn(threads);
 
-		List<Thread> result = postAccess.getThreads(1);
+		when(mockDatabaseFacade.getReplies(any(Thread.class), eq(0), eq(50))).thenReturn(replies);
+		List result;
+		result = postAccess.getPosts(1, 0);
 
 		assertSame("Result list not same as expected", threads, result);
 		verify(mockDatabaseFacade).getThreads(0, 50);
+
+		result = postAccess.getPosts(1, 1);
+
+		assertSame("Result list not same as expected", replies, result);
+		verify(mockDatabaseFacade).getReplies(any(Thread.class), eq(0), eq(50));
 	}
 
 	@Test
