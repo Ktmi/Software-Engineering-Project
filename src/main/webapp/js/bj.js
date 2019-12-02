@@ -18,11 +18,15 @@ bj.getUpdatePost = function (target)
 	});
 };
 
+bj.deleteCookie = function(){
+	document.cookie = "UserToken=; Path=/; expires=Thu, 01 Jan 2000 00:00:00 GMT";
+};
+
 
 $(function(){
 	$(".navbar").load("/bluejay-server/navbar.html");
 	$("post").click(function(event){
 		target = $(this);
 		bj.getUpdatePost(target);
-	});
+	});	
 });
