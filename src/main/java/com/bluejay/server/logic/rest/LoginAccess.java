@@ -47,9 +47,10 @@ public class LoginAccess {
 			databaseFacade.validateLogin(user);
 			String token = authentication.issueToken(user);
 			NewCookie cookie = new NewCookie("UserToken", token, "/", "", "authentication", 1000000, false);
-			return Response.temporaryRedirect(URI.create("/login/loginSucceeded.html")).cookie(cookie).build();
+			return Response.temporaryRedirect(URI.create("/bluejay-server/login/loginSucceeded.html")).cookie(cookie)
+					.build();
 		} catch (SQLException e) {
-			return Response.temporaryRedirect(URI.create("/login/loginFailed.html")).build();
+			return Response.temporaryRedirect(URI.create("/bluejay-server/login/loginFailed.html")).build();
 		}
 	}
 
