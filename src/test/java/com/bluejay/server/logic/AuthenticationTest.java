@@ -77,8 +77,8 @@ public class AuthenticationTest {
 	}
 
 	/*
-	 * @Test public void testIssueToken() { fail("Not yet implemented"); // TODO }
+	 * @Test public void testIssueToken() { fail("Not yet implemented");}
 	 * 
-	 * @Test public void testVerifyToken() { fail("Not yet implemented"); // TODO }
+	 * @Test public void testVerifyToken() { fail("Not yet implemented");}
 	 */
 }

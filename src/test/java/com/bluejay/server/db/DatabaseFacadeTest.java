@@ -1,18 +1,12 @@
 package com.bluejay.server.db;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,6 +93,7 @@ public class DatabaseFacadeTest {
 
 		// Common stubs
 		try {
+			databaseFacade.setDataSource(mockDataSource);
 			when(mockDataSource.getConnection()).thenReturn(mockConnection);
 		} catch (SQLException e) {
 
@@ -120,68 +115,66 @@ public class DatabaseFacadeTest {
 		mockResultSet = null;
 	}
 
-	@Test
-	public void testGetSetDataSource() {
-		// getEncryption returns null for just initialized databaseFacade
-		assertNull("Default constructor initialized the MessageDigest.", databaseFacade.getDataSource());
+	/*
+	 * Old test cases, mostly useless for the moment.
+	 */
 
-		DataSource lastDataSource = null;
-
-		for (int i = 0; i < 5; i++) {
-			final DataSource mockedDataSource = mock(DataSource.class);
-			assertNotNull("Mock returned null", mockedDataSource); // Check that return mock is not null
-			assertNotSame("Duplicate mock return value", lastDataSource, mockedDataSource);
-
-			databaseFacade.setDataSource(mockedDataSource);
-			assertSame("Did not change DataSource", mockedDataSource, databaseFacade.getDataSource());
-			lastDataSource = mockedDataSource;
-		}
-	}
-
-	@Test
-	public void testGetSetEncryptionMessageDigest() {
-		// getEncryption returns null for just initialized databaseFacade
-		assertNull("Default constructor initialized the MessageDigest.", databaseFacade.getEncryption());
-
-		MessageDigest lastMessageDigest = null;
-
-		for (int i = 0; i < 5; i++) {
-			final MessageDigest mockedMessageDigest = mock(MessageDigest.class);
-			assertNotNull("Mock returned null", mockedMessageDigest); // Check that return mock is not null
-			assertNotSame("Duplicate mock return value", lastMessageDigest, mockedMessageDigest);
-
-			databaseFacade.setEncryption(mockedMessageDigest);
-			assertSame("Did not change MessageDigest", mockedMessageDigest, databaseFacade.getEncryption());
-			lastMessageDigest = mockedMessageDigest;
-		}
-	}
-
-	@Test
-	public void testGetSetEncryptionString() {
-		// getEncryption returns null for just initialized databaseFacade
-		assertNull("Default constructor initialized the MessageDigest.", databaseFacade.getEncryption());
-
-		MessageDigest result;
-		MessageDigest lastResult = null;
-
-		for (String algorithm : algorithms) {
-			try {
-				databaseFacade.setEncryption(algorithm);
-			} catch (NoSuchAlgorithmException e) {
-				fail("Failed to set encryption to specified algorithm.");
-			}
-			result = databaseFacade.getEncryption();
-
-			assertNotSame("MessageDigest should have changed", lastResult, result);
-			assertEquals("Message algorithm did not match expected", algorithm, result.getAlgorithm());
-			lastResult = result;
-		}
-	}
-
-	@Test(expected = NoSuchAlgorithmException.class)
-	public void testSetEncryptionStringException() throws NoSuchAlgorithmException {
-		databaseFacade.setEncryption("");
-	}
+	/*
+	 * @Test public void testGetSetDataSource() { // getEncryption returns null for
+	 * just initialized databaseFacade
+	 * assertNull("Default constructor initialized the MessageDigest.",
+	 * databaseFacade.getDataSource());
+	 * 
+	 * DataSource lastDataSource = null;
+	 * 
+	 * for (int i = 0; i < 5; i++) { final DataSource mockedDataSource =
+	 * mock(DataSource.class); assertNotNull("Mock returned null",
+	 * mockedDataSource); // Check that return mock is not null
+	 * assertNotSame("Duplicate mock return value", lastDataSource,
+	 * mockedDataSource);
+	 * 
+	 * databaseFacade.setDataSource(mockedDataSource);
+	 * assertSame("Did not change DataSource", mockedDataSource,
+	 * databaseFacade.getDataSource()); lastDataSource = mockedDataSource; } }
+	 * 
+	 * @Test public void testGetSetEncryptionMessageDigest() { // getEncryption
+	 * returns null for just initialized databaseFacade
+	 * assertNull("Default constructor initialized the MessageDigest.",
+	 * databaseFacade.getEncryption());
+	 * 
+	 * MessageDigest lastMessageDigest = null;
+	 * 
+	 * for (int i = 0; i < 5; i++) { final MessageDigest mockedMessageDigest =
+	 * mock(MessageDigest.class); assertNotNull("Mock returned null",
+	 * mockedMessageDigest); // Check that return mock is not null
+	 * assertNotSame("Duplicate mock return value", lastMessageDigest,
+	 * mockedMessageDigest);
+	 * 
+	 * databaseFacade.setEncryption(mockedMessageDigest);
+	 * assertSame("Did not change MessageDigest", mockedMessageDigest,
+	 * databaseFacade.getEncryption()); lastMessageDigest = mockedMessageDigest; } }
+	 * 
+	 * @Test public void testGetSetEncryptionString() { // getEncryption returns
+	 * null for just initialized databaseFacade
+	 * assertNull("Default constructor initialized the MessageDigest.",
+	 * databaseFacade.getEncryption());
+	 * 
+	 * MessageDigest result; MessageDigest lastResult = null;
+	 * 
+	 * for (String algorithm : algorithms) { try {
+	 * databaseFacade.setEncryption(algorithm); } catch (NoSuchAlgorithmException e)
+	 * { fail("Failed to set encryption to specified algorithm."); } result =
+	 * databaseFacade.getEncryption();
+	 * 
+	 * assertNotSame("MessageDigest should have changed", lastResult, result);
+	 * assertEquals("Message algorithm did not match expected", algorithm,
+	 * result.getAlgorithm()); lastResult = result; } }
+	 *
+	 * 
+	 * @Test(expected = NoSuchAlgorithmException.class) public void
+	 * testSetEncryptionStringException() throws NoSuchAlgorithmException {
+	 * databaseFacade.setEncryption(""); }
+	 */
 
 	@Test
 	public void testValidateLogin() throws Exception {
@@ -190,8 +183,6 @@ public class DatabaseFacadeTest {
 				.thenReturn(mockStatement);
 		when(mockResultSet.next()).thenReturn(true);
 		when(mockResultSet.getInt(1)).thenReturn(1);
-
-		databaseFacade.setDataSource(mockDataSource);
 
 		for (String algorithm : algorithms) {
 			MessageDigest expectedMessageDigest = MessageDigest.getInstance(algorithm);
@@ -230,7 +221,6 @@ public class DatabaseFacadeTest {
 		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
 		when(mockResultSet.next()).thenReturn(false);
 
-		databaseFacade.setDataSource(mockDataSource);
 		databaseFacade.setEncryption("SHA-256");
 
 		User temp = new User();
@@ -248,8 +238,6 @@ public class DatabaseFacadeTest {
 				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
 		when(mockResultSet.next()).thenReturn(true);
 		when(mockResultSet.getInt(1)).thenReturn(1);
-
-		databaseFacade.setDataSource(mockDataSource);
 
 		for (String algorithm : algorithms) {
 			MessageDigest expectedMessageDigest = MessageDigest.getInstance(algorithm);
@@ -290,7 +278,6 @@ public class DatabaseFacadeTest {
 				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
 		when(mockStatement.executeUpdate()).thenReturn(0);
 
-		databaseFacade.setDataSource(mockDataSource);
 		databaseFacade.setEncryption("SHA-256");
 
 		User temp = new User();
@@ -317,8 +304,6 @@ public class DatabaseFacadeTest {
 		when(mockConnection.prepareStatement("INSERT INTO threads(postid,title) VALUES (?,?)"))
 				.thenReturn(mockStatement);
 
-		databaseFacade.setDataSource(mockDataSource);
-
 		for (Thread thread : threads) {
 
 			databaseFacade.createThread(thread);
@@ -341,8 +326,6 @@ public class DatabaseFacadeTest {
 		when(mockCreatePostResultSet.next()).thenReturn(true);
 		when(mockCreatePostResultSet.getInt(1)).thenReturn(1);
 
-		databaseFacade.setDataSource(mockDataSource);
-
 		when(mockConnection.prepareStatement("INSERT INTO replies(postid,threadid) VALUES (?,?)"))
 				.thenReturn(mockStatement);
 
@@ -355,7 +338,7 @@ public class DatabaseFacadeTest {
 	}
 
 	/*
-	 * @Test public void testCreatePost() { fail("Not yet implemented"); // TODO }
+	 * @Test public void testCreatePost() { fail("Not yet implemented");}
 	 */
 
 	@Test
@@ -369,8 +352,6 @@ public class DatabaseFacadeTest {
 		when(mockResultSet.getInt(1)).thenReturn(1);
 		String expectedContent = "Yo";
 		when(mockResultSet.getString(2)).thenReturn(expectedContent);
-
-		databaseFacade.setDataSource(mockDataSource);
 
 		Post post = new Post();
 		post.setPostid(1);
@@ -388,8 +369,6 @@ public class DatabaseFacadeTest {
 
 		when(mockResultSet.next()).thenReturn(false);
 
-		databaseFacade.setDataSource(mockDataSource);
-
 		Post post = new Post();
 		post.setPostid(1);
 
@@ -404,8 +383,6 @@ public class DatabaseFacadeTest {
 		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
 		when(mockResultSet.next()).thenReturn(true).thenReturn(false);
 
-		databaseFacade.setDataSource(mockDataSource);
-
 		int expectedUserid = 1;
 		int expectedPostid = 2;
 		String expectedTitle = "Yo";
@@ -414,15 +391,13 @@ public class DatabaseFacadeTest {
 		when(mockResultSet.getInt(2)).thenReturn(expectedPostid);
 		when(mockResultSet.getString(3)).thenReturn(expectedTitle);
 
-		List<Thread> result = databaseFacade.getThreads(1, 1);
+		List<Post> result = databaseFacade.getThreads(1, 1);
 
-		Thread resultThread = result.get(0);
+		Thread resultThread = (Thread) result.get(0);
 
 		assertEquals("Did not return expected userid", expectedUserid, resultThread.getUserid());
 		assertEquals("Did not return expected postid", expectedPostid, resultThread.getPostid());
 		assertEquals("Did not return expected title", expectedTitle, resultThread.getTitle());
-
-		databaseFacade.setDataSource(mockDataSource);
 
 	}
 
@@ -433,8 +408,6 @@ public class DatabaseFacadeTest {
 						.thenReturn(mockStatement);
 		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
 		when(mockResultSet.next()).thenReturn(true).thenReturn(false);
-
-		databaseFacade.setDataSource(mockDataSource);
 
 		int expectedUserid = 1;
 		int expectedPostid = 2;
@@ -447,15 +420,14 @@ public class DatabaseFacadeTest {
 
 		thread.setPostid(expectedThreadid);
 
-		List<Reply> result = databaseFacade.getReplies(thread, 1, 1);
+		List<Post> result = databaseFacade.getReplies(thread, 1, 1);
 
-		Reply resultReply = result.get(0);
+		Reply resultReply = (Reply) result.get(0);
 
 		assertEquals("Did not return expected userid", expectedUserid, resultReply.getUserid());
 		assertEquals("Did not return expected postid", expectedPostid, resultReply.getPostid());
 		assertEquals("Did not return expected title", expectedThreadid, resultReply.getThreadid());
 
-		databaseFacade.setDataSource(mockDataSource);
 	}
 
 	@Test
@@ -463,8 +435,6 @@ public class DatabaseFacadeTest {
 		when(mockConnection.prepareStatement("SELECT username FROM users WHERE userid = ?")).thenReturn(mockStatement);
 		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
 		when(mockResultSet.next()).thenReturn(true);
-
-		databaseFacade.setDataSource(mockDataSource);
 
 		String expectedUsername = "Yo";
 
@@ -485,8 +455,6 @@ public class DatabaseFacadeTest {
 		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
 		when(mockResultSet.next()).thenReturn(false);
 
-		databaseFacade.setDataSource(mockDataSource);
-
 		User user = new User();
 		user.setUserid(1);
 
@@ -494,6 +462,6 @@ public class DatabaseFacadeTest {
 	}
 
 	/*
-	 * @Test public void testSearch() { fail("Not yet implemented"); // TODO }
+	 * @Test public void testSearch() { fail("Not yet implemented");}
 	 */
 }

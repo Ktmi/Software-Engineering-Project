@@ -26,4 +26,9 @@ buildNumber.properties
 .project
 .vscode/
 .vs/
+
+#
+# OpenClover
+#
 /.clover/
+report/

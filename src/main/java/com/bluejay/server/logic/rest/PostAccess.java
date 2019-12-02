@@ -51,12 +51,19 @@ public class PostAccess {
 		return post;
 	}
 
-	@Path("/browse")
+	@Path("/list")
 	@GET
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Thread> getThreads(@QueryParam("p") @DefaultValue("1") int page) throws SQLException {
-		return databaseFacade.getThreads(page - 1, 50);
+	public List<Post> getPosts(@QueryParam("p") @DefaultValue("1") int page,
+			@QueryParam("thread") @DefaultValue("0") int threadid) throws SQLException {
+		if (threadid == 0) {
+			return databaseFacade.getThreads(page - 1, 50);
+		}
+		Thread thread = new Thread();
+		thread.setPostid(threadid);
+		return databaseFacade.getReplies(thread, page - 1, 50);
+
 	}
 
 	@Path("/thread")

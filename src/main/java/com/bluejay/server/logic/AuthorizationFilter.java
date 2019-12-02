@@ -60,19 +60,16 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 				// Not used yet???
 				@Override
 				public boolean isUserInRole(String role) {
-					// TODO Auto-generated method stub
 					return false;
 				}
 
 				@Override
 				public boolean isSecure() {
-					// TODO Auto-generated method stub
 					return false;
 				}
 
 				@Override
 				public String getAuthenticationScheme() {
-					// TODO Auto-generated method stub
 					return null;
 				}
 			});
