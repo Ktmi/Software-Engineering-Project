@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -60,9 +61,9 @@ public class PostAccess {
 
 	@Path("/thread")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Thread createThread(Thread thread, @Context SecurityContext securityContext) throws SQLException {
+	public Thread createThread(@BeanParam Thread thread, @Context SecurityContext securityContext) throws SQLException {
 		User user = (User) securityContext.getUserPrincipal();
 		thread.setUserid(user.getUserid());
 		databaseFacade.createThread(thread);
