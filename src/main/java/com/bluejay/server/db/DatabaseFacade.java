@@ -30,22 +30,19 @@ public class DatabaseFacade {
 	public void setDataSource(DataSource dataSource) {
 		this.ds = dataSource;
 	}
-
-	public DataSource getDataSource() {
-		return this.ds;
-	}
-
-	public void setEncryption(MessageDigest encryption) {
-		this.encryption = encryption;
-	}
+	/*
+	 * public DataSource getDataSource() { return this.ds; }
+	 * 
+	 * public void setEncryption(MessageDigest encryption) { this.encryption =
+	 * encryption; }
+	 */
 
 	public void setEncryption(String algorithm) throws NoSuchAlgorithmException {
 		encryption = MessageDigest.getInstance(algorithm);
 	}
-
-	public MessageDigest getEncryption() {
-		return encryption;
-	}
+	/*
+	 * public MessageDigest getEncryption() { return encryption; }
+	 */
 
 	public void validateLogin(User user) throws SQLException {
 		try (Connection con = ds.getConnection();
@@ -169,8 +166,8 @@ public class DatabaseFacade {
 		}
 	}
 
-	public List<Thread> getThreads(int page, int amt) throws SQLException {
-		List<Thread> list = new ArrayList<Thread>();
+	public List<Post> getThreads(int page, int amt) throws SQLException {
+		List<Post> list = new ArrayList<Post>();
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement(
 						"SELECT userid, posts.postid, title FROM threads INNER JOIN posts LIMIT ?,?");) {
@@ -188,8 +185,8 @@ public class DatabaseFacade {
 		return list;
 	}
 
-	public List<Reply> getReplies(Thread thread, int page, int amt) throws SQLException {
-		List<Reply> list = new ArrayList<Reply>();
+	public List<Post> getReplies(Thread thread, int page, int amt) throws SQLException {
+		List<Post> list = new ArrayList<Post>();
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement(
 						"SELECT userid, postid FROM replies INNER JOIN posts WHERE threadid = ? LIMIT ?,?");) {
@@ -210,7 +207,6 @@ public class DatabaseFacade {
 	}
 
 	/*
-	 * TODO finish search back end
 	 * 
 	 * @param query
 	 * 

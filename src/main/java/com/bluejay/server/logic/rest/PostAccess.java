@@ -54,7 +54,7 @@ public class PostAccess {
 	@GET
 	@PermitAll
 	@Produces(MediaType.APPLICATION_JSON)
-	public List getPosts(@QueryParam("p") @DefaultValue("1") int page,
+	public List<Post> getPosts(@QueryParam("p") @DefaultValue("1") int page,
 			@QueryParam("thread") @DefaultValue("0") int threadid) throws SQLException {
 		if (threadid == 0) {
 			return databaseFacade.getThreads(page - 1, 50);

@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,9 @@ public class PostAccessTest {
 	@Mock
 	private SecurityContext mockSecurityContext;
 
+	/**
+	 * Initializes mocks Basic setup for most tests.
+	 */
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
@@ -46,29 +51,73 @@ public class PostAccessTest {
 		postAccess.setDatabaseFacade(mockDatabaseFacade);
 	}
 
+	/**
+	 * Cleans up after tests
+	 */
 	@After
 	public void clean() {
 		postAccess = null;
 		mockDatabaseFacade = null;
 	}
 
+	/**
+	 * Tests the getPost method for postAccess
+	 */
 	@Test
 	public void testGetPost() throws Exception {
 		Post post = new Post();
 
-		postAccess.getPost(post);
+		/*
+		 * getPost returns the object passed to it, due to the way it needs to pass
+		 * information back to the client
+		 */
+		Post result = postAccess.getPost(post);
 
+		/*
+		 * postAccess.getPost calls databaseFacade.getPost on the arguments passed to it
+		 */
 		verify(mockDatabaseFacade).getPost(post);
+		// Ensure that the object returned was the object passed to it
+		assertSame("Made a new object rather than changing the existing one.", post, result);
 	}
 
+	/**
+	 * Tests the getPost method for postAccess, for when databaseFacade throws an
+	 * error.
+	 */
+	@Test
+	public void testGetPostException() throws Exception {
+		Post post = new Post();
+		doThrow(new SQLException()).when(mockDatabaseFacade).getPost(post);
+
+		Post result = postAccess.getPost(post);
+		verify(mockDatabaseFacade).getPost(post);
+		assertSame("Made a new object rather than changing the existing one.", post, result);
+
+		assertEquals("Did not display proper message for error", "Content unavailable.", post.getContent());
+	}
+
+	/**
+	 * Tests the getPosts method for postAccess
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testGetPosts() throws Exception {
-		List<Thread> threads = new ArrayList<Thread>();
-		List<Reply> replies = new ArrayList<Reply>();
+		/*
+		 * Test setup:
+		 * 
+		 * Returns a list of posts, that will either contain only threads or only
+		 * replies. We mock the functions that we would get these lists from.
+		 * 
+		 * 
+		 */
+		List<Post> threads = new ArrayList<Post>();
+		List<Post> replies = new ArrayList<Post>();
 		when(mockDatabaseFacade.getThreads(0, 50)).thenReturn(threads);
-
 		when(mockDatabaseFacade.getReplies(any(Thread.class), eq(0), eq(50))).thenReturn(replies);
-		List result;
+
+		List<Post> result;
 		result = postAccess.getPosts(1, 0);
 
 		assertSame("Result list not same as expected", threads, result);
