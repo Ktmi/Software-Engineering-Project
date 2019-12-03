@@ -62,7 +62,8 @@ public class LoginAccessTest {
 				response.getStatus());
 
 		assertEquals("Did not get expected cookie.", expectedCookieValue, result);
-
+		assertEquals("Did not redirect to correct page", "/bluejay-server/login/loginSucceeded.html",
+				response.getLocation().getPath());
 	}
 
 	@Test
@@ -74,6 +75,8 @@ public class LoginAccessTest {
 
 		assertEquals("Did not return appropriate status.", Status.TEMPORARY_REDIRECT.getStatusCode(),
 				response.getStatus());
+		assertEquals("Did not redirect to correct page", "/bluejay-server/login/loginFailed.html",
+				response.getLocation().getPath());
 	}
 
 }

@@ -45,6 +45,7 @@ public class UserAccessTest {
 
 		Response response = userAccess.createUser(user);
 
+		verify(mockDatabaseFacade).addUser(user);
 		assertEquals("creatUser did not return redirect", "/bluejay-server/createAcc/createAccountSucceeded.html",
 				response.getHeaders().get("Location").get(0).toString());
 
