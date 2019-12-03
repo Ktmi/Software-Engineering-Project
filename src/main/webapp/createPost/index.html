@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Bluejay</title>
-		<link rel="stylesheet" type="text/css" href="/bluejay-server/css/w3.css">
-		<script src="/bluejay-server/js/jquery.min.js"></script>
-		<script src="/bluejay-server/js/bj.js"></script>
+<head>
+<meta charset="UTF-8">
+<title>Bluejay</title>
+<link rel="stylesheet" type="text/css" href="/bluejay-server/css/w3.css">
+<script src="/bluejay-server/js/jquery.min.js"></script>
+<script src="/bluejay-server/js/bj.js"></script>
 </head>
-<link rel="stylesheet" type="text/css" href="/bluejay-server/css/ACstyle.css" />
-	<body>
-		<header class="navbar w3-top"></header>
-		<div class="main"style="margin-top:50px;">
-		<form action="/" method="post" id="createAccountForm">
-				<br>
-				<h3>
-					<br> <textarea id="postText"></textarea>
-				</h3>
-				<button onclick="window.location.href = '/bluejay-server/';" class="button2">
-					<h3>Submit</h3>
-				</button>
-				<br><br><br><br><br>
-			</form>
-		</div>
-	</body>
+<link rel="stylesheet" type="text/css"
+	href="/bluejay-server/css/ACstyle.css" />
+<body style="background-color: #F1EFEF">
+	<header class="navbar w3-top"></header>
+	<div class="main" style="margin: 20px;">
+		<form action="/bluejay-server/rest/post/thread" method="post">
+			<h1 style="padding-top: 45px">Make a Statement</h1>
+			<br> <input type="text" name="title" placeholder="Post Title" id="postTitle"><br>
+			<textarea id="postText" name="content" placeholder="Post Body"
+				style="width: 70%; height: 180px; display: inline-block; box-sizing: border-box; margin: 8px 0; padding: 12px 12px; border: 1px solid #ccc;" id="content"></textarea>
+			<br> <br>
+			<button onclick="window.location.href = '/bluejay-server/';"
+				class="button2">
+				<h3 style="font-size: 18px;" id="postIt">Post</h3>
+			</button>
+			<br> <br> <br> <br> <br>
+		</form>
+	</div>
+</body>
 </html>

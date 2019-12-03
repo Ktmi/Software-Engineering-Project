@@ -2,6 +2,8 @@ package com.bluejay.server.common;
 
 import java.security.Principal;
 
+import javax.ws.rs.FormParam;
+
 /**
  * Java representation of User
  * 
@@ -9,8 +11,11 @@ import java.security.Principal;
  */
 public class User implements Principal {
 	private int userid;
+	@FormParam("username")
 	private String username;
+	@FormParam("password")
 	private String password;
+	@FormParam("email")
 	private String email;
 
 	public int getUserid() {

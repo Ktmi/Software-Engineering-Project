@@ -1,5 +1,7 @@
 package com.bluejay.server.common;
 
+import javax.ws.rs.FormParam;
+
 /**
  * Java representation of Post
  * 
@@ -8,6 +10,7 @@ package com.bluejay.server.common;
 public class Post {
 	private int postid;
 	private int userid;
+	@FormParam("content")
 	private String content;
 
 	public int getPostid() {

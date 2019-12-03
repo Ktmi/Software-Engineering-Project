@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,22 +30,19 @@ public class DatabaseFacade {
 	public void setDataSource(DataSource dataSource) {
 		this.ds = dataSource;
 	}
-
-	public DataSource getDataSource() {
-		return this.ds;
-	}
-
-	public void setEncryption(MessageDigest encryption) {
-		this.encryption = encryption;
-	}
+	/*
+	 * public DataSource getDataSource() { return this.ds; }
+	 * 
+	 * public void setEncryption(MessageDigest encryption) { this.encryption =
+	 * encryption; }
+	 */
 
 	public void setEncryption(String algorithm) throws NoSuchAlgorithmException {
 		encryption = MessageDigest.getInstance(algorithm);
 	}
-
-	public MessageDigest getEncryption() {
-		return encryption;
-	}
+	/*
+	 * public MessageDigest getEncryption() { return encryption; }
+	 */
 
 	public void validateLogin(User user) throws SQLException {
 		try (Connection con = ds.getConnection();
@@ -68,8 +66,8 @@ public class DatabaseFacade {
 	 */
 	public void addUser(User user) throws SQLException {
 		try (Connection con = ds.getConnection();
-				PreparedStatement st = con
-						.prepareStatement("INSERT INTO users(username,email,password) VALUES (?,?,?)");) {
+				PreparedStatement st = con.prepareStatement("INSERT INTO users(username,email,secret) VALUES (?,?,?)",
+						Statement.RETURN_GENERATED_KEYS);) {
 			st.setString(1, user.getUsername());
 			st.setString(2, user.getEmail());
 			st.setBytes(3, hashSecret(user.getPassword()));
@@ -89,7 +87,7 @@ public class DatabaseFacade {
 			st.setInt(1, user.getUserid());
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
-				user.setUserid(rs.getInt(1));
+				user.setUsername(rs.getString(1));
 			} else {
 				throw new SQLException();
 			}
@@ -136,14 +134,14 @@ public class DatabaseFacade {
 	 */
 	protected void createPost(Post post) throws SQLException {
 		try (Connection con = ds.getConnection();
-				PreparedStatement st = con.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)");) {
+				PreparedStatement st = con.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)",
+						Statement.RETURN_GENERATED_KEYS);) {
 			st.setInt(1, post.getUserid());
 			st.setString(2, post.getContent());
-			if (st.executeUpdate() > 0) {
-				ResultSet rs = st.getGeneratedKeys();
-				rs.next();
-				post.setPostid(rs.getInt(1));
-			}
+			st.executeUpdate();
+			ResultSet rs = st.getGeneratedKeys();
+			rs.next();
+			post.setPostid(rs.getInt(1));
 		}
 	}
 
@@ -159,38 +157,36 @@ public class DatabaseFacade {
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?");) {
 			st.setInt(1, post.getPostid());
-			try (ResultSet rs = st.executeQuery();) {
-				if (rs.next()) {
-					post.setUserid(rs.getInt(1));
-					post.setContent(rs.getString(2));
-				} else
-					throw new SQLException();
-			}
+			ResultSet rs = st.executeQuery();
+			if (rs.next()) {
+				post.setUserid(rs.getInt(1));
+				post.setContent(rs.getString(2));
+			} else
+				throw new SQLException();
 		}
 	}
 
-	public List<Thread> getThreads(int page, int amt) throws SQLException {
-		List<Thread> list = new ArrayList<Thread>();
+	public List<Post> getThreads(int page, int amt) throws SQLException {
+		List<Post> list = new ArrayList<Post>();
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement(
 						"SELECT userid, posts.postid, title FROM threads INNER JOIN posts LIMIT ?,?");) {
 			st.setInt(1, page * amt);
 			st.setInt(2, amt);
-			try (ResultSet rs = st.executeQuery();) {
-				while (rs.next()) {
-					Thread temp = new Thread();
-					temp.setUserid(rs.getInt(1));
-					temp.setPostid(rs.getInt(2));
-					temp.setTitle(rs.getString(3));
-					list.add(temp);
-				}
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				Thread temp = new Thread();
+				temp.setUserid(rs.getInt(1));
+				temp.setPostid(rs.getInt(2));
+				temp.setTitle(rs.getString(3));
+				list.add(temp);
 			}
 		}
 		return list;
 	}
 
-	public List<Reply> getReplies(Thread thread, int page, int amt) throws SQLException {
-		List<Reply> list = new ArrayList<Reply>();
+	public List<Post> getReplies(Thread thread, int page, int amt) throws SQLException {
+		List<Post> list = new ArrayList<Post>();
 		try (Connection con = ds.getConnection();
 				PreparedStatement st = con.prepareStatement(
 						"SELECT userid, postid FROM replies INNER JOIN posts WHERE threadid = ? LIMIT ?,?");) {
@@ -202,6 +198,7 @@ public class DatabaseFacade {
 					Reply temp = new Reply();
 					temp.setUserid(rs.getInt(1));
 					temp.setPostid(rs.getInt(2));
+					temp.setThreadid(thread.getPostid());
 					list.add(temp);
 				}
 			}
@@ -209,23 +206,27 @@ public class DatabaseFacade {
 		return list;
 	}
 
-	/**
-	 * TODO finish search back end
+	/*
 	 * 
 	 * @param query
+	 * 
 	 * @param orderBy
+	 * 
 	 * @param from
+	 * 
 	 * @param to
+	 * 
 	 * @return
+	 * 
 	 * @throws SQLException
+	 *
+	 * public List<Post> search(String query, List<String> orderBy, int from, int
+	 * to) throws SQLException { try (Connection con = ds.getConnection();
+	 * PreparedStatement st =
+	 * con.prepareStatement("SELECT * FROM posts WHERE content LIKE ?");) {
+	 * 
+	 * } return null; }
 	 */
-	public List<Post> search(String query, List<String> orderBy, int from, int to) throws SQLException {
-		try (Connection con = ds.getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT * FROM posts WHERE content LIKE ?");) {
-
-		}
-		return null;
-	}
 
 	protected final byte[] hashSecret(String secret) {
 		encryption.update(secret.getBytes());
