@@ -318,8 +318,9 @@ public class DatabaseFacadeTest {
 		for (Thread thread : threads) {
 
 			databaseFacade.createThread(thread);
-			assertEquals("", 1, thread.getPostid());
+			assertEquals("Postid does not match expected", 1, thread.getPostid());
 			verify(mockStatement).executeUpdate();
+			thread.setPostid(0);
 		}
 
 	}
@@ -331,8 +332,9 @@ public class DatabaseFacadeTest {
 		for (Reply reply : replies) {
 
 			databaseFacade.createReply(reply);
-			assertEquals("", 1, reply.getPostid());
+			assertEquals("Postid does not match expected", 1, reply.getPostid());
 			verify(mockStatement).executeUpdate();
+			reply.setPostid(0);
 		}
 	}
 
