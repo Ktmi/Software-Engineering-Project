@@ -369,6 +369,7 @@ public class DatabaseFacadeTest {
 		databaseFacade.getPost(post);
 
 		assertEquals("Returned content does not match", expectedContent, post.getContent());
+		assertEquals("Returned userid does not match", 1, post.getUserid());
 	}
 
 	@Test(expected = SQLException.class)
@@ -399,6 +400,7 @@ public class DatabaseFacadeTest {
 
 		Thread resultThread = (Thread) result.get(0);
 
+		assertEquals("Did not return the expected amount of threads", 1, result.size());
 		assertEquals("Did not return expected userid", expectedUserid, resultThread.getUserid());
 		assertEquals("Did not return expected postid", expectedPostid, resultThread.getPostid());
 		assertEquals("Did not return expected title", expectedTitle, resultThread.getTitle());
@@ -425,6 +427,7 @@ public class DatabaseFacadeTest {
 
 		Reply resultReply = (Reply) result.get(0);
 
+		assertEquals("Did not return the expected amount of threads", 1, result.size());
 		assertEquals("Did not return expected userid", expectedUserid, resultReply.getUserid());
 		assertEquals("Did not return expected postid", expectedPostid, resultReply.getPostid());
 		assertEquals("Did not return expected title", expectedThreadid, resultReply.getThreadid());
