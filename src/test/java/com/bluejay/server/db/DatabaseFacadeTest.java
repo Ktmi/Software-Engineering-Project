@@ -291,6 +291,7 @@ public class DatabaseFacadeTest {
 				verify(mockStatement).setBytes(3, expectedHash);
 
 				assertEquals("Userid not set.", 1, user.getUserid());
+				user.setUserid(0);
 			}
 		}
 	}

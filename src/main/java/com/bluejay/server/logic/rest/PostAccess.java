@@ -93,6 +93,7 @@ public class PostAccess {
 
 	@Path("/view/{threadid}")
 	@GET
+	@PermitAll
 	public Thread viewPage(@PathParam("threadid") int threadid) {
 		Thread thread = new Thread();
 		thread.setPostid(threadid);
