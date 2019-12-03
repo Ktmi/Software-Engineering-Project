@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
 import org.junit.After;
@@ -138,11 +140,12 @@ public class PostAccessTest {
 		user.setUserid(expectedUserid);
 		when(mockSecurityContext.getUserPrincipal()).thenReturn(user);
 
-		Thread result = postAccess.createThread(thread, mockSecurityContext);
+		Response result = postAccess.createThread(thread, mockSecurityContext);
 
 		verify(mockDatabaseFacade).createThread(thread);
 		assertEquals("Userid of thread did not match expected", expectedUserid, thread.getUserid());
-		assertSame("Made a new object rather than changing the existing one.", thread, result);
+		assertEquals("Did not return appropriate status.", Status.TEMPORARY_REDIRECT.getStatusCode(),
+				result.getStatus());
 	}
 
 	@Test

@@ -95,6 +95,35 @@ public class DatabaseFacadeTest {
 		try {
 			databaseFacade.setDataSource(mockDataSource);
 			when(mockDataSource.getConnection()).thenReturn(mockConnection);
+			// Validate user
+			when(mockConnection.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?"))
+					.thenReturn(mockStatement);
+			// Add user
+			when(mockConnection.prepareStatement("INSERT INTO users(username,email,secret) VALUES (?,?,?)",
+					Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
+			// Create Reply
+			when(mockConnection.prepareStatement("INSERT INTO threads(postid,title) VALUES (?,?)"))
+					.thenReturn(mockStatement);
+			// Create Thread
+			when(mockConnection.prepareStatement("INSERT INTO replies(postid,threadid) VALUES (?,?)"))
+					.thenReturn(mockStatement);
+			// Get post
+			when(mockConnection.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?"))
+					.thenReturn(mockStatement);
+			// Get threads
+			when(mockConnection
+					.prepareStatement("SELECT userid, posts.postid, title FROM threads INNER JOIN posts LIMIT ?,?"))
+							.thenReturn(mockStatement);
+			// Get replies
+			when(mockConnection.prepareStatement(
+					"SELECT userid, postid FROM replies INNER JOIN posts WHERE threadid = ? LIMIT ?,?"))
+							.thenReturn(mockStatement);
+			// Get User
+			when(mockConnection.prepareStatement("SELECT username FROM users WHERE userid = ?"))
+					.thenReturn(mockStatement);
+
+			when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
 		} catch (SQLException e) {
 
 		}
@@ -179,8 +208,6 @@ public class DatabaseFacadeTest {
 	@Test
 	public void testValidateLogin() throws Exception {
 		// Setup stubs
-		when(mockConnection.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?"))
-				.thenReturn(mockStatement);
 		when(mockResultSet.next()).thenReturn(true);
 		when(mockResultSet.getInt(1)).thenReturn(1);
 
@@ -209,6 +236,7 @@ public class DatabaseFacadeTest {
 				verify(mockStatement).setBytes(2, expectedHash);
 
 				assertEquals("Userid not set.", 1, user.getUserid());
+				user.setUserid(0);
 			}
 		}
 	}
@@ -216,9 +244,7 @@ public class DatabaseFacadeTest {
 	@Test(expected = SQLException.class)
 	public void testValidateLoginException() throws Exception {
 		// Setup stubs
-		when(mockConnection.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?"))
-				.thenReturn(mockStatement);
-		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
 		when(mockResultSet.next()).thenReturn(false);
 
 		databaseFacade.setEncryption("SHA-256");
@@ -234,8 +260,6 @@ public class DatabaseFacadeTest {
 	public void testAddUser() throws Exception {
 		// Setup stubs
 
-		when(mockConnection.prepareStatement("INSERT INTO users(username,email,secret) VALUES (?,?,?)",
-				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
 		when(mockResultSet.next()).thenReturn(true);
 		when(mockResultSet.getInt(1)).thenReturn(1);
 
@@ -274,8 +298,6 @@ public class DatabaseFacadeTest {
 	@Test(expected = SQLException.class)
 	public void testAddUserException() throws Exception {
 		// Setup stubs
-		when(mockConnection.prepareStatement("INSERT INTO users(username,email,secret) VALUES (?,?,?)",
-				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
 		when(mockStatement.executeUpdate()).thenReturn(0);
 
 		databaseFacade.setEncryption("SHA-256");
@@ -290,19 +312,7 @@ public class DatabaseFacadeTest {
 
 	@Test
 	public void testCreateThread() throws Exception {
-
-		PreparedStatement mockCreatePostStatement = mock(PreparedStatement.class);
-		ResultSet mockCreatePostResultSet = mock(ResultSet.class);
-
-		when(mockConnection.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)",
-				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockCreatePostStatement);
-		when(mockCreatePostStatement.executeUpdate()).thenReturn(1);
-		when(mockCreatePostStatement.getGeneratedKeys()).thenReturn(mockCreatePostResultSet);
-		when(mockCreatePostResultSet.next()).thenReturn(true);
-		when(mockCreatePostResultSet.getInt(1)).thenReturn(1);
-
-		when(mockConnection.prepareStatement("INSERT INTO threads(postid,title) VALUES (?,?)"))
-				.thenReturn(mockStatement);
+		prepareCreatePost();
 
 		for (Thread thread : threads) {
 
@@ -315,19 +325,7 @@ public class DatabaseFacadeTest {
 
 	@Test
 	public void testCreateReply() throws Exception {
-
-		PreparedStatement mockCreatePostStatement = mock(PreparedStatement.class);
-		ResultSet mockCreatePostResultSet = mock(ResultSet.class);
-
-		when(mockConnection.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)",
-				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockCreatePostStatement);
-		when(mockCreatePostStatement.executeUpdate()).thenReturn(1);
-		when(mockCreatePostStatement.getGeneratedKeys()).thenReturn(mockCreatePostResultSet);
-		when(mockCreatePostResultSet.next()).thenReturn(true);
-		when(mockCreatePostResultSet.getInt(1)).thenReturn(1);
-
-		when(mockConnection.prepareStatement("INSERT INTO replies(postid,threadid) VALUES (?,?)"))
-				.thenReturn(mockStatement);
+		prepareCreatePost();
 
 		for (Reply reply : replies) {
 
@@ -337,15 +335,24 @@ public class DatabaseFacadeTest {
 		}
 	}
 
+	private void prepareCreatePost() throws Exception {
+		PreparedStatement mockCreatePostStatement = mock(PreparedStatement.class);
+		ResultSet mockCreatePostResultSet = mock(ResultSet.class);
+
+		when(mockConnection.prepareStatement("INSERT INTO posts(userid,content) VALUES (?,?)",
+				Statement.RETURN_GENERATED_KEYS)).thenReturn(mockCreatePostStatement);
+		when(mockCreatePostStatement.executeUpdate()).thenReturn(1);
+		when(mockCreatePostStatement.getGeneratedKeys()).thenReturn(mockCreatePostResultSet);
+		when(mockCreatePostResultSet.next()).thenReturn(true);
+		when(mockCreatePostResultSet.getInt(1)).thenReturn(1);
+	}
+
 	/*
 	 * @Test public void testCreatePost() { fail("Not yet implemented");}
 	 */
 
 	@Test
 	public void testGetPost() throws Exception {
-		when(mockConnection.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?"))
-				.thenReturn(mockStatement);
-		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
 
 		when(mockResultSet.next()).thenReturn(true);
 
@@ -363,9 +370,6 @@ public class DatabaseFacadeTest {
 
 	@Test(expected = SQLException.class)
 	public void testGetPostException() throws Exception {
-		when(mockConnection.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?"))
-				.thenReturn(mockStatement);
-		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
 
 		when(mockResultSet.next()).thenReturn(false);
 
@@ -377,10 +381,7 @@ public class DatabaseFacadeTest {
 
 	@Test
 	public void testGetThreads() throws Exception {
-		when(mockConnection
-				.prepareStatement("SELECT userid, posts.postid, title FROM threads INNER JOIN posts LIMIT ?,?"))
-						.thenReturn(mockStatement);
-		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
 		when(mockResultSet.next()).thenReturn(true).thenReturn(false);
 
 		int expectedUserid = 1;
@@ -403,10 +404,7 @@ public class DatabaseFacadeTest {
 
 	@Test
 	public void testGetReplies() throws Exception {
-		when(mockConnection
-				.prepareStatement("SELECT userid, postid FROM replies INNER JOIN posts WHERE threadid = ? LIMIT ?,?"))
-						.thenReturn(mockStatement);
-		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
 		when(mockResultSet.next()).thenReturn(true).thenReturn(false);
 
 		int expectedUserid = 1;
@@ -432,8 +430,7 @@ public class DatabaseFacadeTest {
 
 	@Test
 	public void testGetUser() throws Exception {
-		when(mockConnection.prepareStatement("SELECT username FROM users WHERE userid = ?")).thenReturn(mockStatement);
-		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
 		when(mockResultSet.next()).thenReturn(true);
 
 		String expectedUsername = "Yo";
@@ -451,8 +448,7 @@ public class DatabaseFacadeTest {
 
 	@Test(expected = SQLException.class)
 	public void testGetUserException() throws Exception {
-		when(mockConnection.prepareStatement("SELECT username FROM users WHERE userid = ?")).thenReturn(mockStatement);
-		when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
 		when(mockResultSet.next()).thenReturn(false);
 
 		User user = new User();
