@@ -14,13 +14,13 @@
 	<div class="main" style="margin: 20px;">
 		<form action="/bluejay-server/rest/post/thread" method="post">
 			<h1 style="padding-top: 45px">Make a Statement</h1>
-			<br> <input type="text" name="title" placeholder="Post Title"><br>
+			<br> <input type="text" name="title" placeholder="Post Title" id="postTitle"><br>
 			<textarea id="postText" name="content" placeholder="Post Body"
-				style="width: 70%; height: 180px; display: inline-block; box-sizing: border-box; margin: 8px 0; padding: 12px 12px; border: 1px solid #ccc;"></textarea>
+				style="width: 70%; height: 180px; display: inline-block; box-sizing: border-box; margin: 8px 0; padding: 12px 12px; border: 1px solid #ccc;" id="content"></textarea>
 			<br> <br>
 			<button onclick="window.location.href = '/bluejay-server/';"
 				class="button2">
-				<h3 style="font-size: 18px;">Post</h3>
+				<h3 style="font-size: 18px;" id="postIt">Post</h3>
 			</button>
 			<br> <br> <br> <br> <br>
 		</form>
