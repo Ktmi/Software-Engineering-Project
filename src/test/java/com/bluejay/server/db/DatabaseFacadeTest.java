@@ -93,9 +93,11 @@ public class DatabaseFacadeTest {
 		reply.setThreadid(1);
 		replies.add(reply);
 
+		databaseFacade.setDataSource(mockDataSource);
+
 		// Common stubs
 		try {
-			databaseFacade.setDataSource(mockDataSource);
+
 			when(mockDataSource.getConnection()).thenReturn(mockConnection);
 
 			when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
