@@ -1,6 +1,8 @@
 package com.bluejay.server.db;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
@@ -91,35 +93,16 @@ public class DatabaseFacadeTest {
 		reply.setThreadid(1);
 		replies.add(reply);
 
+		databaseFacade.setDataSource(mockDataSource);
+
 		// Common stubs
 		try {
-			databaseFacade.setDataSource(mockDataSource);
+
 			when(mockDataSource.getConnection()).thenReturn(mockConnection);
-			// Validate user
-			when(mockConnection.prepareStatement("SELECT userid FROM users WHERE username = ? AND secret = ?"))
-					.thenReturn(mockStatement);
-			// Add user
-			when(mockConnection.prepareStatement("INSERT INTO users(username,email,secret) VALUES (?,?,?)",
-					Statement.RETURN_GENERATED_KEYS)).thenReturn(mockStatement);
-			// Create Reply
-			when(mockConnection.prepareStatement("INSERT INTO threads(postid,title) VALUES (?,?)"))
-					.thenReturn(mockStatement);
-			// Create Thread
-			when(mockConnection.prepareStatement("INSERT INTO replies(postid,threadid) VALUES (?,?)"))
-					.thenReturn(mockStatement);
-			// Get post
-			when(mockConnection.prepareStatement("SELECT userid, content FROM posts WHERE postid = ?"))
-					.thenReturn(mockStatement);
-			// Get threads
-			when(mockConnection
-					.prepareStatement("SELECT userid, posts.postid, title FROM threads INNER JOIN posts LIMIT ?,?"))
-							.thenReturn(mockStatement);
-			// Get replies
-			when(mockConnection.prepareStatement(
-					"SELECT userid, postid FROM replies INNER JOIN posts WHERE threadid = ? LIMIT ?,?"))
-							.thenReturn(mockStatement);
-			// Get User
-			when(mockConnection.prepareStatement("SELECT username FROM users WHERE userid = ?"))
+
+			when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+
+			when(mockConnection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS)))
 					.thenReturn(mockStatement);
 
 			when(mockStatement.executeQuery()).thenReturn(mockResultSet);
